@@ -1,0 +1,53 @@
+# Learning plan: Duneri Campaign Wiki
+
+## Locked decisions
+- Language/stack: TypeScript + Next.js end-to-end (frontend pages and backend API routes, one language) — avoids learning two languages/ecosystems at once on a genuine first project
+- Database: PostgreSQL — the data is fundamentally relational (Character → Race, Class, Spell), so a relational database fits its natural shape
+- ORM: Prisma — the standard TypeScript ORM for Next.js, generates matching types automatically, huge community/docs
+- Authentication: NextAuth.js (Auth.js) — the standard Next.js auth library; handles the security-critical parts safely rather than rolling custom auth
+- Hosting: Vercel + Vercel Postgres — built by the Next.js team, minimal setup, one dashboard for app + database
+
+## Sections
+
+### 1. First page running locally  [~] deliverable met, commit pending
+**Deliverable:** A Next.js + TypeScript project running on your own machine, showing a basic "Duneri Wiki" home page in the browser.
+**Concepts:** git, npm-package-json, nextjs-project-structure, react-components, jsx, dev-server
+
+- [x] Check your environment (Node.js and npm installed)
+- [x] Scaffold the Next.js + TypeScript project
+- [x] Tour the generated project files
+- [x] Run the dev server and see it live in the browser
+- [x] Replace the placeholder homepage with your own "Duneri Wiki" content
+- [ ] Commit the first working version to git
+
+### 2. Styling & static pages  [ ] not started
+**Deliverable:** A styled home page plus a few Item/Race pages with real (hardcoded) content, clickable between via navigation.
+**Concepts:** css-styling, react-props, nextjs-routing, component-composition
+
+### 3. The database & schema  [ ] not started
+**Deliverable:** A running PostgreSQL database with Race/Item/Lore/User/Character tables built via Prisma, plus seed data visible in Prisma Studio.
+**Concepts:** prisma-schema, database-migrations, foreign-keys, relational-database-design, seed-data, environment-variables
+
+### 4. Reading real data  [ ] not started
+**Deliverable:** Browse pages pull real Item/Race/Lore data from the database through backend API routes, replacing the hardcoded content from Section 2.
+**Concepts:** nextjs-api-routes, http-requests, json, async-await, frontend-backend-separation
+
+### 5. Search  [ ] not started
+**Deliverable:** A working search bar that filters Items/Races/Lore by name/content across the site — the DM's #1 stated pain point.
+**Concepts:** query-parameters, filtering-with-prisma, debouncing
+
+### 6. Login & roles  [ ] not started
+**Deliverable:** Login/logout works, with DM and Player roles, and the page shows who's currently logged in.
+**Concepts:** nextauth, sessions, protected-routes, role-based-rendering
+
+### 7. DM content management  [ ] not started
+**Deliverable:** A logged-in DM can create/edit/delete a Race/Item/Lore entry through a form, with rich text (bold/bullets/links) saved and displayed correctly, and the permission check enforced on the backend — not just hidden in the UI.
+**Concepts:** react-forms, controlled-inputs, http-post-put-delete, server-side-permission-checks, rich-text-editor, sanitizing-rich-text, basic-testing
+
+### 8. Characters & glossary  [ ] not started
+**Deliverable:** A logged-in Player can create/edit their own Character (linked to a Race), and clicking a glossary term anywhere on the site pops up its plain-language definition.
+**Concepts:** ownership-checks, relational-joins, modals-popups, reusable-components
+
+### 9. Going live  [ ] not started
+**Deliverable:** The real app deployed to a real URL on Vercel, with the real Vercel Postgres database, that your DM and players can actually open and use.
+**Concepts:** vercel-deployment, production-migrations
