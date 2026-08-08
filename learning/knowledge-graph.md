@@ -4,11 +4,18 @@
 <!-- seed: not yet taught | introduced: explained once | practicing: used it with help | understood: explained in own words + passed a quiz -->
 
 ## git
-- status: seed
+- status: practicing
 - depends-on: none
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: correctly explained "git add stages your changes to be committed and git commit actually commits your changes to your local repository" unprompted; correctly predicted git status would show a different (staged) list after adding; ran add/commit themselves for the project's first real commit (539a0aa)
+
+## gitignore
+- status: introduced
+- depends-on: git
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: walked through web/.gitignore together and confirmed node_modules/ and .next/ correctly stayed out of `git status` and the staged file list; not yet checked in their own words
 
 ## javascript
 - status: seed
@@ -119,8 +126,8 @@
 - status: practicing
 - depends-on: react
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-05
-- evidence: correctly wrote plain text as JSX children between <p> and </p>, replacing a TODO comment, without guidance on syntax
+- last-reviewed: 2026-08-08
+- evidence: correctly wrote plain text as JSX children between <p> and </p> without guidance (2026-08-05); on 2026-08-08, correctly embedded a variable with {title} after one hint distinguishing it from a previous static-text fill-in
 
 ## npm-package-json
 - status: practicing
@@ -145,32 +152,62 @@
 - note: HTTP status codes (e.g. the "200" in the dev server's request log) were named in passing on 2026-08-05 but deliberately parked, not taught — full concept comes due in Section 4
 
 ## css-styling
-- status: seed
+- status: practicing
 - depends-on: none
+- introduced: 2026-08-08
+- last-reviewed: 2026-08-08
+- evidence: wrote a valid color declaration correctly first try; then independently noticed black title text was invisible against globals.css's dark-mode background and fixed it by changing the color value to darkblue, without being told there was a problem
+
+## css-modules
+- status: introduced
+- depends-on: css-styling
+- introduced: 2026-08-08
+- last-reviewed: 2026-08-08
+- evidence: shown that .title in page.module.css becomes styles.title in page.tsx, scoped uniquely by Next.js; not yet checked in their own words
+
+## tailwind-css
+- status: seed
+- depends-on: css-styling
 - introduced: —
 - last-reviewed: —
 - evidence: —
+- note: explicitly named as a future interest on 2026-08-08 when we chose plain CSS/CSS Modules for now — good candidate to revisit once css-styling reaches understood
+
+## nextjs-link
+- status: practicing
+- depends-on: nextjs-routing
+- introduced: 2026-08-08
+- last-reviewed: 2026-08-08
+- evidence: correctly predicted that Link navigation would feel instant rather than causing a full-page reload/flash, correctly described the interception mechanism in their own words, and confirmed it by clicking through the site; independently added the third Link (to /races) and wired <Nav /> into both items/page.tsx and races/page.tsx unaided
+
+## arrow-function-implicit-object-return
+- status: seed
+- depends-on: javascript
+- introduced: —
+- last-reviewed: —
+- evidence: —
+- note: on 2026-08-08, asked a sharp clarifying question about `() => ({ ... })` syntax (thought parens were about JSX returns); given a full explanation of the concise-body-vs-block-body arrow function ambiguity, but chose to defer confirming understanding until it shows up in real code — deliberate, not a struggle
 
 ## react-props
-- status: seed
+- status: practicing
 - depends-on: react-components
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-08
+- last-reviewed: 2026-08-08
+- evidence: correctly wrote `return <h1>{title}</h1>;` after one syntax hint, correctly destructuring the title prop; unprompted, correctly predicted the homepage title would lose its color/size since PageHeader doesn't know about page.module.css
 
 ## nextjs-routing
-- status: seed
+- status: practicing
 - depends-on: nextjs-project-structure
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-08
+- last-reviewed: 2026-08-08
+- evidence: correctly predicted /items as the URL for a new items/ folder with a page.tsx; correctly recalled the folder+page.tsx pattern for /races unprompted (minor "file" vs "folder" wording slip, self-evident from correct description); independently authored the entire races/page.tsx file from scratch, correctly
 
 ## component-composition
-- status: seed
+- status: practicing
 - depends-on: react-components
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-08
+- last-reviewed: 2026-08-08
+- evidence: independently wrote <PageHeader title="Races" /> in a brand-new file, reusing the shared component with a different prop value, unaided
 
 ## prisma-schema
 - status: seed

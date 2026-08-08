@@ -22,6 +22,13 @@
 - .next/ — generated — build cache created by `npm run dev`; never edit, rebuildable by re-running the dev server → [[dev-server]]
 - src/app/page.tsx — known (2026-08-05) — the homepage component; shows real "Duneri Campaign Wiki" content, authored by you → [[react-components]] [[jsx]] [[nextjs-project-structure]]
 - src/app/layout.tsx — known (2026-08-05) — shared wrapper (html/body) rendered around every page → [[nextjs-project-structure]]
-- src/app/page.module.css, src/app/globals.css — parked (revisit: Section 2) — page/global styling, not yet covered
+- src/components/PageHeader.tsx — known (2026-08-08) — reusable heading component that takes a title prop, used on the homepage, Items, and Races pages → [[react-props]] [[component-composition]]
+- src/app/items/page.tsx — known (2026-08-08) — the Items page (/items route); hardcoded placeholder content, authored by you, now includes <Nav /> → [[nextjs-routing]] [[nextjs-link]]
+- src/app/races/page.tsx — known (2026-08-08) — the Races page (/races route); written entirely by you, unaided, now includes <Nav /> → [[nextjs-routing]] [[nextjs-link]]
+- src/components/Nav.tsx — known (2026-08-08) — reusable navigation links (Home/Items/Races) using next/link for instant client-side navigation, used on every page → [[nextjs-link]] [[component-composition]]
+- src/app/page.module.css — known (2026-08-08) — your homepage's styling: layout, title, and tagline rules, written by you → [[css-styling]] [[css-modules]]
+- src/app/globals.css — known (2026-08-08) — site-wide defaults (background/text colors, including the dark-mode variant that caused today's invisible-text bug) → [[css-styling]]
+- src/app/favicon.ico — parked (revisit: Section 2) — placeholder browser-tab icon from the starter template
 - public/*.svg — parked (revisit: Section 2) — placeholder image assets from the starter template
-- .gitignore, README.md, next.config.ts, tsconfig.json, eslint.config.mjs, next-env.d.ts — parked (revisit: as needed) — generated config defaults, named but not deep-dived yet
+- .gitignore — known (2026-08-05) — tells git which files/folders to never track (node_modules/, .next/, env files); read and confirmed together before the first commit → [[git]] [[gitignore]]
+- README.md, next.config.ts, tsconfig.json, eslint.config.mjs, next-env.d.ts — parked (revisit: as needed) — generated config defaults, named but not deep-dived yet

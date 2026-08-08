@@ -9,7 +9,7 @@
 
 ## Sections
 
-### 1. First page running locally  [~] deliverable met, commit pending
+### 1. First page running locally  [x] done
 **Deliverable:** A Next.js + TypeScript project running on your own machine, showing a basic "Duneri Wiki" home page in the browser.
 **Concepts:** git, npm-package-json, nextjs-project-structure, react-components, jsx, dev-server
 
@@ -18,11 +18,17 @@
 - [x] Tour the generated project files
 - [x] Run the dev server and see it live in the browser
 - [x] Replace the placeholder homepage with your own "Duneri Wiki" content
-- [ ] Commit the first working version to git
+- [x] Commit the first working version to git (539a0aa)
 
 ### 2. Styling & static pages  [ ] not started
 **Deliverable:** A styled home page plus a few Item/Race pages with real (hardcoded) content, clickable between via navigation.
 **Concepts:** css-styling, react-props, nextjs-routing, component-composition
+
+- [x] Style the homepage with CSS Modules
+- [x] Build a reusable PageHeader component that takes a title prop
+- [x] Create Items and Races pages with hardcoded content, reusing PageHeader
+- [x] Add navigation links between Home/Items/Races
+- [ ] Commit the styled, multi-page site
 
 ### 3. The database & schema  [ ] not started
 **Deliverable:** A running PostgreSQL database with Race/Item/Lore/User/Character tables built via Prisma, plus seed data visible in Prisma Studio.
