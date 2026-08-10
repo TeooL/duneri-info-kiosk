@@ -28,6 +28,7 @@ A campaign wiki for my friend's D&D campaign — lets players browse and search 
 - Managed auth provider polish
 - Quest logs, party/social features, richer inventory management
 - Swapping local LLM for a hosted paid API
+- Bulk content importer (Discord export + Google Docs → seed data) — cut from the original spec's Week 1 plan during MVP trim; manual entry through the DM tools works for now, but flagged on 2026-08-08 as a real pain point given how much existing content there is to migrate
 
 ### Explicitly out of scope (not just deferred)
 - Map-making / storyboarding tools — a different kind of tool (drawing/diagramming), not a wiki feature; would be its own separate project

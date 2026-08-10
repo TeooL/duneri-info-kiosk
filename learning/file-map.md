@@ -16,6 +16,13 @@
 - .claude/ — generated — installed skills in the format Claude Code reads
 
 ## /web
+- .env — known (2026-08-08) — holds the real Neon/Postgres connection string; gitignored, never committed, never shared in chat → [[environment-variables]]
+- prisma.config.ts — known (2026-08-08) — tells the Prisma CLI where the schema/migrations live, how to read DATABASE_URL from .env, and (as of 2026-08-09) how to run the seed script → [[prisma]] [[seed-data]]
+- prisma/schema.prisma — known (2026-08-08) — the full MVP schema: Race, Item, LoreEntry, User (with Role enum), and Character (linked to both User and Race via foreign keys), trimmed from schema.md's fuller vision → [[prisma-schema]] [[foreign-keys]] [[relational-database-design]]
+- prisma/migrations/ — known (2026-08-09) — versioned history of real SQL changes applied to the live Neon database; each folder is one migration, never hand-edited after the fact → [[database-migrations]]
+- prisma/seed.ts — known (2026-08-09) — script that inserts sample Race/Item rows for local testing; written together, including a real typo you found and fixed yourself → [[seed-data]] [[reading-error-messages]]
+- src/generated/prisma/ — generated — the actual Prisma Client code (TypeScript), rebuilt from schema.prisma by `npx prisma generate`; never hand-edited → [[prisma-schema]]
+- .agents/skills/, .claude/skills/, .windsurf/skills/, skills-lock.json (inside web/) — generated — AI-assistant skill files auto-installed by `npx prisma init` (published by Prisma, help AI tools use Prisma correctly); same idea as the repo-root learning skills, never hand-edited
 - package.json — known (2026-08-05) — project's dependency list and npm script shortcuts (`npm run dev`, etc.) → [[npm-package-json]]
 - package-lock.json — generated — exact locked versions of every installed package; never hand-edited
 - node_modules/ — generated — the actual downloaded package code (282 packages); never edit, rebuildable via `npm install` → [[npm-package-json]]

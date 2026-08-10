@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Race {
+  id          String @id @default(cuid())
+  name        String
+  description String
+  characters  Character[]
+}
+
+model Item {
+  id          String @id @default(cuid())
+  name        String
+  type        String
+  description String
+}
+
+model LoreEntry {
+  id        String   @id @default(cuid())
+  title     String
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  DM
+  PLAYER
+}
+
+model User {
+  id             String @id @default(cuid())
+  authProviderId String @unique
+  displayName    String
+  role           Role
+  characters     Character[]
+}
+
+model Character {
+  id      String @id @default(cuid())
+  name    String
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id])
+  raceId  String
+  race    Race   @relation(fields: [raceId], references: [id])
+}

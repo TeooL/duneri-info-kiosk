@@ -4,11 +4,11 @@
 <!-- seed: not yet taught | introduced: explained once | practicing: used it with help | understood: explained in own words + passed a quiz -->
 
 ## git
-- status: practicing
+- status: understood
 - depends-on: none
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-05
-- evidence: correctly explained "git add stages your changes to be committed and git commit actually commits your changes to your local repository" unprompted; correctly predicted git status would show a different (staged) list after adding; ran add/commit themselves for the project's first real commit (539a0aa)
+- last-reviewed: 2026-08-08
+- evidence: correctly explained add vs commit and executed the first real commit unaided on 2026-08-05 (539a0aa); 3 days later on 2026-08-08, independently ran git add/commit again for Section 2's commit (1edfe93) with no prompting or hints — genuine multi-day retention, not just same-session performance
 
 ## gitignore
 - status: introduced
@@ -60,11 +60,11 @@
 - evidence: agreed PostgreSQL fits after reasoning through how connected the data is (Character → Race, Class, Spell)
 
 ## relational-database-design
-- status: seed
+- status: introduced
 - depends-on: postgresql
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-08
+- last-reviewed: 2026-08-08
+- evidence: built Character's connections to both User and Race in schema.prisma, and added the required reverse-side field on Race; not yet asked to explain the overall design in their own words
 
 ## prisma
 - status: introduced
@@ -210,39 +210,53 @@
 - evidence: independently wrote <PageHeader title="Races" /> in a brand-new file, reusing the shared component with a different prop value, unaided
 
 ## prisma-schema
-- status: seed
+- status: practicing
 - depends-on: prisma
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-08
+- last-reviewed: 2026-08-08
+- evidence: correctly wrote the Item model mirroring Race's field pattern unaided; correctly answered what @updatedAt would contain after a later edit; correctly identified ownerId/raceId (not owner/race) as the real database columns; correctly predicted what `prisma validate` checks and ran it themselves to a clean result
 
 ## database-migrations
-- status: seed
+- status: practicing
 - depends-on: prisma-schema
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-09
+- last-reviewed: 2026-08-09
+- evidence: correctly predicted `prisma migrate dev` would change both local files and the remote database, then ran it themselves and confirmed real tables were created in the live Neon database via the generated migration.sql
 
 ## foreign-keys
-- status: seed
+- status: practicing
 - depends-on: relational-database-design
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-08
+- last-reviewed: 2026-08-08
+- evidence: correctly identified, unprompted, that ownerId and raceId (not the owner/race relation fields) are the actual columns that would exist in the real database table; on 2026-08-09, correctly predicted that inserting a Character with an invalid ownerId would be rejected with an error by the database's foreign key constraint
 
 ## seed-data
-- status: seed
+- status: practicing
 - depends-on: prisma-schema
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-09
+- last-reviewed: 2026-08-09
+- evidence: wrote a real prisma.item.create() call mirroring the given Race pattern; predicted `prisma studio` would show real data, then confirmed both seeded rows (Race "Human", Item "Longsword") visible in Studio
+
+## prisma-driver-adapters
+- status: introduced
+- depends-on: prisma
+- introduced: 2026-08-09
+- last-reviewed: 2026-08-09
+- evidence: shown that Prisma 7 requires an explicit adapter (PrismaPg wrapping the pg driver) passed to PrismaClient's constructor; this was new/unpredictable architecture I wired in directly, not yet explained by them in their own words
+
+## reading-error-messages
+- status: practicing
+- depends-on: none
+- introduced: 2026-08-09
+- last-reviewed: 2026-08-09
+- evidence: independently found and fixed a real "Cannot find module" error by reasoning through a file listing (proposed adding /client to the import path); separately, independently caught and fixed their own prisma.item.creaet() typo with no hint from me while I was investigating a different bug
 
 ## environment-variables
-- status: seed
+- status: practicing
 - depends-on: none
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-08
+- last-reviewed: 2026-08-08
+- evidence: correctly created web/.env with a properly formatted DATABASE_URL line after one explanation; independently declined to paste the real connection string into chat, unprompted, showing real grasp of why secrets shouldn't be shared/committed
 
 ## nextjs-api-routes
 - status: seed

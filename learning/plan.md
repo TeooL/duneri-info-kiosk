@@ -20,7 +20,7 @@
 - [x] Replace the placeholder homepage with your own "Duneri Wiki" content
 - [x] Commit the first working version to git (539a0aa)
 
-### 2. Styling & static pages  [ ] not started
+### 2. Styling & static pages  [x] done
 **Deliverable:** A styled home page plus a few Item/Race pages with real (hardcoded) content, clickable between via navigation.
 **Concepts:** css-styling, react-props, nextjs-routing, component-composition
 
@@ -28,11 +28,17 @@
 - [x] Build a reusable PageHeader component that takes a title prop
 - [x] Create Items and Races pages with hardcoded content, reusing PageHeader
 - [x] Add navigation links between Home/Items/Races
-- [ ] Commit the styled, multi-page site
+- [x] Commit the styled, multi-page site (1edfe93)
 
-### 3. The database & schema  [ ] not started
+### 3. The database & schema  [x] done
 **Deliverable:** A running PostgreSQL database with Race/Item/Lore/User/Character tables built via Prisma, plus seed data visible in Prisma Studio.
 **Concepts:** prisma-schema, database-migrations, foreign-keys, relational-database-design, seed-data, environment-variables
+
+- [x] Create a free Postgres database (Neon) and store the connection string in a .env file
+- [x] Install and initialize Prisma
+- [x] Define the schema (User, Race, Item, LoreEntry, Character) trimmed from schema.md to MVP scope
+- [x] Run the first migration to create real tables
+- [x] Seed sample data and view it in Prisma Studio
 
 ### 4. Reading real data  [ ] not started
 **Deliverable:** Browse pages pull real Item/Race/Lore data from the database through backend API routes, replacing the hardcoded content from Section 2.
