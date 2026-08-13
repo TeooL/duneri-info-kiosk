@@ -17,6 +17,12 @@ async function main() {
       type: "Weapon",
       description: "A starting item for the warrior class"
     }
+  });
+  await prisma.loreEntry.create({
+    data: {
+      title: "First Fight",
+      body: "This was the party's first fight, they encountered some bandits and successfully defended against them" 
+    }
   })
 
   console.log("Seed data created!");

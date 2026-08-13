@@ -44,6 +44,12 @@
 **Deliverable:** Browse pages pull real Item/Race/Lore data from the database through backend API routes, replacing the hardcoded content from Section 2.
 **Concepts:** nextjs-api-routes, http-requests, json, async-await, frontend-backend-separation
 
+- [x] Build the Races API route and connect the Races page to real data
+- [x] Build the Items API route and connect the Items page to real data
+- [x] Seed a LoreEntry, then build a Lore API route and new Lore page reading real data
+- [x] Add Lore to the nav
+- [ ] Commit
+
 ### 5. Search  [ ] not started
 **Deliverable:** A working search bar that filters Items/Races/Lore by name/content across the site — the DM's #1 stated pain point.
 **Concepts:** query-parameters, filtering-with-prisma, debouncing

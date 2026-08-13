@@ -46,11 +46,11 @@
 - evidence: —
 
 ## frontend-backend-separation
-- status: introduced
+- status: practicing
 - depends-on: none
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-05
-- evidence: correctly explained, unprompted, that the frontend is what users see/click and the backend controls requests/data/permissions, during /start-project trunk check
+- last-reviewed: 2026-08-09
+- evidence: correctly explained, unprompted, that the frontend is what users see/click and the backend controls requests/data/permissions, during /start-project trunk check (2026-08-05); on 2026-08-09, the boundary became real code — the Races page never touches Prisma directly, only talks to /api/races over real HTTP, and they correctly predicted both sides of that boundary
 
 ## postgresql
 - status: introduced
@@ -144,11 +144,11 @@
 - evidence: correctly explained, unprompted, that the running `npm run dev` process listens for browser requests and sends back the page, after seeing it work live at localhost:3000
 
 ## http-requests
-- status: seed
+- status: practicing
 - depends-on: none
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-09
+- last-reviewed: 2026-08-09
+- evidence: correctly predicted a raw JSON array would appear when visiting /api/races directly in the browser, then correctly predicted the Races page itself would show exactly one list item, both confirmed correct
 - note: HTTP status codes (e.g. the "200" in the dev server's request log) were named in passing on 2026-08-05 but deliberately parked, not taught — full concept comes due in Section 4
 
 ## css-styling
@@ -157,6 +157,13 @@
 - introduced: 2026-08-08
 - last-reviewed: 2026-08-08
 - evidence: wrote a valid color declaration correctly first try; then independently noticed black title text was invisible against globals.css's dark-mode background and fixed it by changing the color value to darkblue, without being told there was a problem
+
+## semantic-html
+- status: practicing
+- depends-on: none
+- introduced: 2026-08-09
+- last-reviewed: 2026-08-09
+- evidence: used <h3> as a direct child of <ul> (works visually, but violates the ul/li contract); correctly fixed it to <li> after one explanation of why the structure matters
 
 ## css-modules
 - status: introduced
@@ -178,7 +185,7 @@
 - depends-on: nextjs-routing
 - introduced: 2026-08-08
 - last-reviewed: 2026-08-08
-- evidence: correctly predicted that Link navigation would feel instant rather than causing a full-page reload/flash, correctly described the interception mechanism in their own words, and confirmed it by clicking through the site; independently added the third Link (to /races) and wired <Nav /> into both items/page.tsx and races/page.tsx unaided
+- evidence: correctly predicted that Link navigation would feel instant rather than causing a full-page reload/flash, correctly described the interception mechanism in their own words, and confirmed it by clicking through the site; independently added the third Link (to /races) and wired <Nav /> into both items/page.tsx and races/page.tsx unaided; on 2026-08-09, added the Lore link to Nav.tsx entirely on their own initiative, with zero prompting from this lesson
 
 ## arrow-function-implicit-object-return
 - status: seed
@@ -199,8 +206,8 @@
 - status: practicing
 - depends-on: nextjs-project-structure
 - introduced: 2026-08-08
-- last-reviewed: 2026-08-08
-- evidence: correctly predicted /items as the URL for a new items/ folder with a page.tsx; correctly recalled the folder+page.tsx pattern for /races unprompted (minor "file" vs "folder" wording slip, self-evident from correct description); independently authored the entire races/page.tsx file from scratch, correctly
+- last-reviewed: 2026-08-09
+- evidence: correctly predicted /items as the URL for a new items/ folder with a page.tsx; correctly recalled the folder+page.tsx pattern for /races unprompted; independently authored races/page.tsx from scratch; on 2026-08-09 built lore/page.tsx (routing + real data fetch combined) after one hint pointing to items/page.tsx as a reference
 
 ## component-composition
 - status: practicing
@@ -235,7 +242,7 @@
 - depends-on: prisma-schema
 - introduced: 2026-08-09
 - last-reviewed: 2026-08-09
-- evidence: wrote a real prisma.item.create() call mirroring the given Race pattern; predicted `prisma studio` would show real data, then confirmed both seeded rows (Race "Human", Item "Longsword") visible in Studio
+- evidence: wrote a real prisma.item.create() call mirroring the given Race pattern; predicted `prisma studio` would show real data, then confirmed both seeded rows (Race "Human", Item "Longsword") visible in Studio; on 2026-08-09, independently wrote prisma.loreEntry.create() with correct field names, and correctly predicted that re-running the seed script would duplicate Race/Item rows since nothing prevents it
 
 ## prisma-driver-adapters
 - status: introduced
@@ -259,25 +266,25 @@
 - evidence: correctly created web/.env with a properly formatted DATABASE_URL line after one explanation; independently declined to paste the real connection string into chat, unprompted, showing real grasp of why secrets shouldn't be shared/committed
 
 ## nextjs-api-routes
-- status: seed
+- status: practicing
 - depends-on: nextjs-project-structure
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-09
+- last-reviewed: 2026-08-09
+- evidence: shown the route.ts + exported GET() pattern for Races; independently wrote the entire api/items/route.ts file themselves mirroring it correctly, and correctly predicted /api/items's JSON output; on 2026-08-09, independently wrote api/lore/route.ts correctly on the first attempt, adapting the model name (loreEntry) without a hint
 
 ## async-await
-- status: seed
+- status: practicing
 - depends-on: javascript
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-09
+- last-reviewed: 2026-08-09
+- evidence: independently wrote export async function GET() and an async page component with two await calls (fetch, then .json()) for Items, unaided
 
 ## json
-- status: seed
+- status: practicing
 - depends-on: none
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-09
+- last-reviewed: 2026-08-09
+- evidence: independently wrote const items = await res.json() themselves in items/page.tsx, correctly, mirroring the Races pattern with no prompting on that specific line
 
 ## query-parameters
 - status: seed
