@@ -40,7 +40,7 @@
 - [x] Run the first migration to create real tables
 - [x] Seed sample data and view it in Prisma Studio
 
-### 4. Reading real data  [ ] not started
+### 4. Reading real data  [x] done
 **Deliverable:** Browse pages pull real Item/Race/Lore data from the database through backend API routes, replacing the hardcoded content from Section 2.
 **Concepts:** nextjs-api-routes, http-requests, json, async-await, frontend-backend-separation
 
@@ -48,11 +48,17 @@
 - [x] Build the Items API route and connect the Items page to real data
 - [x] Seed a LoreEntry, then build a Lore API route and new Lore page reading real data
 - [x] Add Lore to the nav
-- [ ] Commit
+- [x] Commit (437b3e1)
 
 ### 5. Search  [ ] not started
 **Deliverable:** A working search bar that filters Items/Races/Lore by name/content across the site — the DM's #1 stated pain point.
-**Concepts:** query-parameters, filtering-with-prisma, debouncing
+**Concepts:** query-parameters, filtering-with-prisma, debouncing, client-components, react-state
+
+- [x] Add search filtering to the Items API route (query param + Prisma filtering)
+- [x] Build a debounced search input Client Component for the Items page
+- [x] Apply the same search pattern to the Races page
+- [x] Apply the same search pattern to the Lore page
+- [ ] Commit
 
 ### 6. Login & roles  [ ] not started
 **Deliverable:** Login/logout works, with DM and Player roles, and the page shows who's currently logged in.

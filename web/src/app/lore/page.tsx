@@ -1,5 +1,6 @@
 import PageHeader from "@/components/PageHeader";
 import Nav from "@/components/Nav";
+import LoreSearch from "@/components/LoreSearch";
 
 export default async function LorePage() {
     const res = await fetch("http://localhost:3000/api/lore");
@@ -10,11 +11,7 @@ export default async function LorePage() {
             <Nav />
             <PageHeader title="Lore" />
             <p>This page is for the lore section of Duneri </p>
-            <ul>
-                {lore.map((entry: {id : string, title: string, body: string}) => (
-                    <li key={entry.id}>{entry.title}:{entry.body}</li>
-                ))}
-            </ul>
+            <LoreSearch initialLore={lore} />
         </main>
     )
 }

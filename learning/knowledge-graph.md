@@ -119,8 +119,8 @@
 - status: practicing
 - depends-on: react
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-05
-- evidence: correctly edited the Home() component's JSX themselves (removed a TODO comment, added real text inside the <p> tag) and predicted/confirmed how fast refresh shows the change live
+- last-reviewed: 2026-08-14
+- evidence: correctly edited the Home() component's JSX themselves (removed a TODO comment, added real text inside the <p> tag) and predicted/confirmed how fast refresh shows the change live; on 2026-08-14, correctly recalled after a multi-day gap that a component is a reusable function returning UI
 
 ## jsx
 - status: practicing
@@ -140,8 +140,8 @@
 - status: practicing
 - depends-on: nextjs
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-05
-- evidence: correctly explained, unprompted, that the running `npm run dev` process listens for browser requests and sends back the page, after seeing it work live at localhost:3000
+- last-reviewed: 2026-08-14
+- evidence: correctly explained, unprompted, that the running `npm run dev` process listens for browser requests and sends back the page, after seeing it work live at localhost:3000; correctly recalled both the request/response loop and fast refresh after a multi-day gap on 2026-08-14
 
 ## http-requests
 - status: practicing
@@ -287,25 +287,39 @@
 - evidence: independently wrote const items = await res.json() themselves in items/page.tsx, correctly, mirroring the Races pattern with no prompting on that specific line
 
 ## query-parameters
-- status: seed
+- status: practicing
 - depends-on: http-requests
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: correctly predicted /api/items?q=sword would return matching items and /api/items?q=xyz would return an empty array, both confirmed against real output
 
 ## filtering-with-prisma
-- status: seed
+- status: practicing
 - depends-on: prisma-schema
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: independently wrote the where: { OR: [...] } filter with contains/mode: "insensitive" across two fields, correctly, from a shape description in a comment; independently noticed lore/route.ts's filter only covered title (not body), correctly predicted the resulting search gap, and fixed it themselves by adding a matching OR condition
 
 ## debouncing
-- status: seed
+- status: practicing
 - depends-on: javascript
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: correctly predicted, before typing, that search results would update only after a brief pause rather than instantly per keystroke, and confirmed it working exactly that way
+
+## client-components
+- status: practicing
+- depends-on: react-components
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: shown "use client" and the Server/Client split in ItemSearch.tsx (written by me); independently wrote the entire "use client" RaceSearch.tsx file themselves after one hint; independently built LoreSearch.tsx entirely unprompted, with zero hints, before this task even started
+
+## react-state
+- status: practicing
+- depends-on: javascript
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: filled in the fetch/setItems call in ItemSearch.tsx (hooks written by me); independently wrote useState/useRef declarations themselves in RaceSearch.tsx after one hint; did the same fully unprompted for LoreSearch.tsx
 
 ## sessions
 - status: seed
