@@ -16,6 +16,8 @@
 - .claude/ — generated — installed skills in the format Claude Code reads
 
 ## /web
+- src/auth.ts — known (2026-08-14) — NextAuth's central config: registers Discord, and three callbacks (signIn/jwt/session) that create a Prisma User on first login and attach its role to the session → [[nextauth]] [[nextauth-callbacks]] [[sessions]]
+- src/app/api/auth/[...nextauth]/route.ts — known (2026-08-14) — catch-all route wiring NextAuth's handlers to real URLs (sign-in, callback, session check, etc.) → [[nextauth]] [[nextjs-api-routes]]
 - .env — known (2026-08-08) — holds the real Neon/Postgres connection string; gitignored, never committed, never shared in chat → [[environment-variables]]
 - prisma.config.ts — known (2026-08-08) — tells the Prisma CLI where the schema/migrations live, how to read DATABASE_URL from .env, and (as of 2026-08-09) how to run the seed script → [[prisma]] [[seed-data]]
 - prisma/schema.prisma — known (2026-08-08) — the full MVP schema: Race, Item, LoreEntry, User (with Role enum), and Character (linked to both User and Race via foreign keys), trimmed from schema.md's fuller vision → [[prisma-schema]] [[foreign-keys]] [[relational-database-design]]
@@ -27,7 +29,7 @@
 - package-lock.json — generated — exact locked versions of every installed package; never hand-edited
 - node_modules/ — generated — the actual downloaded package code (282 packages); never edit, rebuildable via `npm install` → [[npm-package-json]]
 - .next/ — generated — build cache created by `npm run dev`; never edit, rebuildable by re-running the dev server → [[dev-server]]
-- src/app/page.tsx — known (2026-08-05) — the homepage component; shows real "Duneri Campaign Wiki" content, authored by you → [[react-components]] [[jsx]] [[nextjs-project-structure]]
+- src/app/page.tsx — known (2026-08-14) — the homepage component; back to its simple form now that sign-in/sign-out lives in Nav → [[react-components]] [[jsx]] [[nextjs-project-structure]]
 - src/app/layout.tsx — known (2026-08-05) — shared wrapper (html/body) rendered around every page → [[nextjs-project-structure]]
 - src/components/PageHeader.tsx — known (2026-08-08) — reusable heading component that takes a title prop, used on the homepage, Items, and Races pages → [[react-props]] [[component-composition]]
 - src/app/items/page.tsx — known (2026-08-14) — the Items page; still a Server Component doing the initial fetch, now hands data off to <ItemSearch /> for the interactive search UI → [[nextjs-routing]] [[nextjs-link]] [[nextjs-api-routes]] [[http-requests]] [[async-await]] [[json]] [[client-components]]
@@ -40,7 +42,7 @@
 - src/app/api/races/route.ts — known (2026-08-14) — GET endpoint returning Races as JSON, now filterable by ?q=; rewritten by you after one hint pointing to the Items version → [[nextjs-api-routes]] [[frontend-backend-separation]] [[query-parameters]] [[filtering-with-prisma]]
 - src/components/RaceSearch.tsx — known (2026-08-14) — Client Component: debounced search input over Races; written entirely by you after one hint → [[client-components]] [[react-state]] [[debouncing]]
 - src/lib/prisma.ts — known (2026-08-09) — one shared Prisma Client + adapter instance, reused by every API route instead of repeating the setup → [[prisma-driver-adapters]]
-- src/components/Nav.tsx — known (2026-08-09) — reusable navigation links (Home/Items/Races/Lore) using next/link for instant client-side navigation, used on every page; Lore link added entirely on your own initiative → [[nextjs-link]] [[component-composition]]
+- src/components/Nav.tsx — known (2026-08-14) — reusable navigation links (Home/Items/Races/Lore), a DM-only "DM Tools" link (UI-only, not yet backend-enforced), sign-in/sign-out, session, and role display, shown on every page → [[nextjs-link]] [[component-composition]] [[nextauth]] [[sessions]] [[server-actions]] [[nextauth-callbacks]] [[role-based-rendering]] [[protected-routes]]
 - src/app/page.module.css — known (2026-08-08) — your homepage's styling: layout, title, and tagline rules, written by you → [[css-styling]] [[css-modules]]
 - src/app/globals.css — known (2026-08-08) — site-wide defaults (background/text colors, including the dark-mode variant that caused today's invisible-text bug) → [[css-styling]]
 - src/app/favicon.ico — parked (revisit: Section 2) — placeholder browser-tab icon from the starter template

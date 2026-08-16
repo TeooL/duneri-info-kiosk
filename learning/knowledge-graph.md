@@ -74,11 +74,11 @@
 - evidence: confirmed understanding that an ORM lets TypeScript talk to the database and auto-generates matching types
 
 ## nextauth
-- status: introduced
+- status: practicing
 - depends-on: nextjs
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-05
-- evidence: agreed rolling custom auth is not appropriate for a first project; chose NextAuth.js over Clerk/custom
+- last-reviewed: 2026-08-14
+- evidence: agreed rolling custom auth is not appropriate for a first project; chose NextAuth.js over Clerk/custom (2026-08-05); on 2026-08-14, walked through a real Discord OAuth login end-to-end (consent screen, authorize, redirect back, session established) and could describe each step
 
 ## vercel-deployment
 - status: introduced
@@ -133,8 +133,8 @@
 - status: practicing
 - depends-on: none
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-05
-- evidence: correctly explained node_modules as where installed packages live and that it's never hand-edited, after walking through package.json/package-lock.json/node_modules together
+- last-reviewed: 2026-08-14
+- evidence: correctly explained node_modules as where installed packages live and that it's never hand-edited (2026-08-05); on 2026-08-14, review revealed a real misconception — thought devDependencies was about where packages physically live rather than when they're needed (build-time vs runtime); given a refresher, not yet re-confirmed
 
 ## dev-server
 - status: practicing
@@ -255,8 +255,8 @@
 - status: practicing
 - depends-on: none
 - introduced: 2026-08-09
-- last-reviewed: 2026-08-09
-- evidence: independently found and fixed a real "Cannot find module" error by reasoning through a file listing (proposed adding /client to the import path); separately, independently caught and fixed their own prisma.item.creaet() typo with no hint from me while I was investigating a different bug
+- last-reviewed: 2026-08-14
+- evidence: independently found and fixed a real "Cannot find module" error by reasoning through a file listing (proposed adding /client to the import path); separately, independently caught and fixed their own prisma.item.creaet() typo with no hint from me while I was investigating a different bug; on 2026-08-14, correctly diagnosed why `npm install` at the wrong directory level created a stray package.json/node_modules, and cleanly recovered
 
 ## environment-variables
 - status: practicing
@@ -322,25 +322,46 @@
 - evidence: filled in the fetch/setItems call in ItemSearch.tsx (hooks written by me); independently wrote useState/useRef declarations themselves in RaceSearch.tsx after one hint; did the same fully unprompted for LoreSearch.tsx
 
 ## sessions
-- status: seed
+- status: practicing
 - depends-on: nextauth
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: shown auth() returning a session object on the homepage; independently adapted it into Nav.tsx themselves after one hint (async function, auth() call, session-branching JSX), confirmed working site-wide
+
+## server-actions
+- status: practicing
+- depends-on: javascript
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: shown "use server" inline in a form's action on the homepage; independently copied and correctly adapted the same pattern into Nav.tsx after one hint, verified working across every page
+
+## nextauth-callbacks
+- status: practicing
+- depends-on: nextauth, sessions, prisma-schema
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: correctly filled in the jwt callback's TODO (attaching dbUser.role onto the token) matching the given session-callback pattern; correctly predicted the role would show nothing on a stale pre-existing token, then confirmed a fresh sign-in correctly showed "PLAYER" — real understanding of the signIn→jwt→session data flow, not just pattern-matching
+
+## oauth
+- status: practicing
+- depends-on: none
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: completed a real Discord OAuth flow themselves and accurately narrated each step (consent screen, authorize, redirect back)
 
 ## protected-routes
-- status: seed
+- status: introduced
 - depends-on: nextauth, nextjs-api-routes
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: correctly reasoned that hiding the DM Tools link does not protect /dm — a Player typing the URL directly would still reach it, since nothing server-side blocks it yet; correctly named this as Section 7's job, not solved yet
 
 ## role-based-rendering
-- status: seed
+- status: practicing
 - depends-on: sessions
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-14
+- last-reviewed: 2026-08-14
+- evidence: independently wrote the {(session?.user as any)?.role === "DM" && <Link .../>} conditional themselves, correctly, and verified it appears only for a DM-role session
 
 ## server-side-permission-checks
 - status: seed

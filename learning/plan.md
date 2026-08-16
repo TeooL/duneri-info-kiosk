@@ -50,7 +50,7 @@
 - [x] Add Lore to the nav
 - [x] Commit (437b3e1)
 
-### 5. Search  [ ] not started
+### 5. Search  [x] done
 **Deliverable:** A working search bar that filters Items/Races/Lore by name/content across the site — the DM's #1 stated pain point.
 **Concepts:** query-parameters, filtering-with-prisma, debouncing, client-components, react-state
 
@@ -58,11 +58,17 @@
 - [x] Build a debounced search input Client Component for the Items page
 - [x] Apply the same search pattern to the Races page
 - [x] Apply the same search pattern to the Lore page
-- [ ] Commit
+- [x] Commit (6f05d8c)
 
 ### 6. Login & roles  [ ] not started
 **Deliverable:** Login/logout works, with DM and Player roles, and the page shows who's currently logged in.
 **Concepts:** nextauth, sessions, protected-routes, role-based-rendering
+
+- [x] Install and configure NextAuth.js with Discord sign-in
+- [x] Show sign-in/sign-out and the current session in the Nav
+- [x] Connect NextAuth users to the Prisma User model with a Role
+- [x] Role-aware rendering (hide/show something based on DM vs Player)
+- [ ] Commit
 
 ### 7. DM content management  [ ] not started
 **Deliverable:** A logged-in DM can create/edit/delete a Race/Item/Lore entry through a form, with rich text (bold/bullets/links) saved and displayed correctly, and the permission check enforced on the backend — not just hidden in the UI.
