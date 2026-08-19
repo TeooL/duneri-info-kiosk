@@ -6,7 +6,7 @@ type Lore = {id: string, title: string, body: string};
 
 export default function LoreSearch({initialLore} : {initialLore : Lore[]}) {
     const [lore, setLore] = useState(initialLore);
-    const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+    const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const q = e.target.value;
@@ -23,7 +23,7 @@ export default function LoreSearch({initialLore} : {initialLore : Lore[]}) {
       <input type="text" placeholder="Search races..." onChange={handleChange} />
       <ul>
         {lore.map((entry) => (
-          <li key={entry.id}>{entry.title} : {entry.body}</li>
+          <li key={entry.id}>{entry.title} : {<div dangerouslySetInnerHTML={{__html: entry.body}} />} </li>
         ))}
       </ul>
     </div>

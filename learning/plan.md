@@ -60,7 +60,7 @@
 - [x] Apply the same search pattern to the Lore page
 - [x] Commit (6f05d8c)
 
-### 6. Login & roles  [ ] not started
+### 6. Login & roles  [x] done
 **Deliverable:** Login/logout works, with DM and Player roles, and the page shows who's currently logged in.
 **Concepts:** nextauth, sessions, protected-routes, role-based-rendering
 
@@ -73,6 +73,15 @@
 ### 7. DM content management  [ ] not started
 **Deliverable:** A logged-in DM can create/edit/delete a Race/Item/Lore entry through a form, with rich text (bold/bullets/links) saved and displayed correctly, and the permission check enforced on the backend — not just hidden in the UI.
 **Concepts:** react-forms, controlled-inputs, http-post-put-delete, server-side-permission-checks, rich-text-editor, sanitizing-rich-text, basic-testing
+
+- [x] Server-side permission check + POST /api/items + a simple create form for Items
+- [x] Upgrade the description field to a real rich text editor, with sanitization
+  - decided: TipTap + sanitize-html (verified against React 19/Next 16); ignored a Prisma-CLI-only deepmerge-ts audit warning after tracing it to config-loading code that never runs in the deployed app
+- [x] Add edit (PUT) and delete (DELETE) for Items, DM-only
+- [x] Apply the same full CRUD pattern to Races
+- [x] Apply the same full CRUD pattern to Lore
+- [x] Write a basic test for the server-side permission check
+- [ ] Commit
 
 ### 8. Characters & glossary  [ ] not started
 **Deliverable:** A logged-in Player can create/edit their own Character (linked to a Race), and clicking a glossary term anywhere on the site pops up its plain-language definition.

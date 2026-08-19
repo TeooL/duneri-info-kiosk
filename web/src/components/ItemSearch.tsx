@@ -6,7 +6,7 @@ type Item = { id: string; name: string };
 
 export default function ItemSearch({ initialItems }: { initialItems: Item[] }) {
   const [items, setItems] = useState(initialItems);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const q = e.target.value;

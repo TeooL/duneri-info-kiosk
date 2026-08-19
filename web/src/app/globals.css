@@ -10,6 +10,14 @@
   }
 }
 
+ul, ol {
+  list-style-position: inside;
+}
+
+li p {
+  display: inline;
+}
+
 html {
   height: 100%;
 }

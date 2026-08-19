@@ -5,21 +5,24 @@ import sanitizeHtml from "sanitize-html";
 
 const ALLOWED_TAGS = ["p", "strong", "em", "ul", "ol", "li", "br", "blockquote", "code"];
 
-export async function GET(request: NextRequest) {
-    const q = request.nextUrl.searchParams.get("q") ?? "";
-
-    const items = await prisma.item.findMany({where: { OR: [{ name: { contains: q, mode: "insensitive"} }, {description: { contains: q, mode: "insensitive"} }]}});
-
-    return Response.json(items);
-}
-
-export async function POST(request: NextRequest) {
+export async function PUT(request: NextRequest, { params } : {params : Promise<{id: string}>}) {
     const permission = await requireDM();
+    const {id} = await params;
     if (!permission) {
         return new Response("Forbidden", {status: 403})
     }
     const data = await request.json();
     data.description = sanitizeHtml(data.description, {allowedTags: ALLOWED_TAGS, allowedAttributes: {} });
-    const item = await prisma.item.create({ data });
+    const item = await prisma.item.update({ where: { id }, data })
+    return Response.json(item);
+}
+
+export async function DELETE(request: NextRequest, { params } : {params : Promise<{id: string}>} ) {
+    const permission = await requireDM();
+    const {id} = await params;
+    if(!permission) {
+        return new Response("Forbidden", {status: 403})
+    }
+    const item = await prisma.item.delete({ where: {id }});
     return Response.json(item);
 }

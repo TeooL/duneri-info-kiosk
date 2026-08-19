@@ -6,7 +6,7 @@ type Race = {id : string, name: string}
 
 export default function RaceSearch({initialRaces} : {initialRaces: Race[]}) {
     const [races, setRaces] = useState(initialRaces);
-    const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+    const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const q = e.target.value;

@@ -256,7 +256,7 @@
 - depends-on: none
 - introduced: 2026-08-09
 - last-reviewed: 2026-08-14
-- evidence: independently found and fixed a real "Cannot find module" error by reasoning through a file listing (proposed adding /client to the import path); separately, independently caught and fixed their own prisma.item.creaet() typo with no hint from me while I was investigating a different bug; on 2026-08-14, correctly diagnosed why `npm install` at the wrong directory level created a stray package.json/node_modules, and cleanly recovered
+- evidence: independently found and fixed a real "Cannot find module" error by reasoning through a file listing (proposed adding /client to the import path); separately, independently caught and fixed their own prisma.item.creaet() typo with no hint from me while I was investigating a different bug; on 2026-08-14, correctly diagnosed why `npm install` at the wrong directory level created a stray package.json/node_modules, and cleanly recovered; on 2026-08-17, worked through a multi-step DevTools debugging session (checking Console, then Network tab, request status, then a bisection with checkpoint logs) that correctly narrowed the issue down to a Console "Verbose" filter hiding their own console.log output; same day, used DOM inspection (Inspect Element) twice in a row to correctly report the exact HTML structure behind two separate CSS display bugs, giving the actual evidence needed to diagnose both
 
 ## environment-variables
 - status: practicing
@@ -364,53 +364,67 @@
 - evidence: independently wrote the {(session?.user as any)?.role === "DM" && <Link .../>} conditional themselves, correctly, and verified it appears only for a DM-role session
 
 ## server-side-permission-checks
-- status: seed
+- status: practicing
 - depends-on: protected-routes, frontend-backend-separation
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-17
+- last-reviewed: 2026-08-17
+- evidence: caught two real self-authored bugs in the permission check (checking the function reference `if (!requireDM)` instead of its result, then `await !requireDM()` operator-precedence issue) purely through reasoning about what each expression evaluates to; verified the fix genuinely blocks unauthenticated requests via a real curl test returning 403; on the Races POST rep, correctly identified a third variant (a missing `await` entirely, leaving `permission` as an always-truthy Promise) when asked what the un-awaited value actually was
 
 ## react-forms
-- status: seed
+- status: practicing
 - depends-on: react-components
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-17
+- last-reviewed: 2026-08-17
+- evidence: built a real working create form (ItemCreateForm.tsx) with onSubmit/e.preventDefault(), correctly wired end-to-end to a POST endpoint; independently built RaceCreateForm.tsx, correctly omitting the "type" field since Race's schema doesn't have one — real schema awareness, not blind copying
 
 ## controlled-inputs
-- status: seed
+- status: practicing
 - depends-on: react-forms
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-17
+- last-reviewed: 2026-08-17
+- evidence: correctly applied the value/onChange pattern for all three fields, and correctly identified textarea as the more semantically correct element than input for a multi-line description field
 
 ## http-post-put-delete
-- status: seed
+- status: practicing
 - depends-on: http-requests
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-17
+- last-reviewed: 2026-08-17
+- evidence: correctly predicted an unauthenticated curl POST would be blocked, confirmed via real 403 response; understands POST reads its data from the request body, not query params; built real PUT/DELETE handlers, correctly reasoned that DELETE's broken (id: string) signature would actually receive the raw Request object (not an id) once shown the mismatch against PUT's correct shape, and fixed it; verified both against a real item via authenticated browser console requests; on the Races rep, independently wrote fully correct PUT/DELETE with zero bugs, verified live
+
+## nextjs-dynamic-routes
+- status: practicing
+- depends-on: nextjs-routing
+- introduced: 2026-08-17
+- last-reviewed: 2026-08-17
+- evidence: independently wrote the PUT handler's params type ({ params }: { params: Promise<{ id: string }> }) correctly on the second attempt after one real self-caught TS7031 error; reused the pattern correctly for DELETE once shown the signature mismatch; on the Races rep, wrote a complete, correct races/[id]/route.ts (both PUT and DELETE, both correct params typing) entirely unaided, zero errors
 
 ## rich-text-editor
-- status: seed
+- status: practicing
 - depends-on: react-components
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-17
+- last-reviewed: 2026-08-17
+- evidence: independently added the BulletList toolbar button matching the given Bold pattern; genuinely used the working editor and correctly diagnosed two real CSS bugs affecting it (missing bullet markers from a global padding:0 reset, marker/text split from TipTap's <li><p> structure) through DOM inspection, not guessing
 
 ## sanitizing-rich-text
-- status: seed
+- status: practicing
 - depends-on: rich-text-editor
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-17
+- last-reviewed: 2026-08-17
+- evidence: correctly predicted a real XSS attempt (<script> tag sent via DevTools Console fetch, bypassing the UI entirely) would be stripped by sanitize-html, then confirmed it via a live test — the <p> tag survived, the <script> tag did not
+
+## dangerously-set-inner-html
+- status: practicing
+- depends-on: sanitizing-rich-text, jsx
+- introduced: 2026-08-17
+- last-reviewed: 2026-08-17
+- evidence: discovered raw HTML tags rendering as literal text in LoreSearch (JSX's default auto-escaping); after one explanation, correctly applied dangerouslySetInnerHTML={{ __html: entry.body }} themselves and verified real formatting rendered correctly
 
 ## basic-testing
-- status: seed
-- depends-on: none
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- status: practicing
+- depends-on: javascript
+- introduced: 2026-08-17
+- last-reviewed: 2026-08-17
+- evidence: correctly wrote a third test case (DM session → true) independently, matching the given describe/it/expect/vi.mock pattern; correctly predicted 3/3 passing before running, then correctly predicted the exact failure mode (false→true mismatches) when the underlying code was deliberately broken, and confirmed the fix restored a clean pass — real understanding that a test only has value if it can actually fail
 
 ## ownership-checks
 - status: seed
