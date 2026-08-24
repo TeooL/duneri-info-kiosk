@@ -70,7 +70,7 @@
 - [x] Role-aware rendering (hide/show something based on DM vs Player)
 - [ ] Commit
 
-### 7. DM content management  [ ] not started
+### 7. DM content management  [x] done
 **Deliverable:** A logged-in DM can create/edit/delete a Race/Item/Lore entry through a form, with rich text (bold/bullets/links) saved and displayed correctly, and the permission check enforced on the backend — not just hidden in the UI.
 **Concepts:** react-forms, controlled-inputs, http-post-put-delete, server-side-permission-checks, rich-text-editor, sanitizing-rich-text, basic-testing
 
@@ -81,11 +81,18 @@
 - [x] Apply the same full CRUD pattern to Races
 - [x] Apply the same full CRUD pattern to Lore
 - [x] Write a basic test for the server-side permission check
-- [ ] Commit
+- [x] Commit (40f4038)
 
 ### 8. Characters & glossary  [ ] not started
 **Deliverable:** A logged-in Player can create/edit their own Character (linked to a Race), and clicking a glossary term anywhere on the site pops up its plain-language definition.
 **Concepts:** ownership-checks, relational-joins, modals-popups, reusable-components
+
+- [x] Attach the real database user id to the session (extends the existing nextauth-callbacks pattern)
+- [x] Character API: GET own characters, POST create (linked to raceId + ownerId)
+- [x] Character page: form to create a Character (name + Race dropdown), list your own
+- [x] Add PUT/DELETE for Characters with an ownership check (only the owning Player)
+- [x] Build a reusable Glossary popup component, wire in a few real terms
+- [ ] Commit
 
 ### 9. Going live  [ ] not started
 **Deliverable:** The real app deployed to a real URL on Vercel, with the real Vercel Postgres database, that your DM and players can actually open and use.

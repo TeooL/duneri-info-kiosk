@@ -126,8 +126,8 @@
 - status: practicing
 - depends-on: react
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-08
-- evidence: correctly wrote plain text as JSX children between <p> and </p> without guidance (2026-08-05); on 2026-08-08, correctly embedded a variable with {title} after one hint distinguishing it from a previous static-text fill-in
+- last-reviewed: 2026-08-24
+- evidence: correctly wrote plain text as JSX children between <p> and </p> without guidance (2026-08-05); on 2026-08-08, correctly embedded a variable with {title} after one hint distinguishing it from a previous static-text fill-in; on 2026-08-24, correctly predicted that a bare newline between two adjacent JSX tags (no other text) collapses to zero space rather than one space, confirmed live; then, on the harder follow-up case (a newline sitting directly next to a tag but with real text on the same line, e.g. "roll for" then a line break into <GlossaryTerm>), incorrectly predicted the added spaces would be enough — a real gap, self-diagnosed only after seeing the actual squished rendering and being shown the newlines-adjacent-to-tags rule, then fixed correctly by removing the line breaks
 
 ## npm-package-json
 - status: practicing
@@ -213,8 +213,8 @@
 - status: practicing
 - depends-on: react-components
 - introduced: 2026-08-08
-- last-reviewed: 2026-08-08
-- evidence: independently wrote <PageHeader title="Races" /> in a brand-new file, reusing the shared component with a different prop value, unaided
+- last-reviewed: 2026-08-24
+- evidence: independently wrote <PageHeader title="Races" /> in a brand-new file, reusing the shared component with a different prop value, unaided; on 2026-08-24, after a 2-week gap, correctly recalled unprompted that props are the mechanism letting the same component render differently in different places, using PageHeader as their own example
 
 ## prisma-schema
 - status: practicing
@@ -340,7 +340,7 @@
 - depends-on: nextauth, sessions, prisma-schema
 - introduced: 2026-08-14
 - last-reviewed: 2026-08-14
-- evidence: correctly filled in the jwt callback's TODO (attaching dbUser.role onto the token) matching the given session-callback pattern; correctly predicted the role would show nothing on a stale pre-existing token, then confirmed a fresh sign-in correctly showed "PLAYER" — real understanding of the signIn→jwt→session data flow, not just pattern-matching
+- evidence: correctly filled in the jwt callback's TODO (attaching dbUser.role onto the token) matching the given session-callback pattern; correctly predicted the role would show nothing on a stale pre-existing token, then confirmed a fresh sign-in correctly showed "PLAYER" — real understanding of the signIn→jwt→session data flow, not just pattern-matching; on 2026-08-17, independently extended the same pattern to attach dbUser.id, correctly predicted a re-login was needed, and verified it via /api/auth/session's raw JSON
 
 ## oauth
 - status: practicing
@@ -382,14 +382,14 @@
 - depends-on: react-forms
 - introduced: 2026-08-17
 - last-reviewed: 2026-08-17
-- evidence: correctly applied the value/onChange pattern for all three fields, and correctly identified textarea as the more semantically correct element than input for a multi-line description field
+- evidence: correctly applied the value/onChange pattern for all three fields, and correctly identified textarea as the more semantically correct element than input for a multi-line description field; genuinely struggled with the <select>/<option> variant (put the races.map() inside the onChange prop instead of as children), needed the corrected snippet shown directly rather than self-correcting — a real gap, not yet solid on this specific form-element variant
 
 ## http-post-put-delete
 - status: practicing
 - depends-on: http-requests
 - introduced: 2026-08-17
-- last-reviewed: 2026-08-17
-- evidence: correctly predicted an unauthenticated curl POST would be blocked, confirmed via real 403 response; understands POST reads its data from the request body, not query params; built real PUT/DELETE handlers, correctly reasoned that DELETE's broken (id: string) signature would actually receive the raw Request object (not an id) once shown the mismatch against PUT's correct shape, and fixed it; verified both against a real item via authenticated browser console requests; on the Races rep, independently wrote fully correct PUT/DELETE with zero bugs, verified live
+- last-reviewed: 2026-08-24
+- evidence: correctly predicted an unauthenticated curl POST would be blocked, confirmed via real 403 response; understands POST reads its data from the request body, not query params; built real PUT/DELETE handlers, correctly reasoned that DELETE's broken (id: string) signature would actually receive the raw Request object (not an id) once shown the mismatch against PUT's correct shape, and fixed it; verified both against a real item via authenticated browser console requests; on the Races rep, independently wrote fully correct PUT/DELETE with zero bugs, verified live; on 2026-08-24, tested Characters PUT/DELETE against real requests via authenticated browser console fetch, correctly predicted both outcomes before running (including how to verify the delete actually worked, not just that the request didn't error) and confirmed both live
 
 ## nextjs-dynamic-routes
 - status: practicing
@@ -427,32 +427,39 @@
 - evidence: correctly wrote a third test case (DM session → true) independently, matching the given describe/it/expect/vi.mock pattern; correctly predicted 3/3 passing before running, then correctly predicted the exact failure mode (false→true mismatches) when the underlying code was deliberately broken, and confirmed the fix restored a clean pass — real understanding that a test only has value if it can actually fail
 
 ## ownership-checks
-- status: seed
+- status: understood
 - depends-on: server-side-permission-checks
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-17
+- last-reviewed: 2026-08-24
+- evidence: correctly identified two real bugs when prompted (missing await on request.json(), and the critical missing data.ownerId = session.user.id override); correctly predicted the created character would carry the real session owner id despite never sending one, confirmed live, and confirmed GET correctly scopes results to only the caller's own characters; on 2026-08-24 (multi-day gap), wrote DELETE for characters/[id]/route.ts mirroring the ownership-check pattern from PUT, correctly reasoned through a guiding question why leftover request.json()/data.ownerId lines copied from PUT were both unused and would break a real bodyless DELETE request, and removed them unaided; then, without being asked, tested the negative case directly — attempted to delete a character that didn't match their own ownerId and confirmed it correctly returned 403 Forbidden, real proactive security-mindset testing
 
 ## relational-joins
-- status: seed
+- status: practicing
 - depends-on: prisma-schema, foreign-keys
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-17
+- last-reviewed: 2026-08-17
+- evidence: independently added include: { race: true } to the characters GET query after one explanation, correctly placed alongside where; confirmed the resulting character.race.name was available and rendered it correctly in the list
 
 ## modals-popups
-- status: seed
+- status: practicing
 - depends-on: react-components
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-24
+- last-reviewed: 2026-08-24
+- evidence: built GlossaryTerm.tsx, a component that toggles visibility of hidden content via a useState boolean flipped on click; wrote the useState declaration and the conditional render ({open && definition}) correctly unaided; genuinely struggled with the onClick handler — wrote onClick={setOpen(!open)} (calling the state setter immediately during render instead of deferring it) and needed the bug pointed to an existing pattern in their own RichTextEditor.tsx toolbar buttons before writing the correct onClick={() => setOpen(!open)}; verified live in the browser that clicking the term correctly reveals its definition
 
 ## reusable-components
-- status: seed
+- status: practicing
 - depends-on: component-composition
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-17
+- last-reviewed: 2026-08-24
+- evidence: used CharacterCreateForm as a props-driven reusable form component (races passed in), same idea as PageHeader; not yet independently explained in own words; on 2026-08-24, wired the new GlossaryTerm component into three real usages on the same page (HP/Initiative/MP), each with different definition and children props — real reuse of one component across multiple real call sites, not just a single instance
+
+## server-fetch-vs-direct-query
+- status: introduced
+- depends-on: nextjs-api-routes, frontend-backend-separation
+- introduced: 2026-08-17
+- last-reviewed: 2026-08-17
+- evidence: shown (with an empirical scratch test proving it) that a Server Component's own fetch() to an authenticated API route does not carry the login cookie, and that querying Prisma directly in the Server Component sidesteps the problem; confirmed the resulting page correctly showed their own characters — not yet independently explained or diagnosed by them
 
 ## production-migrations
 - status: seed

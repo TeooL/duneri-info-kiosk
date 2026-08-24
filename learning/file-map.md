@@ -16,7 +16,7 @@
 - .claude/ — generated — installed skills in the format Claude Code reads
 
 ## /web
-- src/auth.ts — known (2026-08-14) — NextAuth's central config: registers Discord, and three callbacks (signIn/jwt/session) that create a Prisma User on first login and attach its role to the session → [[nextauth]] [[nextauth-callbacks]] [[sessions]]
+- src/auth.ts — known (2026-08-17) — NextAuth's central config: registers Discord, and three callbacks (signIn/jwt/session) that create a Prisma User on first login and attach its role and real database id to the session → [[nextauth]] [[nextauth-callbacks]] [[sessions]]
 - src/app/api/auth/[...nextauth]/route.ts — known (2026-08-14) — catch-all route wiring NextAuth's handlers to real URLs (sign-in, callback, session check, etc.) → [[nextauth]] [[nextjs-api-routes]]
 - .env — known (2026-08-08) — holds the real Neon/Postgres connection string; gitignored, never committed, never shared in chat → [[environment-variables]]
 - prisma.config.ts — known (2026-08-08) — tells the Prisma CLI where the schema/migrations live, how to read DATABASE_URL from .env, and (as of 2026-08-09) how to run the seed script → [[prisma]] [[seed-data]]
@@ -32,7 +32,7 @@
 - package-lock.json — generated — exact locked versions of every installed package; never hand-edited
 - node_modules/ — generated — the actual downloaded package code (282 packages); never edit, rebuildable via `npm install` → [[npm-package-json]]
 - .next/ — generated — build cache created by `npm run dev`; never edit, rebuildable by re-running the dev server → [[dev-server]]
-- src/app/page.tsx — known (2026-08-14) — the homepage component; back to its simple form now that sign-in/sign-out lives in Nav → [[react-components]] [[jsx]] [[nextjs-project-structure]]
+- src/app/page.tsx — known (2026-08-24) — the homepage component; tagline plus a real sentence wiring HP/Initiative/MP into <GlossaryTerm>, with a genuine JSX whitespace bug (newlines adjacent to tags collapsing to nothing) diagnosed and fixed → [[react-components]] [[jsx]] [[nextjs-project-structure]] [[modals-popups]]
 - src/app/layout.tsx — known (2026-08-05) — shared wrapper (html/body) rendered around every page → [[nextjs-project-structure]]
 - src/components/PageHeader.tsx — known (2026-08-08) — reusable heading component that takes a title prop, used on the homepage, Items, and Races pages → [[react-props]] [[component-composition]]
 - src/app/items/page.tsx — known (2026-08-17) — the Items page; Server Component doing the initial fetch, hands data to <ItemSearch />, and conditionally renders <ItemCreateForm /> for DMs only → [[nextjs-routing]] [[nextjs-link]] [[nextjs-api-routes]] [[http-requests]] [[async-await]] [[json]] [[client-components]] [[role-based-rendering]]
@@ -49,11 +49,16 @@
 - src/components/RaceSearch.tsx — known (2026-08-14) — Client Component: debounced search input over Races; written entirely by you after one hint → [[client-components]] [[react-state]] [[debouncing]]
 - src/lib/prisma.ts — known (2026-08-09) — one shared Prisma Client + adapter instance, reused by every API route instead of repeating the setup → [[prisma-driver-adapters]]
 - src/lib/requireDM.ts — known (2026-08-17) — reusable server-side helper checking if the current session's role is DM; used to gate write operations for real, not just hide UI → [[server-side-permission-checks]] [[nextauth-callbacks]]
+- src/app/api/characters/route.ts — known (2026-08-17) — GET (scoped to your own characters, includes the related Race) and POST (ownerId always derived from the session, never trusted from the client) → [[ownership-checks]] [[nextjs-api-routes]] [[relational-joins]]
+- src/app/api/characters/[id]/route.ts — known (2026-08-24) — dynamic route: PUT/DELETE for a single Character, gated by an ownership check (fetch the record first, compare ownerId to session.user.id) rather than a role check; DELETE's leftover request.json()/data.ownerId lines (copied from PUT but unused) caught via a guiding question and removed; verified live including the negative case (deleting someone else's character correctly returns 403) → [[nextjs-dynamic-routes]] [[http-post-put-delete]] [[ownership-checks]]
+- src/app/characters/page.tsx — known (2026-08-17) — the Characters page; queries Prisma directly for your own characters (sidesteps the cookie-forwarding gap with an authenticated API route), renders the create form and your character list → [[server-fetch-vs-direct-query]] [[relational-joins]] [[ownership-checks]]
+- src/components/CharacterCreateForm.tsx — known (2026-08-17) — reusable form: name input + Race <select> dropdown, POSTs to /api/characters → [[react-forms]] [[controlled-inputs]] [[reusable-components]]
+- src/components/GlossaryTerm.tsx — known (2026-08-24) — reusable component: wraps a clickable term, toggles a useState boolean on click to show/hide its definition; real bug caught and fixed (onClick={setOpen(!open)} calling the setter immediately during render instead of deferring it) → [[modals-popups]] [[reusable-components]] [[react-state]]
 - src/lib/requireDM.test.ts — known (2026-08-17) — 3 real Vitest tests for requireDM() (no session/PLAYER/DM), verified to actually catch a deliberately-introduced bug → [[basic-testing]]
 - vitest.config.ts — known (2026-08-17) — Vitest config; teaches it about the @/ import alias → [[basic-testing]]
 - src/components/ItemCreateForm.tsx — known (2026-08-17) — DM-only Client Component form for creating an Item; controlled inputs, uses RichTextEditor for description, POSTs to /api/items, reloads on success → [[react-forms]] [[controlled-inputs]] [[http-post-put-delete]] [[rich-text-editor]]
 - src/components/RichTextEditor.tsx — known (2026-08-17) — reusable TipTap-based rich text editor (bold, bullet list), controlled via content/onChange props, used by ItemCreateForm → [[rich-text-editor]]
-- src/components/Nav.tsx — known (2026-08-14) — reusable navigation links (Home/Items/Races/Lore), a DM-only "DM Tools" link (UI-only, not yet backend-enforced), sign-in/sign-out, session, and role display, shown on every page → [[nextjs-link]] [[component-composition]] [[nextauth]] [[sessions]] [[server-actions]] [[nextauth-callbacks]] [[role-based-rendering]] [[protected-routes]]
+- src/components/Nav.tsx — known (2026-08-17) — reusable navigation links (Home/Items/Races/Lore/Characters), a DM-only "DM Tools" link (now backed by real server-side checks as of Section 7), sign-in/sign-out, session, and role display, shown on every page → [[nextjs-link]] [[component-composition]] [[nextauth]] [[sessions]] [[server-actions]] [[nextauth-callbacks]] [[role-based-rendering]] [[protected-routes]]
 - src/app/page.module.css — known (2026-08-08) — your homepage's styling: layout, title, and tagline rules, written by you → [[css-styling]] [[css-modules]]
 - src/app/globals.css — known (2026-08-17) — site-wide defaults (background/text colors, list-style-position and li p display:inline fixes diagnosed via real DOM inspection) → [[css-styling]] [[rich-text-editor]]
 - src/app/favicon.ico — parked (revisit: Section 2) — placeholder browser-tab icon from the starter template

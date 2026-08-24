@@ -30,8 +30,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           where: { authProviderId: account.providerAccountId },
         });
         if (dbUser) {
-          (token as any).role = dbUser.role
-          // TODO(you): attach dbUser.role onto the token, e.g. (token as any).role = ...
+          (token as any).role = dbUser.role;
+          (token as any).id = dbUser.id;
+
         }
       }
       return token;
@@ -39,6 +40,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       if (session.user) {
         (session.user as any).role = (token as any).role;
+        (session.user as any).id = (token as any).id;
       }
       return session;
     },
