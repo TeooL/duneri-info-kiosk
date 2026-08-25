@@ -3,10 +3,10 @@ import Nav from "@/components/Nav";
 import ItemSearch from "@/components/ItemSearch";
 import ItemCreateForm from "@/components/ItemCreateForm";
 import { requireDM } from "@/lib/requireDM";
+import { prisma } from "@/lib/prisma";
 
 export default async function ItemsPage() {
-  const res = await fetch("http://localhost:3000/api/items");
-  const items = await res.json();
+  const items = await prisma.item.findMany();
 
   const isDM = await requireDM();
 

@@ -49,8 +49,8 @@
 - status: practicing
 - depends-on: none
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-09
-- evidence: correctly explained, unprompted, that the frontend is what users see/click and the backend controls requests/data/permissions, during /start-project trunk check (2026-08-05); on 2026-08-09, the boundary became real code — the Races page never touches Prisma directly, only talks to /api/races over real HTTP, and they correctly predicted both sides of that boundary
+- last-reviewed: 2026-08-24
+- evidence: correctly explained, unprompted, that the frontend is what users see/click and the backend controls requests/data/permissions, during /start-project trunk check (2026-08-05); on 2026-08-09, the boundary became real code — the Races page never touches Prisma directly, only talks to /api/races over real HTTP, and they correctly predicted both sides of that boundary; on 2026-08-24, after a 2-week gap, correctly recalled unprompted that the database lives on the backend side, right before a task that moves several pages from fetching their own API route to querying Prisma directly
 
 ## postgresql
 - status: introduced
@@ -455,11 +455,18 @@
 - evidence: used CharacterCreateForm as a props-driven reusable form component (races passed in), same idea as PageHeader; not yet independently explained in own words; on 2026-08-24, wired the new GlossaryTerm component into three real usages on the same page (HP/Initiative/MP), each with different definition and children props — real reuse of one component across multiple real call sites, not just a single instance
 
 ## server-fetch-vs-direct-query
-- status: introduced
+- status: practicing
 - depends-on: nextjs-api-routes, frontend-backend-separation
 - introduced: 2026-08-17
-- last-reviewed: 2026-08-17
-- evidence: shown (with an empirical scratch test proving it) that a Server Component's own fetch() to an authenticated API route does not carry the login cookie, and that querying Prisma directly in the Server Component sidesteps the problem; confirmed the resulting page correctly showed their own characters — not yet independently explained or diagnosed by them
+- last-reviewed: 2026-08-24
+- evidence: shown (with an empirical scratch test proving it) that a Server Component's own fetch() to an authenticated API route does not carry the login cookie, and that querying Prisma directly in the Server Component sidesteps the problem; confirmed the resulting page correctly showed their own characters — not yet independently explained or diagnosed by them; on 2026-08-24, applied the same fix themselves to fix hardcoded localhost:3000 URLs across Races/Items/Lore/Characters pages ahead of deployment — Items and Lore were converted correctly on the first try (right model name, awaited); Races initially had two self-corrected bugs (wrong model — prisma.character instead of prisma.race, and a missing await, both caught via guiding questions); Characters required a real refocus after losing track of which file was being edited, then completed correctly
+
+## ssl-tls-verification
+- status: practicing
+- depends-on: environment-variables
+- introduced: 2026-08-24
+- last-reviewed: 2026-08-24
+- evidence: surfaced a real dev-console warning about pg's sslmode=require aliasing to verify-full today but not in a future major version; correctly explained, in their own words, that an encrypted-but-unverified connection could still be exploited by an attacker impersonating the real database server; edited DATABASE_URL themselves to sslmode=verify-full, restarted the dev server, and confirmed the warning was gone
 
 ## production-migrations
 - status: seed

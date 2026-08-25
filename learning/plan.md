@@ -83,7 +83,7 @@
 - [x] Write a basic test for the server-side permission check
 - [x] Commit (40f4038)
 
-### 8. Characters & glossary  [ ] not started
+### 8. Characters & glossary  [x] done
 **Deliverable:** A logged-in Player can create/edit their own Character (linked to a Race), and clicking a glossary term anywhere on the site pops up its plain-language definition.
 **Concepts:** ownership-checks, relational-joins, modals-popups, reusable-components
 
@@ -92,8 +92,15 @@
 - [x] Character page: form to create a Character (name + Race dropdown), list your own
 - [x] Add PUT/DELETE for Characters with an ownership check (only the owning Player)
 - [x] Build a reusable Glossary popup component, wire in a few real terms
-- [ ] Commit
+- [x] Commit (c5841b3)
 
 ### 9. Going live  [ ] not started
 **Deliverable:** The real app deployed to a real URL on Vercel, with the real Vercel Postgres database, that your DM and players can actually open and use.
 **Concepts:** vercel-deployment, production-migrations
+
+- [x] Fix the hardcoded localhost:3000 fetches in Races/Items/Lore pages (same direct-Prisma-query fix already used on the Characters page)
+- [ ] Push the latest commits to GitHub
+- [ ] Create a Vercel project connected to the GitHub repo and run the first deploy
+- [ ] Add production environment variables in Vercel (DATABASE_URL, Discord secrets, AUTH_SECRET) and update the Discord OAuth redirect URI for the real URL
+- [ ] Run a production database migration against the real database
+- [ ] Smoke-test the live URL end to end, then commit

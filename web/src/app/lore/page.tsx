@@ -3,10 +3,10 @@ import Nav from "@/components/Nav";
 import LoreSearch from "@/components/LoreSearch";
 import { requireDM } from "@/lib/requireDM";
 import LoreCreateForm from "@/components/LoreCreateForm";
+import { prisma } from "@/lib/prisma";
 
 export default async function LorePage() {
-    const res = await fetch("http://localhost:3000/api/lore");
-    const lore = await res.json();
+    const lore = await prisma.loreEntry.findMany();
 
     const isDM = await requireDM();
 

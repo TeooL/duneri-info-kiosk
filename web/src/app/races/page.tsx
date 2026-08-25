@@ -3,10 +3,10 @@ import Nav from "@/components/Nav";
 import RaceSearch from "@/components/RaceSearch";
 import RaceCreateForm from "@/components/RaceCreateForm";
 import { requireDM } from "@/lib/requireDM";
+import { prisma } from "@/lib/prisma";
 
 export default async function RacesPage() {
-  const res = await fetch("http://localhost:3000/api/races");
-  const races = await res.json();
+  const races = await prisma.race.findMany();
 
   const isDM = await requireDM();
 

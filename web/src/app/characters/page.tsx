@@ -7,8 +7,7 @@ import { prisma } from "@/lib/prisma";
 export default async function CharactersPage() {
   const session = await auth();
 
-  const racesRes = await fetch("http://localhost:3000/api/races");
-  const races = await racesRes.json();
+  const races = await prisma.race.findMany();
 
   const characters = session?.user
     ? await prisma.character.findMany({
@@ -28,9 +27,6 @@ export default async function CharactersPage() {
             {characters.map((character) => (
               <li key={character.id}>{character.name} : {character.race.name}</li>
             ))}
-            {/* TODO(you): map over `characters` and render one <li> per
-                character, showing character.name and character.race.name —
-                same list pattern you've used many times before */}
           </ul>
         </>
       ) : (
