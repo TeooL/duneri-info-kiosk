@@ -99,7 +99,7 @@
 **Concepts:** vercel-deployment, production-migrations
 
 - [x] Fix the hardcoded localhost:3000 fetches in Races/Items/Lore pages (same direct-Prisma-query fix already used on the Characters page)
-- [ ] Push the latest commits to GitHub
+- [x] Push the latest commits to GitHub (a72428e)
 - [ ] Create a Vercel project connected to the GitHub repo and run the first deploy
 - [ ] Add production environment variables in Vercel (DATABASE_URL, Discord secrets, AUTH_SECRET) and update the Discord OAuth redirect URI for the real URL
 - [ ] Run a production database migration against the real database

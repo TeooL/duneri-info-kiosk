@@ -7,8 +7,8 @@
 - status: understood
 - depends-on: none
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-08
-- evidence: correctly explained add vs commit and executed the first real commit unaided on 2026-08-05 (539a0aa); 3 days later on 2026-08-08, independently ran git add/commit again for Section 2's commit (1edfe93) with no prompting or hints — genuine multi-day retention, not just same-session performance
+- last-reviewed: 2026-08-24
+- evidence: correctly explained add vs commit and executed the first real commit unaided on 2026-08-05 (539a0aa); 3 days later on 2026-08-08, independently ran git add/commit again for Section 2's commit (1edfe93) with no prompting or hints — genuine multi-day retention, not just same-session performance; on 2026-08-24, correctly predicted git status's output before running it, wrote a real, accurate commit message describing the day's change unaided (a72428e), correctly predicted git push would send the commit to the remote and that GitHub itself is where to verify it, then confirmed the push landed there
 
 ## gitignore
 - status: introduced
@@ -227,8 +227,8 @@
 - status: practicing
 - depends-on: prisma-schema
 - introduced: 2026-08-09
-- last-reviewed: 2026-08-09
-- evidence: correctly predicted `prisma migrate dev` would change both local files and the remote database, then ran it themselves and confirmed real tables were created in the live Neon database via the generated migration.sql
+- last-reviewed: 2026-08-24
+- evidence: correctly predicted `prisma migrate dev` would change both local files and the remote database, then ran it themselves and confirmed real tables were created in the live Neon database via the generated migration.sql; on 2026-08-24, after a 2-week gap, correctly recalled unprompted that a migration is what actually turns schema.prisma's models into real tables/columns in the database — editing the schema file alone changes nothing live
 
 ## foreign-keys
 - status: practicing
