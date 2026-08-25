@@ -81,11 +81,11 @@
 - evidence: agreed rolling custom auth is not appropriate for a first project; chose NextAuth.js over Clerk/custom (2026-08-05); on 2026-08-14, walked through a real Discord OAuth login end-to-end (consent screen, authorize, redirect back, session established) and could describe each step
 
 ## vercel-deployment
-- status: introduced
+- status: practicing
 - depends-on: nextjs
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-05
-- evidence: confirmed understanding that deployment moves the app from laptop-only to a real URL others can use
+- last-reviewed: 2026-08-24
+- evidence: confirmed understanding that deployment moves the app from laptop-only to a real URL others can use; on 2026-08-24, created a real Vercel project connected to GitHub, correctly identified and fixed the Root Directory setting (app lives in web/, not repo root) after correctly predicting deploying without it would fail since Vercel wouldn't find package.json at the root; ran two real deploys, diagnosed a genuine "generated Prisma Client not committed" build failure (fixed via a postinstall script), then correctly traced a second failure's "Can't reach database server at 127.0.0.1:5432" error back to the missing production DATABASE_URL unaided; same day, added all four production environment variables in the Vercel dashboard, asked a sharp clarifying question about not including the .env file's quote marks in the raw values, and confirmed the live deployed site actually shows real data and a working Discord login end to end
 
 ## writing-a-good-plan
 - status: introduced
@@ -220,8 +220,8 @@
 - status: practicing
 - depends-on: prisma
 - introduced: 2026-08-08
-- last-reviewed: 2026-08-08
-- evidence: correctly wrote the Item model mirroring Race's field pattern unaided; correctly answered what @updatedAt would contain after a later edit; correctly identified ownerId/raceId (not owner/race) as the real database columns; correctly predicted what `prisma validate` checks and ran it themselves to a clean result
+- last-reviewed: 2026-08-24
+- evidence: correctly wrote the Item model mirroring Race's field pattern unaided; correctly answered what @updatedAt would contain after a later edit; correctly identified ownerId/raceId (not owner/race) as the real database columns; correctly predicted what `prisma validate` checks and ran it themselves to a clean result; on 2026-08-24, after a 2-week gap, correctly recalled unprompted that schema.prisma and the live database aren't automatically in sync — a real command (a migration) is what bridges them
 
 ## database-migrations
 - status: practicing
@@ -255,8 +255,8 @@
 - status: practicing
 - depends-on: none
 - introduced: 2026-08-09
-- last-reviewed: 2026-08-14
-- evidence: independently found and fixed a real "Cannot find module" error by reasoning through a file listing (proposed adding /client to the import path); separately, independently caught and fixed their own prisma.item.creaet() typo with no hint from me while I was investigating a different bug; on 2026-08-14, correctly diagnosed why `npm install` at the wrong directory level created a stray package.json/node_modules, and cleanly recovered; on 2026-08-17, worked through a multi-step DevTools debugging session (checking Console, then Network tab, request status, then a bisection with checkpoint logs) that correctly narrowed the issue down to a Console "Verbose" filter hiding their own console.log output; same day, used DOM inspection (Inspect Element) twice in a row to correctly report the exact HTML structure behind two separate CSS display bugs, giving the actual evidence needed to diagnose both
+- last-reviewed: 2026-08-24
+- evidence: independently found and fixed a real "Cannot find module" error by reasoning through a file listing (proposed adding /client to the import path); separately, independently caught and fixed their own prisma.item.creaet() typo with no hint from me while I was investigating a different bug; on 2026-08-14, correctly diagnosed why `npm install` at the wrong directory level created a stray package.json/node_modules, and cleanly recovered; on 2026-08-17, worked through a multi-step DevTools debugging session (checking Console, then Network tab, request status, then a bisection with checkpoint logs) that correctly narrowed the issue down to a Console "Verbose" filter hiding their own console.log output; same day, used DOM inspection (Inspect Element) twice in a row to correctly report the exact HTML structure behind two separate CSS display bugs, giving the actual evidence needed to diagnose both; on 2026-08-24, read two real Vercel build logs and correctly connected "Can't reach database server at 127.0.0.1:5432" back to a missing DATABASE_URL environment variable unaided
 
 ## environment-variables
 - status: practicing
@@ -346,8 +346,8 @@
 - status: practicing
 - depends-on: none
 - introduced: 2026-08-14
-- last-reviewed: 2026-08-14
-- evidence: completed a real Discord OAuth flow themselves and accurately narrated each step (consent screen, authorize, redirect back)
+- last-reviewed: 2026-08-24
+- evidence: completed a real Discord OAuth flow themselves and accurately narrated each step (consent screen, authorize, redirect back); on 2026-08-24, a real gap — couldn't recall in their own words what a redirect URI is or why Discord requires pre-registering it, needed a full refresher before registering a second one for production; same day, after the refresher, correctly predicted the production Discord login would prompt and redirect back to the live app, then registered the real redirect URI and confirmed the full flow actually worked on the deployed site
 
 ## protected-routes
 - status: introduced
