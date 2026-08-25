@@ -88,11 +88,11 @@
 - evidence: confirmed understanding that deployment moves the app from laptop-only to a real URL others can use; on 2026-08-24, created a real Vercel project connected to GitHub, correctly identified and fixed the Root Directory setting (app lives in web/, not repo root) after correctly predicting deploying without it would fail since Vercel wouldn't find package.json at the root; ran two real deploys, diagnosed a genuine "generated Prisma Client not committed" build failure (fixed via a postinstall script), then correctly traced a second failure's "Can't reach database server at 127.0.0.1:5432" error back to the missing production DATABASE_URL unaided; same day, added all four production environment variables in the Vercel dashboard, asked a sharp clarifying question about not including the .env file's quote marks in the raw values, and confirmed the live deployed site actually shows real data and a working Discord login end to end
 
 ## writing-a-good-plan
-- status: introduced
+- status: practicing
 - depends-on: none
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-05
-- evidence: co-authored the MVP scope trim (using real DM interview notes) and the 9-section build sequence this session
+- last-reviewed: 2026-08-24
+- evidence: co-authored the MVP scope trim (using real DM interview notes) and the 9-section build sequence this session; on 2026-08-24, during the final smoke test, noticed the app was missing edit/delete UI for Items/Races/Lore (only the backend routes exist) against Section 7's original deliverable text, and made a real, deliberate scope call to defer it to a "v2" rather than treating it as a blocking bug — genuine prioritization judgment, not something handed to them
 
 ## reviewing-a-diff
 - status: seed
@@ -184,8 +184,8 @@
 - status: practicing
 - depends-on: nextjs-routing
 - introduced: 2026-08-08
-- last-reviewed: 2026-08-08
-- evidence: correctly predicted that Link navigation would feel instant rather than causing a full-page reload/flash, correctly described the interception mechanism in their own words, and confirmed it by clicking through the site; independently added the third Link (to /races) and wired <Nav /> into both items/page.tsx and races/page.tsx unaided; on 2026-08-09, added the Lore link to Nav.tsx entirely on their own initiative, with zero prompting from this lesson
+- last-reviewed: 2026-08-24
+- evidence: correctly predicted that Link navigation would feel instant rather than causing a full-page reload/flash, correctly described the interception mechanism in their own words, and confirmed it by clicking through the site; independently added the third Link (to /races) and wired <Nav /> into both items/page.tsx and races/page.tsx unaided; on 2026-08-09, added the Lore link to Nav.tsx entirely on their own initiative, with zero prompting from this lesson; on 2026-08-24, during the final smoke test, correctly predicted the long-dead "DM Tools" Link (pointing at a /dm page that was never built) would 404, confirmed it live, and correctly removed the dead Link themselves rather than building an unnecessary page
 
 ## arrow-function-implicit-object-return
 - status: seed

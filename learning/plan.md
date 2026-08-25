@@ -72,6 +72,7 @@
 
 ### 7. DM content management  [x] done
 **Deliverable:** A logged-in DM can create/edit/delete a Race/Item/Lore entry through a form, with rich text (bold/bullets/links) saved and displayed correctly, and the permission check enforced on the backend — not just hidden in the UI.
+**Known gap (found 2026-08-24, deferred to v2):** only create actually shipped a form — edit/delete only exist as backend PUT/DELETE routes (tested via raw fetch calls), with no UI button anywhere. Same story for Characters in Section 8. A deliberate scope call, not an oversight.
 **Concepts:** react-forms, controlled-inputs, http-post-put-delete, server-side-permission-checks, rich-text-editor, sanitizing-rich-text, basic-testing
 
 - [x] Server-side permission check + POST /api/items + a simple create form for Items
@@ -94,7 +95,7 @@
 - [x] Build a reusable Glossary popup component, wire in a few real terms
 - [x] Commit (c5841b3)
 
-### 9. Going live  [ ] not started
+### 9. Going live  [x] done
 **Deliverable:** The real app deployed to a real URL on Vercel, with the real Vercel Postgres database, that your DM and players can actually open and use.
 **Concepts:** vercel-deployment, production-migrations
 
@@ -103,4 +104,9 @@
 - [x] Create a Vercel project connected to the GitHub repo and run the first deploy
 - [x] Add production environment variables in Vercel (DATABASE_URL, Discord secrets, AUTH_SECRET) and update the Discord OAuth redirect URI for the real URL
 - [x] Run a production database migration against the real database
-- [ ] Smoke-test the live URL end to end, then commit
+- [x] Smoke-test the live URL end to end, then commit
+  - found and fixed a real dead link ("DM Tools" → /dm, never built) during the smoke test
+
+## v2 backlog (deferred, not started)
+- Edit/delete UI (buttons/forms) for Items, Races, Lore, and Characters — backend routes already exist and work, just no frontend hookup yet
+- Promote the actual DM's account from PLAYER to DM via Prisma Studio once they've logged in at least once
