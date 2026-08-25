@@ -367,8 +367,8 @@
 - status: practicing
 - depends-on: protected-routes, frontend-backend-separation
 - introduced: 2026-08-17
-- last-reviewed: 2026-08-17
-- evidence: caught two real self-authored bugs in the permission check (checking the function reference `if (!requireDM)` instead of its result, then `await !requireDM()` operator-precedence issue) purely through reasoning about what each expression evaluates to; verified the fix genuinely blocks unauthenticated requests via a real curl test returning 403; on the Races POST rep, correctly identified a third variant (a missing `await` entirely, leaving `permission` as an always-truthy Promise) when asked what the un-awaited value actually was
+- last-reviewed: 2026-08-24
+- evidence: caught two real self-authored bugs in the permission check (checking the function reference `if (!requireDM)` instead of its result, then `await !requireDM()` operator-precedence issue) purely through reasoning about what each expression evaluates to; verified the fix genuinely blocks unauthenticated requests via a real curl test returning 403; on the Races POST rep, correctly identified a third variant (a missing `await` entirely, leaving `permission` as an always-truthy Promise) when asked what the un-awaited value actually was; on 2026-08-24, after a week gap, correctly recalled unprompted that a hidden Nav link is not real protection since a user could just enter the URL directly — the backend is what actually has to enforce it
 
 ## react-forms
 - status: practicing
@@ -469,8 +469,8 @@
 - evidence: surfaced a real dev-console warning about pg's sslmode=require aliasing to verify-full today but not in a future major version; correctly explained, in their own words, that an encrypted-but-unverified connection could still be exploited by an attacker impersonating the real database server; edited DATABASE_URL themselves to sslmode=verify-full, restarted the dev server, and confirmed the warning was gone
 
 ## production-migrations
-- status: seed
+- status: practicing
 - depends-on: database-migrations, vercel-deployment
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-24
+- last-reviewed: 2026-08-24
+- evidence: correctly predicted `prisma migrate status` would report the production database as up to date, since it's the same Neon database used in local dev, then confirmed it live; correctly identified the two commands needed to wire migrations into the deploy pipeline (prisma migrate deploy, next build) though needed the `&&` chaining syntax explained; wired "build": "prisma migrate deploy && next build" into package.json, verified in a real Vercel build log showing "1 migration found... No pending migrations to apply" exactly as predicted

@@ -102,5 +102,5 @@
 - [x] Push the latest commits to GitHub (a72428e)
 - [x] Create a Vercel project connected to the GitHub repo and run the first deploy
 - [x] Add production environment variables in Vercel (DATABASE_URL, Discord secrets, AUTH_SECRET) and update the Discord OAuth redirect URI for the real URL
-- [ ] Run a production database migration against the real database
+- [x] Run a production database migration against the real database
 - [ ] Smoke-test the live URL end to end, then commit
