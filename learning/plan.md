@@ -106,7 +106,32 @@
 - [x] Run a production database migration against the real database
 - [x] Smoke-test the live URL end to end, then commit
   - found and fixed a real dead link ("DM Tools" → /dm, never built) during the smoke test
+  - **post-launch incident (2026-08-24):** a later Vercel build failed with a P1002 advisory-lock timeout — `prisma migrate deploy` was running through Neon's pooled connection, which can't reliably hold the lock. Fixed by adding a DIRECT_URL (non-pooled) env var and pointing prisma.config.ts's datasource at it, leaving the app's own DATABASE_URL (pooled) untouched. Confirmed fixed in a real rebuilt deploy.
 
-## v2 backlog (deferred, not started)
-- Edit/delete UI (buttons/forms) for Items, Races, Lore, and Characters — backend routes already exist and work, just no frontend hookup yet
-- Promote the actual DM's account from PLAYER to DM via Prisma Studio once they've logged in at least once
+## v2 locked decisions
+- Styling: Tailwind CSS for the UI/styling pass (Section 14) — the common, widely-used utility-class approach in the Next.js ecosystem, chosen over going deeper with plain CSS Modules since the explicit goal for v2 is a real UI push
+
+### 10. Spells  [ ] not started
+**Deliverable:** A Spells page exists with real spell data, searchable like Items/Races/Lore, with DM-only create working — same pattern as Items and Races, applied to a new content type.
+**Concepts:** prisma-schema, database-migrations, nextjs-api-routes, filtering-with-prisma, react-forms
+
+### 11. Click-to-view descriptions  [ ] not started
+**Deliverable:** Clicking any Item/Race/Lore/Spell entry in a list opens its full description, instead of the list only ever showing the name.
+**Concepts:** modals-popups, reusable-components, dangerously-set-inner-html
+
+### 12. Edit/delete UI — Items  [ ] not started
+**Deliverable:** A DM can click a real edit button on an Item, change its fields in a pre-filled form, and save — plus delete it — with no more raw fetch() calls needed to exercise the existing PUT/DELETE routes.
+**Concepts:** react-forms, controlled-inputs, edit-vs-create-forms, http-post-put-delete
+
+### 13. Edit/delete UI — Races, Lore, Characters, Spells  [ ] not started
+**Deliverable:** The same real edit/delete UI pattern from Section 12 applied across every remaining content type.
+**Concepts:** edit-vs-create-forms, reusable-components
+
+### 14. UI/styling pass  [ ] not started
+**Deliverable:** A visually consistent, polished site using Tailwind CSS across every page, plus a real category dropdown filter on Items/Spells (now genuinely useful with two categories to filter between).
+**Concepts:** tailwind-css, query-parameters, filtering-with-prisma
+
+## v3 parking lot (deferred, not started)
+- Bulk content importer (Discord export / Google Docs → seed data) — a genuinely bigger, separate problem (file parsing pipeline)
+- Item comparison view (side-by-side)
+- Promote the actual DM's account from PLAYER to DM via Prisma Studio once they've logged in at least once — a one-off operational task, not really a "section"

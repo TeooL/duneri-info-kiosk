@@ -173,12 +173,11 @@
 - evidence: shown that .title in page.module.css becomes styles.title in page.tsx, scoped uniquely by Next.js; not yet checked in their own words
 
 ## tailwind-css
-- status: seed
+- status: introduced
 - depends-on: css-styling
-- introduced: —
-- last-reviewed: —
-- evidence: —
-- note: explicitly named as a future interest on 2026-08-08 when we chose plain CSS/CSS Modules for now — good candidate to revisit once css-styling reaches understood
+- introduced: 2026-08-24
+- last-reviewed: 2026-08-24
+- evidence: explicitly named as a future interest on 2026-08-08 when we chose plain CSS/CSS Modules for now; locked in as the v2 styling decision on 2026-08-24 for the dedicated UI pass (Section 14), and correctly explained in their own words that Tailwind applies utility classes directly in JSX instead of writing selectors in a separate stylesheet like CSS Modules
 
 ## nextjs-link
 - status: practicing
@@ -468,9 +467,24 @@
 - last-reviewed: 2026-08-24
 - evidence: surfaced a real dev-console warning about pg's sslmode=require aliasing to verify-full today but not in a future major version; correctly explained, in their own words, that an encrypted-but-unverified connection could still be exploited by an attacker impersonating the real database server; edited DATABASE_URL themselves to sslmode=verify-full, restarted the dev server, and confirmed the warning was gone
 
+## edit-vs-create-forms
+- status: seed
+- depends-on: react-forms, controlled-inputs
+- introduced: —
+- last-reviewed: —
+- evidence: —
+- note: seeded 2026-08-24 for v2 Section 12 — the distinction between a create form (empty defaults, POSTs) and an edit form (pre-filled from existing data, PUTs)
+
 ## production-migrations
 - status: practicing
 - depends-on: database-migrations, vercel-deployment
 - introduced: 2026-08-24
 - last-reviewed: 2026-08-24
-- evidence: correctly predicted `prisma migrate status` would report the production database as up to date, since it's the same Neon database used in local dev, then confirmed it live; correctly identified the two commands needed to wire migrations into the deploy pipeline (prisma migrate deploy, next build) though needed the `&&` chaining syntax explained; wired "build": "prisma migrate deploy && next build" into package.json, verified in a real Vercel build log showing "1 migration found... No pending migrations to apply" exactly as predicted
+- evidence: correctly predicted `prisma migrate status` would report the production database as up to date, since it's the same Neon database used in local dev, then confirmed it live; correctly identified the two commands needed to wire migrations into the deploy pipeline (prisma migrate deploy, next build) though needed the `&&` chaining syntax explained; wired "build": "prisma migrate deploy && next build" into package.json, verified in a real Vercel build log showing "1 migration found... No pending migrations to apply" exactly as predicted; hours later, a real production build failure surfaced this pipeline's one gap — after the fix (below), correctly predicted the rebuilt migration step would succeed through the direct connection, confirmed it live in a second real build log
+
+## connection-pooling
+- status: practicing
+- depends-on: production-migrations, environment-variables
+- introduced: 2026-08-24
+- last-reviewed: 2026-08-24
+- evidence: real production incident — a Vercel build failed with a P1002 advisory-lock timeout because prisma migrate deploy was running through Neon's pooled (PgBouncer transaction-mode) connection, which can't reliably hold a session-scoped lock; after the concept was explained (pooled connections may hand queries to different underlying connections between transactions, breaking anything that needs a persistent session), correctly predicted `prisma migrate status` would still report up to date locally once pointed at a direct connection, then correctly predicted the next Vercel build's migration step would succeed through the direct connection — confirmed in a real build log
