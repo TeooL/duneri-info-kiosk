@@ -255,7 +255,7 @@
 - depends-on: none
 - introduced: 2026-08-09
 - last-reviewed: 2026-08-24
-- evidence: independently found and fixed a real "Cannot find module" error by reasoning through a file listing (proposed adding /client to the import path); separately, independently caught and fixed their own prisma.item.creaet() typo with no hint from me while I was investigating a different bug; on 2026-08-14, correctly diagnosed why `npm install` at the wrong directory level created a stray package.json/node_modules, and cleanly recovered; on 2026-08-17, worked through a multi-step DevTools debugging session (checking Console, then Network tab, request status, then a bisection with checkpoint logs) that correctly narrowed the issue down to a Console "Verbose" filter hiding their own console.log output; same day, used DOM inspection (Inspect Element) twice in a row to correctly report the exact HTML structure behind two separate CSS display bugs, giving the actual evidence needed to diagnose both; on 2026-08-24, read two real Vercel build logs and correctly connected "Can't reach database server at 127.0.0.1:5432" back to a missing DATABASE_URL environment variable unaided
+- evidence: independently found and fixed a real "Cannot find module" error by reasoning through a file listing (proposed adding /client to the import path); separately, independently caught and fixed their own prisma.item.creaet() typo with no hint from me while I was investigating a different bug; on 2026-08-14, correctly diagnosed why `npm install` at the wrong directory level created a stray package.json/node_modules, and cleanly recovered; on 2026-08-17, worked through a multi-step DevTools debugging session (checking Console, then Network tab, request status, then a bisection with checkpoint logs) that correctly narrowed the issue down to a Console "Verbose" filter hiding their own console.log output; same day, used DOM inspection (Inspect Element) twice in a row to correctly report the exact HTML structure behind two separate CSS display bugs, giving the actual evidence needed to diagnose both; on 2026-08-24, read two real Vercel build logs and correctly connected "Can't reach database server at 127.0.0.1:5432" back to a missing DATABASE_URL environment variable unaided; same day, given a real TS2304 "Cannot find name 'SpellCreateForm'" error, correctly removed the not-yet-built component reference rather than guessing at a fix
 
 ## environment-variables
 - status: practicing
@@ -303,15 +303,15 @@
 - status: practicing
 - depends-on: javascript
 - introduced: 2026-08-14
-- last-reviewed: 2026-08-14
-- evidence: correctly predicted, before typing, that search results would update only after a brief pause rather than instantly per keystroke, and confirmed it working exactly that way
+- last-reviewed: 2026-08-24
+- evidence: correctly predicted, before typing, that search results would update only after a brief pause rather than instantly per keystroke, and confirmed it working exactly that way; on 2026-08-24, after a 10-day gap, correctly explained unprompted that debouncing avoids firing a request on every keystroke, preventing excessive requests and slowdown
 
 ## client-components
 - status: practicing
 - depends-on: react-components
 - introduced: 2026-08-14
-- last-reviewed: 2026-08-14
-- evidence: shown "use client" and the Server/Client split in ItemSearch.tsx (written by me); independently wrote the entire "use client" RaceSearch.tsx file themselves after one hint; independently built LoreSearch.tsx entirely unprompted, with zero hints, before this task even started
+- last-reviewed: 2026-08-24
+- evidence: shown "use client" and the Server/Client split in ItemSearch.tsx (written by me); independently wrote the entire "use client" RaceSearch.tsx file themselves after one hint; independently built LoreSearch.tsx entirely unprompted, with zero hints, before this task even started; on 2026-08-24, independently wrote SpellSearch.tsx entirely unaided, correctly adapted for Spell's extra fields (type, tier), zero bugs
 
 ## react-state
 - status: practicing
@@ -380,8 +380,8 @@
 - status: practicing
 - depends-on: react-forms
 - introduced: 2026-08-17
-- last-reviewed: 2026-08-17
-- evidence: correctly applied the value/onChange pattern for all three fields, and correctly identified textarea as the more semantically correct element than input for a multi-line description field; genuinely struggled with the <select>/<option> variant (put the races.map() inside the onChange prop instead of as children), needed the corrected snippet shown directly rather than self-correcting — a real gap, not yet solid on this specific form-element variant
+- last-reviewed: 2026-08-24
+- evidence: correctly applied the value/onChange pattern for all three fields, and correctly identified textarea as the more semantically correct element than input for a multi-line description field; genuinely struggled with the <select>/<option> variant (put the races.map() inside the onChange prop instead of as children), needed the corrected snippet shown directly rather than self-correcting — a real gap, not yet solid on this specific form-element variant; on 2026-08-24, a real conceptual mix-up — asked whether "controlled" meant input validation/permission-checking, conflating a React state-management pattern with an unrelated security concept; corrected with a plain refresher (value/onChange = React owns the displayed value, nothing to do with sanitizing or permissions)
 
 ## http-post-put-delete
 - status: practicing
@@ -458,7 +458,7 @@
 - depends-on: nextjs-api-routes, frontend-backend-separation
 - introduced: 2026-08-17
 - last-reviewed: 2026-08-24
-- evidence: shown (with an empirical scratch test proving it) that a Server Component's own fetch() to an authenticated API route does not carry the login cookie, and that querying Prisma directly in the Server Component sidesteps the problem; confirmed the resulting page correctly showed their own characters — not yet independently explained or diagnosed by them; on 2026-08-24, applied the same fix themselves to fix hardcoded localhost:3000 URLs across Races/Items/Lore/Characters pages ahead of deployment — Items and Lore were converted correctly on the first try (right model name, awaited); Races initially had two self-corrected bugs (wrong model — prisma.character instead of prisma.race, and a missing await, both caught via guiding questions); Characters required a real refocus after losing track of which file was being edited, then completed correctly
+- evidence: shown (with an empirical scratch test proving it) that a Server Component's own fetch() to an authenticated API route does not carry the login cookie, and that querying Prisma directly in the Server Component sidesteps the problem; confirmed the resulting page correctly showed their own characters — not yet independently explained or diagnosed by them; on 2026-08-24, applied the same fix themselves to fix hardcoded localhost:3000 URLs across Races/Items/Lore/Characters pages ahead of deployment — Items and Lore were converted correctly on the first try (right model name, awaited); Races initially had two self-corrected bugs (wrong model — prisma.character instead of prisma.race, and a missing await, both caught via guiding questions); Characters required a real refocus after losing track of which file was being edited, then completed correctly; same day, wrote spells/page.tsx with the direct-Prisma pattern correctly on the first try, no fetch/localhost mistake at all — the lesson from earlier the same day held
 
 ## ssl-tls-verification
 - status: practicing

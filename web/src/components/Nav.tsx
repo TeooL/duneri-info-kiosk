@@ -11,6 +11,7 @@ export default async function Nav() {
       <Link href="/races">Races</Link>
       <Link href="/lore">Lore</Link>
       <Link href="/characters">Characters</Link>
+      <Link href="/spells">Spells</Link>
       {session ? (
         <form action={async () => { "use server"; await signOut(); }}>
           <p>Signed in as {session.user?.name} {(session.user as any).role}</p>
