@@ -220,21 +220,21 @@
 - depends-on: prisma
 - introduced: 2026-08-08
 - last-reviewed: 2026-08-24
-- evidence: correctly wrote the Item model mirroring Race's field pattern unaided; correctly answered what @updatedAt would contain after a later edit; correctly identified ownerId/raceId (not owner/race) as the real database columns; correctly predicted what `prisma validate` checks and ran it themselves to a clean result; on 2026-08-24, after a 2-week gap, correctly recalled unprompted that schema.prisma and the live database aren't automatically in sync — a real command (a migration) is what bridges them
+- evidence: correctly wrote the Item model mirroring Race's field pattern unaided; correctly answered what @updatedAt would contain after a later edit; correctly identified ownerId/raceId (not owner/race) as the real database columns; correctly predicted what `prisma validate` checks and ran it themselves to a clean result; on 2026-08-24, after a 2-week gap, correctly recalled unprompted that schema.prisma and the live database aren't automatically in sync — a real command (a migration) is what bridges them; same day, wrote the Spell model mirroring Item's shape, initially forgot the `type` field (self-caught when asked to recount against the spec) and wrote `Integer` instead of Prisma's real `Int` type (self-corrected after reading the real prisma validate error)
 
 ## database-migrations
 - status: practicing
 - depends-on: prisma-schema
 - introduced: 2026-08-09
 - last-reviewed: 2026-08-24
-- evidence: correctly predicted `prisma migrate dev` would change both local files and the remote database, then ran it themselves and confirmed real tables were created in the live Neon database via the generated migration.sql; on 2026-08-24, after a 2-week gap, correctly recalled unprompted that a migration is what actually turns schema.prisma's models into real tables/columns in the database — editing the schema file alone changes nothing live
+- evidence: correctly predicted `prisma migrate dev` would change both local files and the remote database, then ran it themselves and confirmed real tables were created in the live Neon database via the generated migration.sql; on 2026-08-24, after a 2-week gap, correctly recalled unprompted that a migration is what actually turns schema.prisma's models into real tables/columns in the database — editing the schema file alone changes nothing live; same day, ran `prisma migrate dev --name add_spell` for Spell, hit a real transient connection error, retried successfully, then correctly recalled that `prisma generate` is still a separate step migrate dev doesn't run automatically
 
 ## foreign-keys
 - status: practicing
 - depends-on: relational-database-design
 - introduced: 2026-08-08
-- last-reviewed: 2026-08-08
-- evidence: correctly identified, unprompted, that ownerId and raceId (not the owner/race relation fields) are the actual columns that would exist in the real database table; on 2026-08-09, correctly predicted that inserting a Character with an invalid ownerId would be rejected with an error by the database's foreign key constraint
+- last-reviewed: 2026-08-24
+- evidence: correctly identified, unprompted, that ownerId and raceId (not the owner/race relation fields) are the actual columns that would exist in the real database table; on 2026-08-09, correctly predicted that inserting a Character with an invalid ownerId would be rejected with an error by the database's foreign key constraint; on 2026-08-24, after a 2-week gap, gave a muddled definition ("an identifier for a different table to recognize what data it is pulling from") — the core idea of cross-table linking was there but imprecise, needed the "stores another table's actual primary key value" framing spelled out again
 
 ## seed-data
 - status: practicing
@@ -466,6 +466,13 @@
 - introduced: 2026-08-24
 - last-reviewed: 2026-08-24
 - evidence: surfaced a real dev-console warning about pg's sslmode=require aliasing to verify-full today but not in a future major version; correctly explained, in their own words, that an encrypted-but-unverified connection could still be exploited by an attacker impersonating the real database server; edited DATABASE_URL themselves to sslmode=verify-full, restarted the dev server, and confirmed the warning was gone
+
+## serverless-database-cold-starts
+- status: introduced
+- depends-on: database-migrations
+- introduced: 2026-08-24
+- last-reviewed: 2026-08-24
+- evidence: hit a real P1001 "Can't reach database server" error running `prisma migrate dev` against Neon's direct connection locally for the first time; retried the exact same command on my suggestion and it succeeded, then was shown the explanation (Neon's free tier "scales to zero" when idle, so the first connection after quiet time has to wait for it to wake up) — not yet independently diagnosed or explained in their own words
 
 ## edit-vs-create-forms
 - status: seed

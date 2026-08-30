@@ -115,6 +115,13 @@
 **Deliverable:** A Spells page exists with real spell data, searchable like Items/Races/Lore, with DM-only create working — same pattern as Items and Races, applied to a new content type.
 **Concepts:** prisma-schema, database-migrations, nextjs-api-routes, filtering-with-prisma, react-forms
 
+- [x] Design and add a Spell model to schema.prisma, run the migration
+- [ ] Build the Spells API route (GET searchable, DM-only POST)
+- [ ] Build the Spells page + a debounced SpellSearch component
+- [ ] Build the DM-only SpellCreateForm
+- [ ] Seed a couple of real spell entries
+- [ ] Commit
+
 ### 11. Click-to-view descriptions  [ ] not started
 **Deliverable:** Clicking any Item/Race/Lore/Spell entry in a list opens its full description, instead of the list only ever showing the name.
 **Concepts:** modals-popups, reusable-components, dangerously-set-inner-html
@@ -135,3 +142,4 @@
 - Bulk content importer (Discord export / Google Docs → seed data) — a genuinely bigger, separate problem (file parsing pipeline)
 - Item comparison view (side-by-side)
 - Promote the actual DM's account from PLAYER to DM via Prisma Studio once they've logged in at least once — a one-off operational task, not really a "section"
+- Classes page (noted 2026-08-24, during Spells work) — mirrors the same content-type pattern as Items/Races/Spells; not yet scoped (fields, relation to Spells if any)

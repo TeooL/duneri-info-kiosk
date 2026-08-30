@@ -26,6 +26,14 @@ model Item {
   description String
 }
 
+model Spell {
+  id          String @id @default(cuid())
+  name        String
+  type        String
+  tier        Int
+  description String
+}
+
 model LoreEntry {
   id        String   @id @default(cuid())
   title     String
