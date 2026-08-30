@@ -268,8 +268,8 @@
 - status: practicing
 - depends-on: nextjs-project-structure
 - introduced: 2026-08-09
-- last-reviewed: 2026-08-09
-- evidence: shown the route.ts + exported GET() pattern for Races; independently wrote the entire api/items/route.ts file themselves mirroring it correctly, and correctly predicted /api/items's JSON output; on 2026-08-09, independently wrote api/lore/route.ts correctly on the first attempt, adapting the model name (loreEntry) without a hint
+- last-reviewed: 2026-08-24
+- evidence: shown the route.ts + exported GET() pattern for Races; independently wrote the entire api/items/route.ts file themselves mirroring it correctly, and correctly predicted /api/items's JSON output; on 2026-08-09, independently wrote api/lore/route.ts correctly on the first attempt, adapting the model name (loreEntry) without a hint; on 2026-08-24, wrote api/spells/route.ts entirely unaided, correctly adapting the model name (spell) and even adding a third searchable field (type) beyond what was asked, showing real schema awareness; one real bug — copied lore's `data.body` field name literally instead of adapting to Spell's actual `description` field — self-corrected after being asked to check the schema
 
 ## async-await
 - status: practicing
@@ -408,8 +408,8 @@
 - status: practicing
 - depends-on: rich-text-editor
 - introduced: 2026-08-17
-- last-reviewed: 2026-08-17
-- evidence: correctly predicted a real XSS attempt (<script> tag sent via DevTools Console fetch, bypassing the UI entirely) would be stripped by sanitize-html, then confirmed it via a live test — the <p> tag survived, the <script> tag did not
+- last-reviewed: 2026-08-24
+- evidence: correctly predicted a real XSS attempt (<script> tag sent via DevTools Console fetch, bypassing the UI entirely) would be stripped by sanitize-html, then confirmed it via a live test — the <p> tag survived, the <script> tag did not; on 2026-08-24, after a week gap, correctly explained the purpose in their own words (preventing malicious code from being saved and later executed against other users), though "break our system" is a slightly imprecise framing of XSS vs. the more accurate "run in someone else's browser"; same day, correctly predicted a real script tag sent to the new Spells POST route would be stripped while the surrounding <p> survived, confirmed live
 
 ## dangerously-set-inner-html
 - status: practicing

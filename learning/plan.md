@@ -116,7 +116,7 @@
 **Concepts:** prisma-schema, database-migrations, nextjs-api-routes, filtering-with-prisma, react-forms
 
 - [x] Design and add a Spell model to schema.prisma, run the migration
-- [ ] Build the Spells API route (GET searchable, DM-only POST)
+- [x] Build the Spells API route (GET searchable, DM-only POST)
 - [ ] Build the Spells page + a debounced SpellSearch component
 - [ ] Build the DM-only SpellCreateForm
 - [ ] Seed a couple of real spell entries
