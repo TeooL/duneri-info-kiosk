@@ -118,8 +118,8 @@
 - [x] Design and add a Spell model to schema.prisma, run the migration
 - [x] Build the Spells API route (GET searchable, DM-only POST)
 - [x] Build the Spells page + a debounced SpellSearch component
-- [ ] Build the DM-only SpellCreateForm
-- [ ] Seed a couple of real spell entries
+- [x] Build the DM-only SpellCreateForm
+- [x] Seed a couple of real spell entries
 - [ ] Commit
 
 ### 11. Click-to-view descriptions  [ ] not started

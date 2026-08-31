@@ -24,7 +24,22 @@ async function main() {
       body: "This was the party's first fight, they encountered some bandits and successfully defended against them" 
     }
   })
-
+  await prisma.spell.create({
+    data: {
+      name: "Firebolt",
+      type: "Fire Arts",
+      tier: 1,
+      description: "A bolt of fire"
+    }
+  })
+  await prisma.spell.create({
+      data: {
+        name: "Waterbolt",
+        type: "Water Arts",
+        tier: 1,
+        description: "A bolt of water"
+      }
+  })
   console.log("Seed data created!");
 }
 

@@ -240,8 +240,8 @@
 - status: practicing
 - depends-on: prisma-schema
 - introduced: 2026-08-09
-- last-reviewed: 2026-08-09
-- evidence: wrote a real prisma.item.create() call mirroring the given Race pattern; predicted `prisma studio` would show real data, then confirmed both seeded rows (Race "Human", Item "Longsword") visible in Studio; on 2026-08-09, independently wrote prisma.loreEntry.create() with correct field names, and correctly predicted that re-running the seed script would duplicate Race/Item rows since nothing prevents it
+- last-reviewed: 2026-08-24
+- evidence: wrote a real prisma.item.create() call mirroring the given Race pattern; predicted `prisma studio` would show real data, then confirmed both seeded rows (Race "Human", Item "Longsword") visible in Studio; on 2026-08-09, independently wrote prisma.loreEntry.create() with correct field names, and correctly predicted that re-running the seed script would duplicate Race/Item rows since nothing prevents it; on 2026-08-24, after a 2-week gap, correctly recalled unprompted that re-running the seed script duplicates the data; same day, correctly reasoned through a real consequence of that fact — since local DATABASE_URL is the same database as production, re-running the whole seed script now would duplicate real live content, not just disposable dev data — and chose to add the two new Spell entries through the live SpellCreateForm instead, keeping seed.ts updated for documentation only without executing it
 
 ## prisma-driver-adapters
 - status: introduced
@@ -373,15 +373,15 @@
 - status: practicing
 - depends-on: react-components
 - introduced: 2026-08-17
-- last-reviewed: 2026-08-17
-- evidence: built a real working create form (ItemCreateForm.tsx) with onSubmit/e.preventDefault(), correctly wired end-to-end to a POST endpoint; independently built RaceCreateForm.tsx, correctly omitting the "type" field since Race's schema doesn't have one — real schema awareness, not blind copying
+- last-reviewed: 2026-08-24
+- evidence: built a real working create form (ItemCreateForm.tsx) with onSubmit/e.preventDefault(), correctly wired end-to-end to a POST endpoint; independently built RaceCreateForm.tsx, correctly omitting the "type" field since Race's schema doesn't have one — real schema awareness, not blind copying; on 2026-08-24, built SpellCreateForm.tsx mirroring ItemCreateForm correctly, with one real gap — initially left out the reset-fields-and-reload step entirely despite noting it needed doing in their own TODO comment, self-corrected once asked to check what was actually there; also had a small "application/json" Content-Type typo, fixed once pointed out
 
 ## controlled-inputs
 - status: practicing
 - depends-on: react-forms
 - introduced: 2026-08-17
 - last-reviewed: 2026-08-24
-- evidence: correctly applied the value/onChange pattern for all three fields, and correctly identified textarea as the more semantically correct element than input for a multi-line description field; genuinely struggled with the <select>/<option> variant (put the races.map() inside the onChange prop instead of as children), needed the corrected snippet shown directly rather than self-correcting — a real gap, not yet solid on this specific form-element variant; on 2026-08-24, a real conceptual mix-up — asked whether "controlled" meant input validation/permission-checking, conflating a React state-management pattern with an unrelated security concept; corrected with a plain refresher (value/onChange = React owns the displayed value, nothing to do with sanitizing or permissions)
+- evidence: correctly applied the value/onChange pattern for all three fields, and correctly identified textarea as the more semantically correct element than input for a multi-line description field; genuinely struggled with the <select>/<option> variant (put the races.map() inside the onChange prop instead of as children), needed the corrected snippet shown directly rather than self-correcting — a real gap, not yet solid on this specific form-element variant; on 2026-08-24, a real conceptual mix-up — asked whether "controlled" meant input validation/permission-checking, conflating a React state-management pattern with an unrelated security concept; corrected with a plain refresher (value/onChange = React owns the displayed value, nothing to do with sanitizing or permissions); later the same day, correctly wrote a numeric controlled input for Spell's tier field (onChange={(e) => setTier(Number(e.target.value))}) unaided, correctly applying the string-to-number conversion after just being told why it's needed
 
 ## http-post-put-delete
 - status: practicing

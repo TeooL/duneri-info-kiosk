@@ -1,25 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import RichTextEditor from "./RichTextEditor";
 
 export default function SpellCreateForm() {
-  // TODO(you): declare name/type/description state (strings) same as ItemCreateForm
+  const [name, setName] = useState("");
+  const [type, setType] = useState("");
+  const [description, setDescription] = useState("");
   const [tier, setTier] = useState(1);
 
-  // TODO(you): write handleSubmit — POST to /api/spells with
-  // { name, type, tier, description }, reset all fields, reload
-
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    await fetch("/api/spells", {
+      method: "POST",
+      headers: {"Content-Type": "application/json" },
+      body: JSON.stringify({ name, type, description, tier }),
+    })
+    setName("");
+    setType("");
+    setDescription("");
+    setTier(1);
+    window.location.reload();
+  }
   return (
-    <form /* TODO(you): onSubmit={handleSubmit} */>
-      {/* TODO(you): name input, type input, RichTextEditor for description
-          — mirror ItemCreateForm exactly for these three */}
+    <form onSubmit={handleSubmit} >
+      <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
+      <input value={type} onChange={(e) => setType(e.target.value)} placeholder="Type" />
       <input
         type="number"
         value={tier}
         onChange={(e) => setTier(Number(e.target.value))}
         placeholder="Tier"
       />
+      <RichTextEditor content={description} onChange={setDescription} />
       <button type="submit">Create Spell</button>
     </form>
   );
