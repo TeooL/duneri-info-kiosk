@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react";
+import ExpandableEntry from "./ExpandableEntry";
 
 type Lore = {id: string, title: string, body: string};
 
@@ -23,7 +24,9 @@ export default function LoreSearch({initialLore} : {initialLore : Lore[]}) {
       <input type="text" placeholder="Search races..." onChange={handleChange} />
       <ul>
         {lore.map((entry) => (
-          <li key={entry.id}>{entry.title} : {<div dangerouslySetInnerHTML={{__html: entry.body}} />} </li>
+          <ExpandableEntry key={entry.id} summary={entry.title}>
+            <div dangerouslySetInnerHTML={{__html: entry.body}}></div>
+          </ExpandableEntry>
         ))}
       </ul>
     </div>

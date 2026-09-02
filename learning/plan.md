@@ -111,7 +111,7 @@
 ## v2 locked decisions
 - Styling: Tailwind CSS for the UI/styling pass (Section 14) — the common, widely-used utility-class approach in the Next.js ecosystem, chosen over going deeper with plain CSS Modules since the explicit goal for v2 is a real UI push
 
-### 10. Spells  [ ] not started
+### 10. Spells  [x] done
 **Deliverable:** A Spells page exists with real spell data, searchable like Items/Races/Lore, with DM-only create working — same pattern as Items and Races, applied to a new content type.
 **Concepts:** prisma-schema, database-migrations, nextjs-api-routes, filtering-with-prisma, react-forms
 
@@ -120,11 +120,19 @@
 - [x] Build the Spells page + a debounced SpellSearch component
 - [x] Build the DM-only SpellCreateForm
 - [x] Seed a couple of real spell entries
-- [ ] Commit
+- [x] Commit (035e6b7)
 
 ### 11. Click-to-view descriptions  [ ] not started
 **Deliverable:** Clicking any Item/Race/Lore/Spell entry in a list opens its full description, instead of the list only ever showing the name.
 **Concepts:** modals-popups, reusable-components, dangerously-set-inner-html
+**Scope decision (2026-08-24):** consistency across all four content types — Items/Races currently show name-only (their real gap), while Lore/Spells currently always show full content inline; all four converge on the same name-first, click-to-expand pattern.
+
+- [x] Build a reusable click-to-expand list-item component (generalizes GlossaryTerm's toggle pattern to a full entry, not just a definition string)
+- [x] Apply it to ItemSearch
+- [x] Apply it to RaceSearch
+- [x] Apply it to LoreSearch (collapses its current always-shown body)
+- [x] Apply it to SpellSearch (collapses its current always-shown fields)
+- [ ] Commit
 
 ### 12. Edit/delete UI — Items  [ ] not started
 **Deliverable:** A DM can click a real edit button on an Item, change its fields in a pre-filled form, and save — plus delete it — with no more raw fetch() calls needed to exercise the existing PUT/DELETE routes.

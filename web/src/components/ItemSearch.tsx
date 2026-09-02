@@ -1,8 +1,9 @@
 "use client";
 
 import { useRef, useState } from "react";
+import ExpandableEntry from "./ExpandableEntry";
 
-type Item = { id: string; name: string };
+type Item = { id: string; name: string; type: string; description: string };
 
 export default function ItemSearch({ initialItems }: { initialItems: Item[] }) {
   const [items, setItems] = useState(initialItems);
@@ -23,7 +24,9 @@ export default function ItemSearch({ initialItems }: { initialItems: Item[] }) {
       <input type="text" placeholder="Search races..." onChange={handleChange} />
       <ul>
         {items.map((item) => (
-          <li key={item.id}>{item.name}</li>
+          <ExpandableEntry key={item.id} summary={item.name}>
+            <div dangerouslySetInnerHTML={{__html: item.description}}></div>
+          </ExpandableEntry>
         ))}
       </ul>
     </div>

@@ -127,7 +127,7 @@
 - depends-on: react
 - introduced: 2026-08-05
 - last-reviewed: 2026-08-24
-- evidence: correctly wrote plain text as JSX children between <p> and </p> without guidance (2026-08-05); on 2026-08-08, correctly embedded a variable with {title} after one hint distinguishing it from a previous static-text fill-in; on 2026-08-24, correctly predicted that a bare newline between two adjacent JSX tags (no other text) collapses to zero space rather than one space, confirmed live; then, on the harder follow-up case (a newline sitting directly next to a tag but with real text on the same line, e.g. "roll for" then a line break into <GlossaryTerm>), incorrectly predicted the added spaces would be enough — a real gap, self-diagnosed only after seeing the actual squished rendering and being shown the newlines-adjacent-to-tags rule, then fixed correctly by removing the line breaks
+- evidence: correctly wrote plain text as JSX children between <p> and </p> without guidance (2026-08-05); on 2026-08-08, correctly embedded a variable with {title} after one hint distinguishing it from a previous static-text fill-in; on 2026-08-24, correctly predicted that a bare newline between two adjacent JSX tags (no other text) collapses to zero space rather than one space, confirmed live; then, on the harder follow-up case (a newline sitting directly next to a tag but with real text on the same line, e.g. "roll for" then a line break into <GlossaryTerm>), incorrectly predicted the added spaces would be enough — a real gap, self-diagnosed only after seeing the actual squished rendering and being shown the newlines-adjacent-to-tags rule, then fixed correctly by removing the line breaks; same day, wrote summary={spell.name, spell.type, spell.tier} in SpellSearch — a genuine misunderstanding of JS's comma operator (only the last value survives), caught by a real TS18007 error; correctly proposed a template literal as the fix once asked how else to combine the three values into one string, and applied it correctly; earlier that day, wiring ExpandableEntry into RaceSearch (right after doing the identical move correctly in ItemSearch), wrote an unclosed <ExpandableEntry id={race.id} summary={race.name} /> with no children and a wrong prop name (id instead of React's special key), causing a real TS1003 syntax error — self-corrected after being asked to compare structurally against the just-written ItemSearch version
 
 ## npm-package-json
 - status: practicing
@@ -162,8 +162,8 @@
 - status: practicing
 - depends-on: none
 - introduced: 2026-08-09
-- last-reviewed: 2026-08-09
-- evidence: used <h3> as a direct child of <ul> (works visually, but violates the ul/li contract); correctly fixed it to <li> after one explanation of why the structure matters
+- last-reviewed: 2026-08-24
+- evidence: used <h3> as a direct child of <ul> (works visually, but violates the ul/li contract); correctly fixed it to <li> after one explanation of why the structure matters; on 2026-08-24, after a 2-week gap, gave an incorrect reason (guessed it was about "knowing what type of list it was") rather than the real accessibility/screen-reader reason — needed the full explanation restated
 
 ## css-modules
 - status: introduced
@@ -255,7 +255,7 @@
 - depends-on: none
 - introduced: 2026-08-09
 - last-reviewed: 2026-08-24
-- evidence: independently found and fixed a real "Cannot find module" error by reasoning through a file listing (proposed adding /client to the import path); separately, independently caught and fixed their own prisma.item.creaet() typo with no hint from me while I was investigating a different bug; on 2026-08-14, correctly diagnosed why `npm install` at the wrong directory level created a stray package.json/node_modules, and cleanly recovered; on 2026-08-17, worked through a multi-step DevTools debugging session (checking Console, then Network tab, request status, then a bisection with checkpoint logs) that correctly narrowed the issue down to a Console "Verbose" filter hiding their own console.log output; same day, used DOM inspection (Inspect Element) twice in a row to correctly report the exact HTML structure behind two separate CSS display bugs, giving the actual evidence needed to diagnose both; on 2026-08-24, read two real Vercel build logs and correctly connected "Can't reach database server at 127.0.0.1:5432" back to a missing DATABASE_URL environment variable unaided; same day, given a real TS2304 "Cannot find name 'SpellCreateForm'" error, correctly removed the not-yet-built component reference rather than guessing at a fix
+- evidence: independently found and fixed a real "Cannot find module" error by reasoning through a file listing (proposed adding /client to the import path); separately, independently caught and fixed their own prisma.item.creaet() typo with no hint from me while I was investigating a different bug; on 2026-08-14, correctly diagnosed why `npm install` at the wrong directory level created a stray package.json/node_modules, and cleanly recovered; on 2026-08-17, worked through a multi-step DevTools debugging session (checking Console, then Network tab, request status, then a bisection with checkpoint logs) that correctly narrowed the issue down to a Console "Verbose" filter hiding their own console.log output; same day, used DOM inspection (Inspect Element) twice in a row to correctly report the exact HTML structure behind two separate CSS display bugs, giving the actual evidence needed to diagnose both; on 2026-08-24, read two real Vercel build logs and correctly connected "Can't reach database server at 127.0.0.1:5432" back to a missing DATABASE_URL environment variable unaided; same day, given a real TS2304 "Cannot find name 'SpellCreateForm'" error, correctly removed the not-yet-built component reference rather than guessing at a fix; on 2026-08-24, read a real TS18007 "JSX expressions may not use the comma operator" error and correctly used its "did you mean to write an array?" hint to reason toward the actual intended fix (a template literal) rather than getting stuck
 
 ## environment-variables
 - status: practicing
@@ -275,8 +275,8 @@
 - status: practicing
 - depends-on: javascript
 - introduced: 2026-08-09
-- last-reviewed: 2026-08-09
-- evidence: independently wrote export async function GET() and an async page component with two await calls (fetch, then .json()) for Items, unaided
+- last-reviewed: 2026-08-24
+- evidence: independently wrote export async function GET() and an async page component with two await calls (fetch, then .json()) for Items, unaided; on 2026-08-24, after a 2-week gap, gave an imprecise answer (attributed async to "it's fetching" rather than the actual mechanism — await requiring an async function) — needed the precise reasoning restated
 
 ## json
 - status: practicing
@@ -289,8 +289,8 @@
 - status: practicing
 - depends-on: http-requests
 - introduced: 2026-08-14
-- last-reviewed: 2026-08-14
-- evidence: correctly predicted /api/items?q=sword would return matching items and /api/items?q=xyz would return an empty array, both confirmed against real output
+- last-reviewed: 2026-08-24
+- evidence: correctly predicted /api/items?q=sword would return matching items and /api/items?q=xyz would return an empty array, both confirmed against real output; on 2026-08-24, after a 10-day gap, correctly identified the ?q= in a real fetch call as a query parameter carrying the search term
 
 ## filtering-with-prisma
 - status: practicing
@@ -415,8 +415,8 @@
 - status: practicing
 - depends-on: sanitizing-rich-text, jsx
 - introduced: 2026-08-17
-- last-reviewed: 2026-08-17
-- evidence: discovered raw HTML tags rendering as literal text in LoreSearch (JSX's default auto-escaping); after one explanation, correctly applied dangerouslySetInnerHTML={{ __html: entry.body }} themselves and verified real formatting rendered correctly
+- last-reviewed: 2026-08-24
+- evidence: discovered raw HTML tags rendering as literal text in LoreSearch (JSX's default auto-escaping); after one explanation, correctly applied dangerouslySetInnerHTML={{ __html: entry.body }} themselves and verified real formatting rendered correctly; on 2026-08-24, after a week gap, gave an incorrect answer for *why* it's needed (guessed it was about inline text layout rather than bypassing JSX's automatic HTML escaping) — a genuine gap, needed the full explanation restated
 
 ## basic-testing
 - status: practicing
@@ -444,14 +444,14 @@
 - depends-on: react-components
 - introduced: 2026-08-24
 - last-reviewed: 2026-08-24
-- evidence: built GlossaryTerm.tsx, a component that toggles visibility of hidden content via a useState boolean flipped on click; wrote the useState declaration and the conditional render ({open && definition}) correctly unaided; genuinely struggled with the onClick handler — wrote onClick={setOpen(!open)} (calling the state setter immediately during render instead of deferring it) and needed the bug pointed to an existing pattern in their own RichTextEditor.tsx toolbar buttons before writing the correct onClick={() => setOpen(!open)}; verified live in the browser that clicking the term correctly reveals its definition
+- evidence: built GlossaryTerm.tsx, a component that toggles visibility of hidden content via a useState boolean flipped on click; wrote the useState declaration and the conditional render ({open && definition}) correctly unaided; genuinely struggled with the onClick handler — wrote onClick={setOpen(!open)} (calling the state setter immediately during render instead of deferring it) and needed the bug pointed to an existing pattern in their own RichTextEditor.tsx toolbar buttons before writing the correct onClick={() => setOpen(!open)}; verified live in the browser that clicking the term correctly reveals its definition; later the same day, built ExpandableEntry.tsx — a generalized version of the same toggle pattern with two content slots (summary, children) instead of one — writing the useState, correct onClick={() => setOpen(!open)}, and conditional render all correctly unaided this time, zero bugs
 
 ## reusable-components
 - status: practicing
 - depends-on: component-composition
 - introduced: 2026-08-17
 - last-reviewed: 2026-08-24
-- evidence: used CharacterCreateForm as a props-driven reusable form component (races passed in), same idea as PageHeader; not yet independently explained in own words; on 2026-08-24, wired the new GlossaryTerm component into three real usages on the same page (HP/Initiative/MP), each with different definition and children props — real reuse of one component across multiple real call sites, not just a single instance
+- evidence: used CharacterCreateForm as a props-driven reusable form component (races passed in), same idea as PageHeader; not yet independently explained in own words; on 2026-08-24, wired the new GlossaryTerm component into three real usages on the same page (HP/Initiative/MP), each with different definition and children props — real reuse of one component across multiple real call sites, not just a single instance; later the same day, built ExpandableEntry.tsx, generalizing GlossaryTerm's single-string content into two named slots (summary, children) specifically so it could be reused across four different content types (Item/Race/Lore/Spell) with different shapes; then correctly wired it as the first real consumer in ItemSearch.tsx, updating the Item type to include the previously-missing type/description fields and passing dangerouslySetInnerHTML content as children, verified working live; then correctly applied the same pattern to LoreSearch.tsx (a slightly different move — collapsing an always-shown body into ExpandableEntry's children instead of adding a reveal to a name-only list), zero bugs
 
 ## server-fetch-vs-direct-query
 - status: practicing
