@@ -1,11 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import ExpandableEntry from "./ExpandableEntry";
+import ItemEditForm from "./ItemEditForm";
 
 type Item = { id: string; name: string; type: string; description: string };
 
-export default function ItemSearch({ initialItems }: { initialItems: Item[] }) {
+export default function ItemSearch({ initialItems, isDM }: { initialItems: Item[]; isDM: boolean}) {
   const [items, setItems] = useState(initialItems);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
@@ -18,6 +19,13 @@ export default function ItemSearch({ initialItems }: { initialItems: Item[] }) {
       setItems(results);
     }, 300);
   }
+  async function handleDelete(id: string) {
+    await fetch(`/api/items/${id}`, {
+      method: "DELETE",
+      headers: { "Content-Type" : "application/json"},
+    })
+    window.location.reload()
+  }
 
   return (
     <div>
@@ -26,6 +34,9 @@ export default function ItemSearch({ initialItems }: { initialItems: Item[] }) {
         {items.map((item) => (
           <ExpandableEntry key={item.id} summary={item.name}>
             <div dangerouslySetInnerHTML={{__html: item.description}}></div>
+            {isDM && <><ItemEditForm item={item} />
+                        <button onClick={() => handleDelete(item.id)}>Delete</button>
+                      </>}
           </ExpandableEntry>
         ))}
       </ul>

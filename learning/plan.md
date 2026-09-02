@@ -122,7 +122,7 @@
 - [x] Seed a couple of real spell entries
 - [x] Commit (035e6b7)
 
-### 11. Click-to-view descriptions  [ ] not started
+### 11. Click-to-view descriptions  [x] done
 **Deliverable:** Clicking any Item/Race/Lore/Spell entry in a list opens its full description, instead of the list only ever showing the name.
 **Concepts:** modals-popups, reusable-components, dangerously-set-inner-html
 **Scope decision (2026-08-24):** consistency across all four content types — Items/Races currently show name-only (their real gap), while Lore/Spells currently always show full content inline; all four converge on the same name-first, click-to-expand pattern.
@@ -132,11 +132,16 @@
 - [x] Apply it to RaceSearch
 - [x] Apply it to LoreSearch (collapses its current always-shown body)
 - [x] Apply it to SpellSearch (collapses its current always-shown fields)
-- [ ] Commit
+- [x] Commit (2d2e697)
 
 ### 12. Edit/delete UI — Items  [ ] not started
 **Deliverable:** A DM can click a real edit button on an Item, change its fields in a pre-filled form, and save — plus delete it — with no more raw fetch() calls needed to exercise the existing PUT/DELETE routes.
 **Concepts:** react-forms, controlled-inputs, edit-vs-create-forms, http-post-put-delete
+
+- [x] Thread `isDM` into ItemSearch as a prop (it doesn't receive it today)
+- [x] Build ItemEditForm — pre-filled with the item's current values, submits PUT
+- [x] Add a Delete button, wire both edit form and delete into ItemSearch's expanded view, DM-only
+- [ ] Commit
 
 ### 13. Edit/delete UI — Races, Lore, Characters, Spells  [ ] not started
 **Deliverable:** The same real edit/delete UI pattern from Section 12 applied across every remaining content type.
@@ -145,9 +150,11 @@
 ### 14. UI/styling pass  [ ] not started
 **Deliverable:** A visually consistent, polished site using Tailwind CSS across every page, plus a real category dropdown filter on Items/Spells (now genuinely useful with two categories to filter between).
 **Concepts:** tailwind-css, query-parameters, filtering-with-prisma
+**Idea to consider (noted 2026-08-24, during Section 12):** a side-panel detail view instead of inline click-to-expand — surfaced after testing edit forms inside ExpandableEntry felt cramped/awkward to interact with
 
 ## v3 parking lot (deferred, not started)
 - Bulk content importer (Discord export / Google Docs → seed data) — a genuinely bigger, separate problem (file parsing pipeline)
 - Item comparison view (side-by-side)
 - Promote the actual DM's account from PLAYER to DM via Prisma Studio once they've logged in at least once — a one-off operational task, not really a "section"
 - Classes page (noted 2026-08-24, during Spells work) — mirrors the same content-type pattern as Items/Races/Spells; not yet scoped (fields, relation to Spells if any)
+- Bulk multi-select delete (noted 2026-08-24, during Section 12 planning) — needs both new frontend state (a "select mode" with checkboxes) and a new backend bulk-delete route, since DELETE only handles one item by id today; deliberately chose simpler per-row edit/delete buttons for v2 instead

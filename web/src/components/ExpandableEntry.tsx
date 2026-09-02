@@ -12,7 +12,7 @@ export default function ExpandableEntry({ summary, children }: ExpandableEntryPr
   return (
     <li style={{ cursor: "pointer" }} onClick={() => setOpen(!open)}>
       {summary}
-      {open && children}
+      <div onClick={(e) => e.stopPropagation()}>{open && children}</div>
     </li>
   );
 }

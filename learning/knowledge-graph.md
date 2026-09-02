@@ -127,7 +127,7 @@
 - depends-on: react
 - introduced: 2026-08-05
 - last-reviewed: 2026-08-24
-- evidence: correctly wrote plain text as JSX children between <p> and </p> without guidance (2026-08-05); on 2026-08-08, correctly embedded a variable with {title} after one hint distinguishing it from a previous static-text fill-in; on 2026-08-24, correctly predicted that a bare newline between two adjacent JSX tags (no other text) collapses to zero space rather than one space, confirmed live; then, on the harder follow-up case (a newline sitting directly next to a tag but with real text on the same line, e.g. "roll for" then a line break into <GlossaryTerm>), incorrectly predicted the added spaces would be enough — a real gap, self-diagnosed only after seeing the actual squished rendering and being shown the newlines-adjacent-to-tags rule, then fixed correctly by removing the line breaks; same day, wrote summary={spell.name, spell.type, spell.tier} in SpellSearch — a genuine misunderstanding of JS's comma operator (only the last value survives), caught by a real TS18007 error; correctly proposed a template literal as the fix once asked how else to combine the three values into one string, and applied it correctly; earlier that day, wiring ExpandableEntry into RaceSearch (right after doing the identical move correctly in ItemSearch), wrote an unclosed <ExpandableEntry id={race.id} summary={race.name} /> with no children and a wrong prop name (id instead of React's special key), causing a real TS1003 syntax error — self-corrected after being asked to compare structurally against the just-written ItemSearch version
+- evidence: correctly wrote plain text as JSX children between <p> and </p> without guidance (2026-08-05); on 2026-08-08, correctly embedded a variable with {title} after one hint distinguishing it from a previous static-text fill-in; on 2026-08-24, correctly predicted that a bare newline between two adjacent JSX tags (no other text) collapses to zero space rather than one space, confirmed live; then, on the harder follow-up case (a newline sitting directly next to a tag but with real text on the same line, e.g. "roll for" then a line break into <GlossaryTerm>), incorrectly predicted the added spaces would be enough — a real gap, self-diagnosed only after seeing the actual squished rendering and being shown the newlines-adjacent-to-tags rule, then fixed correctly by removing the line breaks; same day, wrote summary={spell.name, spell.type, spell.tier} in SpellSearch — a genuine misunderstanding of JS's comma operator (only the last value survives), caught by a real TS18007 error; correctly proposed a template literal as the fix once asked how else to combine the three values into one string, and applied it correctly; earlier that day, wiring ExpandableEntry into RaceSearch (right after doing the identical move correctly in ItemSearch), wrote an unclosed <ExpandableEntry id={race.id} summary={race.name} /> with no children and a wrong prop name (id instead of React's special key), causing a real TS1003 syntax error — self-corrected after being asked to compare structurally against the just-written ItemSearch version; later the same day, wiring a Delete button into ItemSearch, made two real mistakes in one line — an unclosed <button> tag written as <button/> instead of </button> (self-corrected via a guiding question), and chaining {isDM && <ItemEditForm/> && <button>} with && between two JSX elements (correctly diagnosed, after the comma-operator lesson from earlier the same day, that only the last truthy piece survives — the edit form was being evaluated but discarded), fixed by wrapping both in a Fragment
 
 ## npm-package-json
 - status: practicing
@@ -155,8 +155,8 @@
 - status: practicing
 - depends-on: none
 - introduced: 2026-08-08
-- last-reviewed: 2026-08-08
-- evidence: wrote a valid color declaration correctly first try; then independently noticed black title text was invisible against globals.css's dark-mode background and fixed it by changing the color value to darkblue, without being told there was a problem
+- last-reviewed: 2026-08-24
+- evidence: wrote a valid color declaration correctly first try; then independently noticed black title text was invisible against globals.css's dark-mode background and fixed it by changing the color value to darkblue, without being told there was a problem; on 2026-08-24, after a 2-week gap, correctly recalled the conceptual fix (contrast against the dark background, changed the text color) but couldn't recall the specific CSS property name (color) unprompted
 
 ## semantic-html
 - status: practicing
@@ -198,8 +198,8 @@
 - status: practicing
 - depends-on: react-components
 - introduced: 2026-08-08
-- last-reviewed: 2026-08-08
-- evidence: correctly wrote `return <h1>{title}</h1>;` after one syntax hint, correctly destructuring the title prop; unprompted, correctly predicted the homepage title would lose its color/size since PageHeader doesn't know about page.module.css
+- last-reviewed: 2026-08-24
+- evidence: correctly wrote `return <h1>{title}</h1>;` after one syntax hint, correctly destructuring the title prop; unprompted, correctly predicted the homepage title would lose its color/size since PageHeader doesn't know about page.module.css; on 2026-08-24, a real gap threading a new isDM prop into ItemSearch — first wrote it as a second function parameter instead of inside the destructured props object (React only ever passes one props argument), caught via a real TS2786 error; then added it to the type annotation but not the actual destructuring, plus a isDm/isDM casing mismatch, both self-corrected after guiding questions and TypeScript's own "Did you mean 'isDm'?" hint
 
 ## nextjs-routing
 - status: practicing
@@ -359,8 +359,8 @@
 - status: practicing
 - depends-on: sessions
 - introduced: 2026-08-14
-- last-reviewed: 2026-08-14
-- evidence: independently wrote the {(session?.user as any)?.role === "DM" && <Link .../>} conditional themselves, correctly, and verified it appears only for a DM-role session
+- last-reviewed: 2026-08-24
+- evidence: independently wrote the {(session?.user as any)?.role === "DM" && <Link .../>} conditional themselves, correctly, and verified it appears only for a DM-role session; on 2026-08-24, correctly explained why UI-level role gating is still worth doing even when the backend already enforces it — better UX, not hiding a security gap
 
 ## server-side-permission-checks
 - status: practicing
@@ -394,8 +394,8 @@
 - status: practicing
 - depends-on: nextjs-routing
 - introduced: 2026-08-17
-- last-reviewed: 2026-08-17
-- evidence: independently wrote the PUT handler's params type ({ params }: { params: Promise<{ id: string }> }) correctly on the second attempt after one real self-caught TS7031 error; reused the pattern correctly for DELETE once shown the signature mismatch; on the Races rep, wrote a complete, correct races/[id]/route.ts (both PUT and DELETE, both correct params typing) entirely unaided, zero errors
+- last-reviewed: 2026-08-24
+- evidence: independently wrote the PUT handler's params type ({ params }: { params: Promise<{ id: string }> }) correctly on the second attempt after one real self-caught TS7031 error; reused the pattern correctly for DELETE once shown the signature mismatch; on the Races rep, wrote a complete, correct races/[id]/route.ts (both PUT and DELETE, both correct params typing) entirely unaided, zero errors; on 2026-08-24, gave an imprecise answer about where a dynamic route's id actually comes from (conceptually right — "the item we select" — but missed the URL-segment-to-params mechanism), needed the precise plumbing explained
 
 ## rich-text-editor
 - status: practicing
@@ -474,13 +474,19 @@
 - last-reviewed: 2026-08-24
 - evidence: hit a real P1001 "Can't reach database server" error running `prisma migrate dev` against Neon's direct connection locally for the first time; retried the exact same command on my suggestion and it succeeded, then was shown the explanation (Neon's free tier "scales to zero" when idle, so the first connection after quiet time has to wait for it to wake up) — not yet independently diagnosed or explained in their own words
 
+## event-bubbling
+- status: practicing
+- depends-on: react-state
+- introduced: 2026-08-24
+- last-reviewed: 2026-08-24
+- evidence: discovered a real bug through their own testing — clicking inside ItemEditForm's inputs (nested inside ExpandableEntry's clickable <li>) caused the whole entry to collapse, since the click bubbled up to the parent's onClick; after the mechanism was explained, correctly applied e.stopPropagation() by wrapping the children in a div, fixing it for all four content types at once since the fix lives in the shared ExpandableEntry component; verified live
+
 ## edit-vs-create-forms
-- status: seed
+- status: practicing
 - depends-on: react-forms, controlled-inputs
-- introduced: —
-- last-reviewed: —
-- evidence: —
-- note: seeded 2026-08-24 for v2 Section 12 — the distinction between a create form (empty defaults, POSTs) and an edit form (pre-filled from existing data, PUTs)
+- introduced: 2026-08-24
+- last-reviewed: 2026-08-24
+- evidence: built ItemEditForm.tsx correctly and entirely unaided given only the two-difference explanation (state initialized from item.name/type/description instead of "", PUT to `/api/items/${item.id}` instead of POST to /api/items) — zero bugs, correct on the first save
 
 ## production-migrations
 - status: practicing
