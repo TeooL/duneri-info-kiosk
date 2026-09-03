@@ -34,9 +34,10 @@ export default function ItemSearch({ initialItems, isDM }: { initialItems: Item[
         {items.map((item) => (
           <ExpandableEntry key={item.id} summary={item.name}>
             <div dangerouslySetInnerHTML={{__html: item.description}}></div>
-            {isDM && <><ItemEditForm item={item} />
-                        <button onClick={() => handleDelete(item.id)}>Delete</button>
-                      </>}
+            {isDM && 
+            <><ItemEditForm item={item} />
+              <button onClick={() => handleDelete(item.id)}>Delete</button>
+            </>}
           </ExpandableEntry>
         ))}
       </ul>

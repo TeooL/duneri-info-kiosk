@@ -134,18 +134,25 @@
 - [x] Apply it to SpellSearch (collapses its current always-shown fields)
 - [x] Commit (2d2e697)
 
-### 12. Edit/delete UI — Items  [ ] not started
+### 12. Edit/delete UI — Items  [x] done
 **Deliverable:** A DM can click a real edit button on an Item, change its fields in a pre-filled form, and save — plus delete it — with no more raw fetch() calls needed to exercise the existing PUT/DELETE routes.
 **Concepts:** react-forms, controlled-inputs, edit-vs-create-forms, http-post-put-delete
 
 - [x] Thread `isDM` into ItemSearch as a prop (it doesn't receive it today)
 - [x] Build ItemEditForm — pre-filled with the item's current values, submits PUT
 - [x] Add a Delete button, wire both edit form and delete into ItemSearch's expanded view, DM-only
-- [ ] Commit
+  - real event-bubbling bug found and fixed in ExpandableEntry itself (clicks inside the form were closing the entry)
+- [x] Commit (da1611d)
 
 ### 13. Edit/delete UI — Races, Lore, Characters, Spells  [ ] not started
 **Deliverable:** The same real edit/delete UI pattern from Section 12 applied across every remaining content type.
 **Concepts:** edit-vs-create-forms, reusable-components
+
+- [x] Races: thread isDM, build RaceEditForm, add Delete button, wire into RaceSearch
+- [ ] Lore: thread isDM, build LoreEditForm, add Delete button, wire into LoreSearch
+- [ ] Spells: thread isDM, build SpellEditForm, add Delete button, wire into SpellSearch
+- [ ] Characters: build CharacterEditForm (ownership-checked, not DM-only), add Delete button, wire into characters/page.tsx
+- [ ] Commit
 
 ### 14. UI/styling pass  [ ] not started
 **Deliverable:** A visually consistent, polished site using Tailwind CSS across every page, plus a real category dropdown filter on Items/Spells (now genuinely useful with two categories to filter between).

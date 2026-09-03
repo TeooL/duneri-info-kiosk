@@ -15,7 +15,7 @@ export default async function RacesPage() {
       <Nav />
       <PageHeader title="Races" />
       <p>This page is for the races section of Duneri</p>
-      <RaceSearch initialRaces={races}/>
+      <RaceSearch initialRaces={races} isDM={isDM}/>
       {(isDM) && <RaceCreateForm />}
     </main>
   );
