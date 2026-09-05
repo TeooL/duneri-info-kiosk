@@ -3,6 +3,8 @@ import PageHeader from "@/components/PageHeader";
 import CharacterCreateForm from "@/components/CharacterCreateForm";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import ExpandableEntry from "@/components/ExpandableEntry";
+import CharacterEditForm from "@/components/CharacterEditForm";
 
 export default async function CharactersPage() {
   const session = await auth();
@@ -25,7 +27,9 @@ export default async function CharactersPage() {
           <CharacterCreateForm races={races} />
           <ul>
             {characters.map((character) => (
-              <li key={character.id}>{character.name} : {character.race.name}</li>
+              <ExpandableEntry key={character.id} summary={character.name + " : " + character.race.name}>
+                <CharacterEditForm character={character} races={races}/>
+              </ExpandableEntry>
             ))}
           </ul>
         </>

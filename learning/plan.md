@@ -149,9 +149,10 @@
 **Concepts:** edit-vs-create-forms, reusable-components
 
 - [x] Races: thread isDM, build RaceEditForm, add Delete button, wire into RaceSearch
-- [ ] Lore: thread isDM, build LoreEditForm, add Delete button, wire into LoreSearch
-- [ ] Spells: thread isDM, build SpellEditForm, add Delete button, wire into SpellSearch
-- [ ] Characters: build CharacterEditForm (ownership-checked, not DM-only), add Delete button, wire into characters/page.tsx
+- [x] Lore: thread isDM, build LoreEditForm, add Delete button, wire into LoreSearch
+- [x] Spells: thread isDM, build SpellEditForm, add Delete button, wire into SpellSearch
+  - real gap found: api/spells/[id]/route.ts had never been built (Spells only got GET/POST in Section 10, before edit/delete existed) — built it now, PUT/DELETE, DM-only, sanitized
+- [x] Characters: build CharacterEditForm (ownership-checked, not DM-only), add Delete button, wire into characters/page.tsx
 - [ ] Commit
 
 ### 14. UI/styling pass  [ ] not started

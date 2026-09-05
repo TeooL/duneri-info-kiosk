@@ -15,7 +15,7 @@ export default async function SpellPage() {
             <Nav />
             <PageHeader title="Spells" />
             <p>This page is for the Spells Section of Duneri</p>
-            <SpellSearch initialSpells={spells} />
+            <SpellSearch initialSpells={spells} isDM={isDM}/>
             {(isDM) && <SpellCreateForm />} 
         </main>
     )
