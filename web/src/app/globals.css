@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -8,6 +10,10 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+}
+
+h1, h2, h3 {
+  font-family: var(--font-cinzel), serif;
 }
 
 ul, ol {

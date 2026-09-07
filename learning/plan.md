@@ -110,6 +110,7 @@
 
 ## v2 locked decisions
 - Styling: Tailwind CSS for the UI/styling pass (Section 14) — the common, widely-used utility-class approach in the Next.js ecosystem, chosen over going deeper with plain CSS Modules since the explicit goal for v2 is a real UI push
+- Design direction (2026-08-24): a minimalist, sleek D&D-wiki-fandom theme — Cinzel (via next/font/google, built into Next.js, no extra dependency) for headings, paired with the existing clean sans-serif for body text; deliberately avoiding heavy textures/parchment backgrounds/ornate borders to keep it sleek rather than busy
 
 ### 10. Spells  [x] done
 **Deliverable:** A Spells page exists with real spell data, searchable like Items/Races/Lore, with DM-only create working — same pattern as Items and Races, applied to a new content type.
@@ -144,7 +145,7 @@
   - real event-bubbling bug found and fixed in ExpandableEntry itself (clicks inside the form were closing the entry)
 - [x] Commit (da1611d)
 
-### 13. Edit/delete UI — Races, Lore, Characters, Spells  [ ] not started
+### 13. Edit/delete UI — Races, Lore, Characters, Spells  [x] done
 **Deliverable:** The same real edit/delete UI pattern from Section 12 applied across every remaining content type.
 **Concepts:** edit-vs-create-forms, reusable-components
 
@@ -153,12 +154,22 @@
 - [x] Spells: thread isDM, build SpellEditForm, add Delete button, wire into SpellSearch
   - real gap found: api/spells/[id]/route.ts had never been built (Spells only got GET/POST in Section 10, before edit/delete existed) — built it now, PUT/DELETE, DM-only, sanitized
 - [x] Characters: build CharacterEditForm (ownership-checked, not DM-only), add Delete button, wire into characters/page.tsx
-- [ ] Commit
+- [x] Commit (133d51d)
 
 ### 14. UI/styling pass  [ ] not started
 **Deliverable:** A visually consistent, polished site using Tailwind CSS across every page, plus a real category dropdown filter on Items/Spells (now genuinely useful with two categories to filter between).
 **Concepts:** tailwind-css, query-parameters, filtering-with-prisma
 **Idea to consider (noted 2026-08-24, during Section 12):** a side-panel detail view instead of inline click-to-expand — surfaced after testing edit forms inside ExpandableEntry felt cramped/awkward to interact with
+
+- [x] Install and configure Tailwind CSS
+  - **unplanned side quest (2026-08-24):** `npm install` for Tailwind surfaced a real, unrelated npm audit report (32 vulnerabilities). Correctly separated 2 real/fixable issues (@tiptap/core prototype pollution, fast-uri SSRF) from 2 unreachable Prisma-CLI-only ones (deepmerge-ts, mysql2 — same category as the Section 7 deepmerge-ts call), fixed the first two via `npm audit fix`. That fix left a duplicate @tiptap/core instance (starter-kit nested vs. top-level) causing real TS errors; resolved by upgrading @tiptap/react and @tiptap/pm to match. Down to 4 unreachable high-severity findings, left alone.
+- [x] Style the shared layout (Nav, PageHeader, homepage) with Tailwind
+- [ ] Style the content pages (forms, lists, ExpandableEntry) with Tailwind
+  - done: Cinzel font sitewide (layout.tsx + globals.css); ExpandableEntry restyled as a card (applies to every list site-wide already, since it's shared); ItemCreateForm restyled as a panel
+  - remaining: apply the same panel/spacer pattern to RaceCreateForm, RaceEditForm, LoreCreateForm, LoreEditForm, SpellCreateForm, SpellEditForm, ItemEditForm, CharacterCreateForm, CharacterEditForm, and their pages
+  - **unresolved oddity (2026-08-24):** on ItemCreateForm, `mt-6` computed to 0px in DevTools despite the class being present — worked around with a plain spacer `<div className="h-6" />` instead of margin. Real cause not confirmed (possible Tailwind v4 @layer interaction with globals.css's unlayered `* { margin: 0 }` reset, but not verified) — worth investigating for real before relying on margin utilities elsewhere
+- [ ] Add a category dropdown filter to Items and Spells (query param + Prisma `where` on `type`)
+- [ ] Commit
 
 ## v3 parking lot (deferred, not started)
 - Bulk content importer (Discord export / Google Docs → seed data) — a genuinely bigger, separate problem (file parsing pipeline)
@@ -166,3 +177,4 @@
 - Promote the actual DM's account from PLAYER to DM via Prisma Studio once they've logged in at least once — a one-off operational task, not really a "section"
 - Classes page (noted 2026-08-24, during Spells work) — mirrors the same content-type pattern as Items/Races/Spells; not yet scoped (fields, relation to Spells if any)
 - Bulk multi-select delete (noted 2026-08-24, during Section 12 planning) — needs both new frontend state (a "select mode" with checkboxes) and a new backend bulk-delete route, since DELETE only handles one item by id today; deliberately chose simpler per-row edit/delete buttons for v2 instead
+- Icon library (noted 2026-08-24, during design direction discussion) — lucide-react is the likely pick when this comes up; deferred for now to keep the v2 UI pass minimalist

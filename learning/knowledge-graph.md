@@ -133,8 +133,8 @@
 - status: practicing
 - depends-on: none
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-14
-- evidence: correctly explained node_modules as where installed packages live and that it's never hand-edited (2026-08-05); on 2026-08-14, review revealed a real misconception — thought devDependencies was about where packages physically live rather than when they're needed (build-time vs runtime); given a refresher, not yet re-confirmed
+- last-reviewed: 2026-08-24
+- evidence: correctly explained node_modules as where installed packages live and that it's never hand-edited (2026-08-05); on 2026-08-14, review revealed a real misconception — thought devDependencies was about where packages physically live rather than when they're needed (build-time vs runtime); given a refresher, not yet re-confirmed; on 2026-08-24, correctly recalled unprompted that npm install updates both package.json and node_modules
 
 ## dev-server
 - status: practicing
@@ -166,18 +166,18 @@
 - evidence: used <h3> as a direct child of <ul> (works visually, but violates the ul/li contract); correctly fixed it to <li> after one explanation of why the structure matters; on 2026-08-24, after a 2-week gap, gave an incorrect reason (guessed it was about "knowing what type of list it was") rather than the real accessibility/screen-reader reason — needed the full explanation restated
 
 ## css-modules
-- status: introduced
+- status: practicing
 - depends-on: css-styling
 - introduced: 2026-08-08
-- last-reviewed: 2026-08-08
-- evidence: shown that .title in page.module.css becomes styles.title in page.tsx, scoped uniquely by Next.js; not yet checked in their own words
+- last-reviewed: 2026-08-24
+- evidence: shown that .title in page.module.css becomes styles.title in page.tsx, scoped uniquely by Next.js; not yet checked in their own words; on 2026-08-24, correctly reasoned (once nudged) that replacing every styles.x usage with Tailwind classes would leave page.module.css as dead, unreferenced code that should be deleted rather than left behind — then actually did the full migration and deletion
 
 ## tailwind-css
 - status: introduced
 - depends-on: css-styling
 - introduced: 2026-08-24
 - last-reviewed: 2026-08-24
-- evidence: explicitly named as a future interest on 2026-08-08 when we chose plain CSS/CSS Modules for now; locked in as the v2 styling decision on 2026-08-24 for the dedicated UI pass (Section 14), and correctly explained in their own words that Tailwind applies utility classes directly in JSX instead of writing selectors in a separate stylesheet like CSS Modules
+- evidence: explicitly named as a future interest on 2026-08-08 when we chose plain CSS/CSS Modules for now; locked in as the v2 styling decision on 2026-08-24 for the dedicated UI pass (Section 14), and correctly explained in their own words that Tailwind applies utility classes directly in JSX instead of writing selectors in a separate stylesheet like CSS Modules; same day, installed and configured it for real (npm install, postcss.config.mjs, @import in globals.css), correctly predicted a test className would render bold blue text, confirmed live, and asked for (then correctly absorbed) a plain-language breakdown of each utility class's meaning; later the same day, restyled Nav (flex, gap, items-center, px/py, bg-gray-900, ml-auto), PageHeader (mb-6, px-6, pt-6), and the homepage (fully migrating page.module.css's flex-column-centered layout to flex flex-col items-center justify-center min-h-screen plus text-lg text-gray-600), correctly predicting each visual result before checking; caught their own m1-auto typo (mirroring the earlier text-3x1 typo — the same silent-failure-on-invalid-class-name pattern, recognized independently the second time) after being asked to compare it letter-by-letter; later the same day, added the Cinzel themed font via next/font/google (correctly mirroring the existing Geist pattern unaided) and applied it via a CSS variable; styled ExpandableEntry into a real card (border, rounded-lg, hover, transition) and correctly identified that a light hover color clashed with the site's dark theme, proposing gray-500 before landing on the more subtle gray-800 once the tradeoff was explained; styled ItemCreateForm into a bordered panel, correctly diagnosing that mb-6 had no effect because the form is the last element on the page (nothing below it to push away from) and correctly proposing mt-6 as the fix; when mt-6 itself then failed to visually apply, correctly used DevTools' Computed panel to confirm the real resolved value was 0px rather than assuming the class had worked
 
 ## nextjs-link
 - status: practicing
@@ -255,7 +255,7 @@
 - depends-on: none
 - introduced: 2026-08-09
 - last-reviewed: 2026-08-24
-- evidence: independently found and fixed a real "Cannot find module" error by reasoning through a file listing (proposed adding /client to the import path); separately, independently caught and fixed their own prisma.item.creaet() typo with no hint from me while I was investigating a different bug; on 2026-08-14, correctly diagnosed why `npm install` at the wrong directory level created a stray package.json/node_modules, and cleanly recovered; on 2026-08-17, worked through a multi-step DevTools debugging session (checking Console, then Network tab, request status, then a bisection with checkpoint logs) that correctly narrowed the issue down to a Console "Verbose" filter hiding their own console.log output; same day, used DOM inspection (Inspect Element) twice in a row to correctly report the exact HTML structure behind two separate CSS display bugs, giving the actual evidence needed to diagnose both; on 2026-08-24, read two real Vercel build logs and correctly connected "Can't reach database server at 127.0.0.1:5432" back to a missing DATABASE_URL environment variable unaided; same day, given a real TS2304 "Cannot find name 'SpellCreateForm'" error, correctly removed the not-yet-built component reference rather than guessing at a fix; later the same day, when SpellEditForm silently "did nothing," methodically worked through Network tab (found a plain GET instead of the expected PUT — a real clue that the browser's default form submission was firing, not the React handler) then Console (found a 404, "the route doesn't exist") to correctly diagnose that spells/[id]/route.ts had never been built; one incorrect guess along the way (blamed JSON.stringify not handling numbers) was set aside once redirected back to checking real evidence instead of guessing; on 2026-08-24, read a real TS18007 "JSX expressions may not use the comma operator" error and correctly used its "did you mean to write an array?" hint to reason toward the actual intended fix (a template literal) rather than getting stuck
+- evidence: independently found and fixed a real "Cannot find module" error by reasoning through a file listing (proposed adding /client to the import path); separately, independently caught and fixed their own prisma.item.creaet() typo with no hint from me while I was investigating a different bug; on 2026-08-14, correctly diagnosed why `npm install` at the wrong directory level created a stray package.json/node_modules, and cleanly recovered; on 2026-08-17, worked through a multi-step DevTools debugging session (checking Console, then Network tab, request status, then a bisection with checkpoint logs) that correctly narrowed the issue down to a Console "Verbose" filter hiding their own console.log output; same day, used DOM inspection (Inspect Element) twice in a row to correctly report the exact HTML structure behind two separate CSS display bugs, giving the actual evidence needed to diagnose both; on 2026-08-24, read two real Vercel build logs and correctly connected "Can't reach database server at 127.0.0.1:5432" back to a missing DATABASE_URL environment variable unaided; same day, given a real TS2304 "Cannot find name 'SpellCreateForm'" error, correctly removed the not-yet-built component reference rather than guessing at a fix; later the same day, when SpellEditForm silently "did nothing," methodically worked through Network tab (found a plain GET instead of the expected PUT — a real clue that the browser's default form submission was firing, not the React handler) then Console (found a 404, "the route doesn't exist") to correctly diagnose that spells/[id]/route.ts had never been built; one incorrect guess along the way (blamed JSON.stringify not handling numbers) was set aside once redirected back to checking real evidence instead of guessing; on 2026-08-24, correctly predicted that upgrading @tiptap/react and @tiptap/pm to match a fixed @tiptap/core version would resolve the specific toggleBold/toggleBulletList type errors, confirmed via a clean typecheck; on 2026-08-24, read a real TS18007 "JSX expressions may not use the comma operator" error and correctly used its "did you mean to write an array?" hint to reason toward the actual intended fix (a template literal) rather than getting stuck
 
 ## environment-variables
 - status: practicing
@@ -480,6 +480,13 @@
 - introduced: 2026-08-24
 - last-reviewed: 2026-08-24
 - evidence: discovered a real bug through their own testing — clicking inside ItemEditForm's inputs (nested inside ExpandableEntry's clickable <li>) caused the whole entry to collapse, since the click bubbled up to the parent's onClick; after the mechanism was explained, correctly applied e.stopPropagation() by wrapping the children in a div, fixing it for all four content types at once since the fix lives in the shared ExpandableEntry component; verified live
+
+## npm-audit-judgment
+- status: understood
+- depends-on: npm-package-json
+- introduced: 2026-08-17
+- last-reviewed: 2026-08-24
+- evidence: correctly judged a deepmerge-ts "high severity" audit warning as safe to ignore on 2026-08-17 (during TipTap install) and again independently a second time (during Vitest install), tracing both times into Prisma's own CLI config-loading code that never runs in the deployed app, and correctly refusing the "fix" since it would downgrade Prisma from v7 to v6; on 2026-08-24, correctly generalized this same reasoning to a genuinely new, more complex situation — a 4-group audit report mixing two real/reachable/fixable issues (@tiptap/core, fast-uri) with two unreachable Prisma-CLI-only ones (deepmerge-ts, mysql2) — correctly separating which to fix and which to leave alone unprompted, a clean multi-day retrieval of the same underlying judgment skill
 
 ## edit-vs-create-forms
 - status: practicing

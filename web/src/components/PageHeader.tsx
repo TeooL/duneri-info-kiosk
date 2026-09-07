@@ -3,5 +3,5 @@ type PageHeaderProps = {
 };
 
 export default function PageHeader({ title }: PageHeaderProps) {
-  return <h1>{title}</h1>
+  return <h1 className="text-3xl font-bold mb-6 px-6 pt-6">{title}</h1>
 }

@@ -22,11 +22,11 @@ export default function ItemCreateForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
-      <input value={type} onChange={(e) => setType(e.target.value)} placeholder="Type" />
+    <form className="flex flex-col gap-3 mt-6 border rounded-lg p-4 bg-gray-900" onSubmit={handleSubmit}>
+      <input className="border rounded-lg p-2 bg-transparent" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
+      <input className="border rounded-lg p-2 bg-transparent" value={type} onChange={(e) => setType(e.target.value)} placeholder="Type" />
       <RichTextEditor content={description} onChange={setDescription} />
-      <button type="submit">Create Item</button>
+      <button className="border rounded-lg px-4 py-2 hover:bg-gray-800 transition-colors w-fit" type="submit">Create Item</button>
     </form>
   );
 }

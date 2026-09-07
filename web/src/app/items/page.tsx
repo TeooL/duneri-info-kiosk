@@ -15,6 +15,7 @@ export default async function ItemsPage() {
       <Nav />
       <PageHeader title="Items" />
       <ItemSearch initialItems={items} isDM={isDM} />
+      <div className="h-6" />
       {(isDM) && <ItemCreateForm />}
     </main>
   );
