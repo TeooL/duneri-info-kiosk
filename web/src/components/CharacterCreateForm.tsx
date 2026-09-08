@@ -20,20 +20,21 @@ export default function CharacterCreateForm({ races }: { races: Race[] }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="flex flex-col gap-3 mt-6 border rounded-lg p-4 bg-gray-900" onSubmit={handleSubmit}>
       <input
+        className="border rounded-lg p-2 bg-transparent"
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Character name"
       />
-      <select value={raceId} onChange={(e) => setRaceId(e.target.value)}>
+      <select className="border rounded-lg p-2 bg-transparent" value={raceId} onChange={(e) => setRaceId(e.target.value)}>
         {races.map((race) => (
           <option key={race.id} value={race.id}>
             {race.name}
           </option>
         ))}
       </select>
-      <button type="submit">Create Character</button>
+      <button className="border rounded-lg px-4 py-2 hover:bg-gray-800 transition-colors w-fit" type="submit">Create Character</button>
     </form>
   );
 }

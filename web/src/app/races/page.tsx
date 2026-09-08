@@ -16,6 +16,7 @@ export default async function RacesPage() {
       <PageHeader title="Races" />
       <p>This page is for the races section of Duneri</p>
       <RaceSearch initialRaces={races} isDM={isDM}/>
+      <div className="h-6" />
       {(isDM) && <RaceCreateForm />}
     </main>
   );

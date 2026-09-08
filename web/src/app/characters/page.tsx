@@ -25,6 +25,7 @@ export default async function CharactersPage() {
       {session ? (
         <>
           <CharacterCreateForm races={races} />
+          <div className="h-6" />
           <ul>
             {characters.map((character) => (
               <ExpandableEntry key={character.id} summary={character.name + " : " + character.race.name}>

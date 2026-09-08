@@ -16,6 +16,7 @@ export default async function LorePage() {
             <PageHeader title="Lore" />
             <p>This page is for the lore section of Duneri </p>
             <LoreSearch initialLore={lore} isDM={isDM} />
+            <div className="h-6" />
             {(isDM) && <LoreCreateForm />}
         </main>
     )

@@ -20,10 +20,10 @@ export default function RaceCreateForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
+        <form className="flex flex-col gap-3 mt-6 border rounded-lg p-4 bg-gray-900" onSubmit={handleSubmit}>
+            <input className="border rounded-lg p-2 bg-transparent" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
             <RichTextEditor content={description} onChange={setDescription} />
-            <button type="submit">Create Race</button>
+            <button className="border rounded-lg px-4 py-2 hover:bg-gray-800 transition-colors w-fit" type="submit">Create Race</button>
         </form>
     );
 }

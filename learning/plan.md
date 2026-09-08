@@ -164,10 +164,9 @@
 - [x] Install and configure Tailwind CSS
   - **unplanned side quest (2026-08-24):** `npm install` for Tailwind surfaced a real, unrelated npm audit report (32 vulnerabilities). Correctly separated 2 real/fixable issues (@tiptap/core prototype pollution, fast-uri SSRF) from 2 unreachable Prisma-CLI-only ones (deepmerge-ts, mysql2 — same category as the Section 7 deepmerge-ts call), fixed the first two via `npm audit fix`. That fix left a duplicate @tiptap/core instance (starter-kit nested vs. top-level) causing real TS errors; resolved by upgrading @tiptap/react and @tiptap/pm to match. Down to 4 unreachable high-severity findings, left alone.
 - [x] Style the shared layout (Nav, PageHeader, homepage) with Tailwind
-- [ ] Style the content pages (forms, lists, ExpandableEntry) with Tailwind
-  - done: Cinzel font sitewide (layout.tsx + globals.css); ExpandableEntry restyled as a card (applies to every list site-wide already, since it's shared); ItemCreateForm restyled as a panel
-  - remaining: apply the same panel/spacer pattern to RaceCreateForm, RaceEditForm, LoreCreateForm, LoreEditForm, SpellCreateForm, SpellEditForm, ItemEditForm, CharacterCreateForm, CharacterEditForm, and their pages
-  - **unresolved oddity (2026-08-24):** on ItemCreateForm, `mt-6` computed to 0px in DevTools despite the class being present — worked around with a plain spacer `<div className="h-6" />` instead of margin. Real cause not confirmed (possible Tailwind v4 @layer interaction with globals.css's unlayered `* { margin: 0 }` reset, but not verified) — worth investigating for real before relying on margin utilities elsewhere
+- [x] Style the content pages (forms, lists, ExpandableEntry) with Tailwind
+  - Cinzel font sitewide; ExpandableEntry restyled as a card (applies to every list site-wide, since it's shared); all 9 forms (Item/Race/Lore/Spell create+edit, Character create+edit) restyled as bordered panels; spacer divs added to all 5 content pages
+  - **unresolved oddity (2026-08-24):** on ItemCreateForm, `mt-6` computed to 0px in DevTools despite the class being present — worked around with a plain spacer `<div className="h-6" />` instead of margin throughout. Real cause not confirmed (possible Tailwind v4 @layer interaction with globals.css's unlayered `* { margin: 0 }` reset, but not verified) — worth investigating for real before relying on margin utilities elsewhere
 - [ ] Add a category dropdown filter to Items and Spells (query param + Prisma `where` on `type`)
 - [ ] Commit
 
