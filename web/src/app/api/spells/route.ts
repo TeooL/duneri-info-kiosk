@@ -7,12 +7,15 @@ const ALLOWED_TAGS = ["p", "strong", "em", "ul", "ol", "li", "br", "blockquote",
 
 export async function GET(request : NextRequest) {
     const q = request.nextUrl.searchParams.get("q") ?? "";
+    const type = request.nextUrl.searchParams.get("category") ?? "";
+
     const spells = await prisma.spell.findMany({where: {
         OR: [
             {name: {contains: q, mode: "insensitive"}},
             {type: {contains: q, mode: "insensitive"}},
             {description: {contains: q, mode: "insensitive"}}
-        ]
+        ],
+        ...(type ? {type : type } : {})
     }})
     return Response.json(spells)
 }

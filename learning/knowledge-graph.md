@@ -134,7 +134,7 @@
 - depends-on: none
 - introduced: 2026-08-05
 - last-reviewed: 2026-08-24
-- evidence: correctly explained node_modules as where installed packages live and that it's never hand-edited (2026-08-05); on 2026-08-14, review revealed a real misconception — thought devDependencies was about where packages physically live rather than when they're needed (build-time vs runtime); given a refresher, not yet re-confirmed; on 2026-08-24, correctly recalled unprompted that npm install updates both package.json and node_modules
+- evidence: correctly explained node_modules as where installed packages live and that it's never hand-edited (2026-08-05); on 2026-08-14, review revealed a real misconception — thought devDependencies was about where packages physically live rather than when they're needed (build-time vs runtime); given a refresher, not yet re-confirmed; on 2026-08-24, correctly recalled unprompted that npm install updates both package.json and node_modules; on 2026-09-09, wrote `import { randomUUID } from "crypto"` inside a "use client" component to generate React keys — a real misunderstanding, since Node's crypto module is server-only and doesn't belong in browser-side code; self-corrected once asked why a freshly-random key (regenerated every render) defeats the purpose of React's key prop, landing on the already-unique category string itself as the real key
 
 ## dev-server
 - status: practicing
@@ -296,8 +296,8 @@
 - status: practicing
 - depends-on: prisma-schema
 - introduced: 2026-08-14
-- last-reviewed: 2026-08-14
-- evidence: independently wrote the where: { OR: [...] } filter with contains/mode: "insensitive" across two fields, correctly, from a shape description in a comment; independently noticed lore/route.ts's filter only covered title (not body), correctly predicted the resulting search gap, and fixed it themselves by adding a matching OR condition
+- last-reviewed: 2026-09-09
+- evidence: independently wrote the where: { OR: [...] } filter with contains/mode: "insensitive" across two fields, correctly, from a shape description in a comment; independently noticed lore/route.ts's filter only covered title (not body), correctly predicted the resulting search gap, and fixed it themselves by adding a matching OR condition; on 2026-09-09, after a real 26-day gap, a genuine struggle — reached for the familiar contains/mode pattern for what needed to be an exact-match dropdown filter instead, and used an invalid mode value ("sensitive" isn't real); needed the distinction between partial-text and exact-match filtering explained directly; later the same day, once shown the correct exact-match spread pattern on Items' API route, correctly and independently reused it unaided on Spells' API route (including renaming the local variable to avoid confusion with the schema field), and correctly diagnosed via a real concrete test (selecting "Fire Arts" then searching "bolt") that SpellSearch's handleChange had its own separate, stale fetch call that ignored the category filter entirely — fixed by routing it through the already-extracted fetchSpells helper instead
 
 ## debouncing
 - status: practicing
@@ -317,8 +317,8 @@
 - status: practicing
 - depends-on: javascript
 - introduced: 2026-08-14
-- last-reviewed: 2026-08-14
-- evidence: filled in the fetch/setItems call in ItemSearch.tsx (hooks written by me); independently wrote useState/useRef declarations themselves in RaceSearch.tsx after one hint; did the same fully unprompted for LoreSearch.tsx
+- last-reviewed: 2026-09-09
+- evidence: filled in the fetch/setItems call in ItemSearch.tsx (hooks written by me); independently wrote useState/useRef declarations themselves in RaceSearch.tsx after one hint; did the same fully unprompted for LoreSearch.tsx; on 2026-09-09, added a second piece of state (category) and an extracted shared fetch helper to combine two filters — on ItemSearch, wrapped an already-correct Array.from(new Set(...)) in an extra unnecessary [], self-corrected once asked what that did to the shape; on SpellSearch, wrote the new category-aware fetchSpells helper correctly but left the pre-existing handleChange on its own separate, stale fetch call — a real consistency gap between old and new code, caught via a concrete before/after test rather than by inspection alone
 
 ## sessions
 - status: practicing

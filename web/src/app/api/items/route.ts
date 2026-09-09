@@ -7,8 +7,14 @@ const ALLOWED_TAGS = ["p", "strong", "em", "ul", "ol", "li", "br", "blockquote",
 
 export async function GET(request: NextRequest) {
     const q = request.nextUrl.searchParams.get("q") ?? "";
+    const category = request.nextUrl.searchParams.get("category") ?? "";
 
-    const items = await prisma.item.findMany({where: { OR: [{ name: { contains: q, mode: "insensitive"} }, {description: { contains: q, mode: "insensitive"} }]}});
+    const items = await prisma.item.findMany({
+      where: {
+        OR: [{ name: { contains: q, mode: "insensitive"} }, {description: { contains: q, mode: "insensitive"} }],
+        ...(category ? {type : category } : {})
+      },
+    });
 
     return Response.json(items);
 }

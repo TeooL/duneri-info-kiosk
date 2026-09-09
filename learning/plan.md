@@ -167,7 +167,7 @@
 - [x] Style the content pages (forms, lists, ExpandableEntry) with Tailwind
   - Cinzel font sitewide; ExpandableEntry restyled as a card (applies to every list site-wide, since it's shared); all 9 forms (Item/Race/Lore/Spell create+edit, Character create+edit) restyled as bordered panels; spacer divs added to all 5 content pages
   - **unresolved oddity (2026-08-24):** on ItemCreateForm, `mt-6` computed to 0px in DevTools despite the class being present — worked around with a plain spacer `<div className="h-6" />` instead of margin throughout. Real cause not confirmed (possible Tailwind v4 @layer interaction with globals.css's unlayered `* { margin: 0 }` reset, but not verified) — worth investigating for real before relying on margin utilities elsewhere
-- [ ] Add a category dropdown filter to Items and Spells (query param + Prisma `where` on `type`)
+- [x] Add a category dropdown filter to Items and Spells (query param + Prisma `where` on `type`)
 - [ ] Commit
 
 ## v3 parking lot (deferred, not started)
