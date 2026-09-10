@@ -495,6 +495,50 @@
 - last-reviewed: 2026-08-24
 - evidence: built ItemEditForm.tsx correctly and entirely unaided given only the two-difference explanation (state initialized from item.name/type/description instead of "", PUT to `/api/items/${item.id}` instead of POST to /api/items) — zero bugs, correct on the first save; on the Races rep, correctly built the full pattern (thread isDM, RaceEditForm, Delete button, wiring) in one pass, with one real self-corrected bug — the fetch URLs were copy-pasted from Items and still pointed at /api/items instead of /api/races
 
+## file-storage
+- status: introduced
+- depends-on: environment-variables
+- introduced: 2026-09-10
+- last-reviewed: 2026-09-10
+- evidence: during v3 planning, correctly reasoned that a database isn't an efficient place for image files and that dedicated file storage is needed; compared Vercel Blob against Cloudinary and correctly articulated the tradeoff (staying on one platform vs. Cloudinary's bundled image transformations) before choosing Vercel Blob
+
+## vercel-blob
+- status: introduced
+- depends-on: file-storage
+- introduced: 2026-09-10
+- last-reviewed: 2026-09-10
+- evidence: locked in as the v3 file storage choice specifically to avoid a second external account beyond the Vercel/Neon/Discord ones already in play; asked a sharp, specific question (does it do automatic resizing like Cloudinary?) that led to verifying the real docs together rather than assuming
+
+## image-optimization
+- status: introduced
+- depends-on: file-storage
+- introduced: 2026-09-10
+- last-reviewed: 2026-09-10
+- evidence: shown that next/image (already part of the existing Next.js app) provides automatic resizing/format conversion at display time regardless of storage location, closing the gap between Vercel Blob and Cloudinary's bundled features; not yet built or seen working live
+
+## many-to-many-relations
+- status: introduced
+- depends-on: foreign-keys, relational-database-design
+- introduced: 2026-09-10
+- last-reviewed: 2026-09-10
+- evidence: correctly reasoned through the real tradeoff between a shared WeaponTag model (many-to-many, edit a definition once) versus a simpler per-weapon duplicated list, and chose the shared model unprompted once the tradeoff was named — genuine judgment, not yet built
+
+## join-tables
+- status: seed
+- depends-on: many-to-many-relations
+- introduced: —
+- last-reviewed: —
+- evidence: —
+- note: seeded 2026-09-10 for v3 Section 16 — the hidden table Prisma creates to actually implement a many-to-many relation between Weapon and WeaponTag
+
+## master-detail-layout
+- status: seed
+- depends-on: react-state, component-composition
+- introduced: —
+- last-reviewed: —
+- evidence: —
+- note: seeded 2026-09-10 for v3 Section 20 — a list on one side, a detail panel on the other that updates based on what's selected; replaces ExpandableEntry's inline click-to-expand pattern site-wide, an idea the learner first raised themselves back in Section 12
+
 ## production-migrations
 - status: practicing
 - depends-on: database-migrations, vercel-deployment

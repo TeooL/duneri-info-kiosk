@@ -156,7 +156,7 @@
 - [x] Characters: build CharacterEditForm (ownership-checked, not DM-only), add Delete button, wire into characters/page.tsx
 - [x] Commit (133d51d)
 
-### 14. UI/styling pass  [ ] not started
+### 14. UI/styling pass  [x] done
 **Deliverable:** A visually consistent, polished site using Tailwind CSS across every page, plus a real category dropdown filter on Items/Spells (now genuinely useful with two categories to filter between).
 **Concepts:** tailwind-css, query-parameters, filtering-with-prisma
 **Idea to consider (noted 2026-08-24, during Section 12):** a side-panel detail view instead of inline click-to-expand — surfaced after testing edit forms inside ExpandableEntry felt cramped/awkward to interact with
@@ -168,7 +168,7 @@
   - Cinzel font sitewide; ExpandableEntry restyled as a card (applies to every list site-wide, since it's shared); all 9 forms (Item/Race/Lore/Spell create+edit, Character create+edit) restyled as bordered panels; spacer divs added to all 5 content pages
   - **unresolved oddity (2026-08-24):** on ItemCreateForm, `mt-6` computed to 0px in DevTools despite the class being present — worked around with a plain spacer `<div className="h-6" />` instead of margin throughout. Real cause not confirmed (possible Tailwind v4 @layer interaction with globals.css's unlayered `* { margin: 0 }` reset, but not verified) — worth investigating for real before relying on margin utilities elsewhere
 - [x] Add a category dropdown filter to Items and Spells (query param + Prisma `where` on `type`)
-- [ ] Commit
+- [x] Commit (44bae1f)
 
 ## v3 parking lot (deferred, not started)
 - Bulk content importer (Discord export / Google Docs → seed data) — a genuinely bigger, separate problem (file parsing pipeline)
@@ -177,3 +177,44 @@
 - Classes page (noted 2026-08-24, during Spells work) — mirrors the same content-type pattern as Items/Races/Spells; not yet scoped (fields, relation to Spells if any)
 - Bulk multi-select delete (noted 2026-08-24, during Section 12 planning) — needs both new frontend state (a "select mode" with checkboxes) and a new backend bulk-delete route, since DELETE only handles one item by id today; deliberately chose simpler per-row edit/delete buttons for v2 instead
 - Icon library (noted 2026-08-24, during design direction discussion) — lucide-react is the likely pick when this comes up; deferred for now to keep the v2 UI pass minimalist
+
+## v3 locked decisions (2026-09-10)
+- File storage: Vercel Blob, paired with next/image for optimization — chosen over Cloudinary specifically to stay on one platform (already hosting on Vercel); next/image's automatic resizing/format conversion covers most of what Cloudinary would have added
+- Weapon Tags: a separate, shared WeaponTag model with a many-to-many relation to Weapon, so a tag's definition is edited once and reflected everywhere it's used, not duplicated per weapon
+- Spell components: kept as a flexible components String field (e.g. "Verbal, Somatic") plus a real manaCost Int, rather than a fixed boolean column per component type, since the exact set of possible components isn't finalized
+- Spell's optional Summon Stat Block: kept as plain optional text for v3 — a real structured stat-block model is deferred to a future version
+- UI: replacing ExpandableEntry's click-to-expand pattern with a split view (list on the left, detail panel on the right) across every content type; item comparison view stays parked until this and the new models are solid
+
+### 15. Image upload infrastructure  [ ] not started
+**Deliverable:** A test image can be uploaded through a form and displayed on a page, automatically optimized by Next.js.
+**Concepts:** file-storage, vercel-blob, image-optimization, environment-variables
+
+### 16. Weapon backend  [ ] not started
+**Deliverable:** A working Weapon API (GET searchable, DM-only POST/PUT/DELETE) with a real WeaponTag many-to-many relation, verified via direct requests.
+**Concepts:** many-to-many-relations, join-tables, prisma-schema, nextjs-api-routes, filtering-with-prisma
+
+### 17. Weapon frontend  [ ] not started
+**Deliverable:** A Weapons page where a DM can create a weapon with an uploaded icon and selected tags, and players can browse/search them.
+**Concepts:** reusable-components, controlled-inputs, edit-vs-create-forms, file-storage
+
+### 18. Spell model revision  [ ] not started
+**Deliverable:** The Spell model, its migration, and its routes/forms reflect the DM's real fields (school, cast time, components, mana cost, icon, etc.), with the two existing real spells safely preserved.
+**Concepts:** database-migrations, prisma-schema
+
+### 19. Classes page  [ ] not started
+**Deliverable:** A simple Classes page exists with real class data, following the same content-type pattern as Items/Races/Spells.
+**Concepts:** prisma-schema, nextjs-api-routes, react-forms
+
+### 20. Split-view UI overhaul  [ ] not started
+**Deliverable:** Every content page shows a list on the left and a detail panel on the right that updates when you click an item, replacing the old inline-expand pattern site-wide.
+**Concepts:** master-detail-layout, react-state, component-composition
+
+### 21. Icons  [ ] not started
+**Deliverable:** lucide-react is installed, with a few real icons showing up in the nav and/or content pages.
+**Concepts:** npm-package-json, tailwind-css
+
+## v4 parking lot (deferred, not started)
+- Item comparison view (side-by-side) — deferred until v3's new models and the split-view UI are solid
+- Bulk content importer (Discord export / Google Docs → seed data) — a genuinely bigger, separate problem (file parsing pipeline)
+- Bulk multi-select delete
+- Promote the actual DM's account from PLAYER to DM via Prisma Studio once they've logged in at least once
