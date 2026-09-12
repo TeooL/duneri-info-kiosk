@@ -261,8 +261,8 @@
 - status: practicing
 - depends-on: none
 - introduced: 2026-08-08
-- last-reviewed: 2026-08-08
-- evidence: correctly created web/.env with a properly formatted DATABASE_URL line after one explanation; independently declined to paste the real connection string into chat, unprompted, showing real grasp of why secrets shouldn't be shared/committed
+- last-reviewed: 2026-09-11
+- evidence: correctly created web/.env with a properly formatted DATABASE_URL line after one explanation; independently declined to paste the real connection string into chat, unprompted, showing real grasp of why secrets shouldn't be shared/committed; on 2026-09-11, after a month gap, correctly recalled unprompted both that .env holds sensitive values (database URL, passwords) and why it's never committed to git — clean retrieval, no refresher needed
 
 ## nextjs-api-routes
 - status: practicing

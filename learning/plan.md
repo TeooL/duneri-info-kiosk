@@ -189,6 +189,13 @@
 **Deliverable:** A test image can be uploaded through a form and displayed on a page, automatically optimized by Next.js.
 **Concepts:** file-storage, vercel-blob, image-optimization, environment-variables
 
+- [ ] Create a Vercel Blob store in the Vercel dashboard and add the token it gives you to .env
+- [ ] Install the @vercel/blob package
+- [ ] Build a minimal server-side upload API route that takes a file and stores it in Blob, returning its URL
+- [ ] Build a simple test upload form (file input + submit) that calls the route
+- [ ] Display the uploaded image with next/image and confirm it's optimized
+- [ ] Commit
+
 ### 16. Weapon backend  [ ] not started
 **Deliverable:** A working Weapon API (GET searchable, DM-only POST/PUT/DELETE) with a real WeaponTag many-to-many relation, verified via direct requests.
 **Concepts:** many-to-many-relations, join-tables, prisma-schema, nextjs-api-routes, filtering-with-prisma
