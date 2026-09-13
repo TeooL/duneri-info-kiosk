@@ -34,6 +34,28 @@ model Spell {
   description String
 }
 
+model Weapon {
+  id          String @id @default(cuid())
+  name        String
+  subname     String? 
+  icon        String?
+  damageType  String
+  tags        WeaponTag[]
+  specialSkill    String?
+  proficiencySkill    String?
+  rarity      String
+  weight      Float
+  price       String
+  description String
+}
+
+model WeaponTag {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  weapons     Weapon[]
+}
+
 model LoreEntry {
   id        String   @id @default(cuid())
   title     String

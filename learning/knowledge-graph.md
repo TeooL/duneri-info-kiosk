@@ -220,28 +220,28 @@
 - depends-on: prisma
 - introduced: 2026-08-08
 - last-reviewed: 2026-08-24
-- evidence: correctly wrote the Item model mirroring Race's field pattern unaided; correctly answered what @updatedAt would contain after a later edit; correctly identified ownerId/raceId (not owner/race) as the real database columns; correctly predicted what `prisma validate` checks and ran it themselves to a clean result; on 2026-08-24, after a 2-week gap, correctly recalled unprompted that schema.prisma and the live database aren't automatically in sync — a real command (a migration) is what bridges them; same day, wrote the Spell model mirroring Item's shape, initially forgot the `type` field (self-caught when asked to recount against the spec) and wrote `Integer` instead of Prisma's real `Int` type (self-corrected after reading the real prisma validate error)
+- evidence: correctly wrote the Item model mirroring Race's field pattern unaided; correctly answered what @updatedAt would contain after a later edit; correctly identified ownerId/raceId (not owner/race) as the real database columns; correctly predicted what `prisma validate` checks and ran it themselves to a clean result; on 2026-08-24, after a 2-week gap, correctly recalled unprompted that schema.prisma and the live database aren't automatically in sync — a real command (a migration) is what bridges them; same day, wrote the Spell model mirroring Item's shape, initially forgot the `type` field (self-caught when asked to recount against the spec) and wrote `Integer` instead of Prisma's real `Int` type (self-corrected after reading the real prisma validate error); on 2026-09-13, wrote the whole Weapon model unaided from the DM's real field notes, plus the WeaponTag mirror field — showed real judgment making `icon`/`specialSkill` optional once asked why (not every weapon has one yet), correctly reasoned `weight` should be numeric (Float, for fractional lb values) rather than String, and gave a genuine, considered reason for keeping `price` as a flexible String (mixed gold/silver/bronze denominations) rather than defaulting to it; added an extra `specialSkill` field beyond the DM's literal notes based on real campaign knowledge, a deliberate scope call like past ones
 
 ## database-migrations
 - status: practicing
 - depends-on: prisma-schema
 - introduced: 2026-08-09
 - last-reviewed: 2026-08-24
-- evidence: correctly predicted `prisma migrate dev` would change both local files and the remote database, then ran it themselves and confirmed real tables were created in the live Neon database via the generated migration.sql; on 2026-08-24, after a 2-week gap, correctly recalled unprompted that a migration is what actually turns schema.prisma's models into real tables/columns in the database — editing the schema file alone changes nothing live; same day, ran `prisma migrate dev --name add_spell` for Spell, hit a real transient connection error, retried successfully, then correctly recalled that `prisma generate` is still a separate step migrate dev doesn't run automatically
+- evidence: correctly predicted `prisma migrate dev` would change both local files and the remote database, then ran it themselves and confirmed real tables were created in the live Neon database via the generated migration.sql; on 2026-08-24, after a 2-week gap, correctly recalled unprompted that a migration is what actually turns schema.prisma's models into real tables/columns in the database — editing the schema file alone changes nothing live; same day, ran `prisma migrate dev --name add_spell` for Spell, hit a real transient connection error, retried successfully, then correctly recalled that `prisma generate` is still a separate step migrate dev doesn't run automatically; on 2026-09-13, ran `prisma migrate dev --name add_weapon` successfully, but this time hit a real "Property 'weapon' does not exist on PrismaClient" TS error afterward — a genuine partial regression on the same generate-is-separate lesson, though once asked to recall the specific command (not just that a step was missing), correctly produced `npx prisma generate` (after one syntax miss, "prisma regenerate")
 
 ## foreign-keys
 - status: practicing
 - depends-on: relational-database-design
 - introduced: 2026-08-08
 - last-reviewed: 2026-08-24
-- evidence: correctly identified, unprompted, that ownerId and raceId (not the owner/race relation fields) are the actual columns that would exist in the real database table; on 2026-08-09, correctly predicted that inserting a Character with an invalid ownerId would be rejected with an error by the database's foreign key constraint; on 2026-08-24, after a 2-week gap, gave a muddled definition ("an identifier for a different table to recognize what data it is pulling from") — the core idea of cross-table linking was there but imprecise, needed the "stores another table's actual primary key value" framing spelled out again
+- evidence: correctly identified, unprompted, that ownerId and raceId (not the owner/race relation fields) are the actual columns that would exist in the real database table; on 2026-08-09, correctly predicted that inserting a Character with an invalid ownerId would be rejected with an error by the database's foreign key constraint; on 2026-08-24, after a 2-week gap, gave a muddled definition ("an identifier for a different table to recognize what data it is pulling from") — the core idea of cross-table linking was there but imprecise, needed the "stores another table's actual primary key value" framing spelled out again; on 2026-09-13, a repeat of the same imprecision — said a foreign key "contains all the other columns of that table" rather than a single id value — needed the one-value framing restated a second time; a genuine recurring gap, not yet solid
 
 ## seed-data
 - status: practicing
 - depends-on: prisma-schema
 - introduced: 2026-08-09
 - last-reviewed: 2026-08-24
-- evidence: wrote a real prisma.item.create() call mirroring the given Race pattern; predicted `prisma studio` would show real data, then confirmed both seeded rows (Race "Human", Item "Longsword") visible in Studio; on 2026-08-09, independently wrote prisma.loreEntry.create() with correct field names, and correctly predicted that re-running the seed script would duplicate Race/Item rows since nothing prevents it; on 2026-08-24, after a 2-week gap, correctly recalled unprompted that re-running the seed script duplicates the data; same day, correctly reasoned through a real consequence of that fact — since local DATABASE_URL is the same database as production, re-running the whole seed script now would duplicate real live content, not just disposable dev data — and chose to add the two new Spell entries through the live SpellCreateForm instead, keeping seed.ts updated for documentation only without executing it
+- evidence: wrote a real prisma.item.create() call mirroring the given Race pattern; predicted `prisma studio` would show real data, then confirmed both seeded rows (Race "Human", Item "Longsword") visible in Studio; on 2026-08-09, independently wrote prisma.loreEntry.create() with correct field names, and correctly predicted that re-running the seed script would duplicate Race/Item rows since nothing prevents it; on 2026-08-24, after a 2-week gap, correctly recalled unprompted that re-running the seed script duplicates the data; same day, correctly reasoned through a real consequence of that fact — since local DATABASE_URL is the same database as production, re-running the whole seed script now would duplicate real live content, not just disposable dev data — and chose to add the two new Spell entries through the live SpellCreateForm instead, keeping seed.ts updated for documentation only without executing it; on 2026-09-13, tried seeding two WeaponTag rows via Prisma Studio's UI and hit a real, genuine tool bug — the auto-generated `cuid()` id field came back as an empty string on insert, twice, unrelated to anything the learner did — routed around it the same way as the Spell entries (writing through actual `prisma.weaponTag.create()` code instead), which worked correctly on the first try
 
 ## prisma-driver-adapters
 - status: introduced
@@ -367,7 +367,7 @@
 - depends-on: protected-routes, frontend-backend-separation
 - introduced: 2026-08-17
 - last-reviewed: 2026-08-24
-- evidence: caught two real self-authored bugs in the permission check (checking the function reference `if (!requireDM)` instead of its result, then `await !requireDM()` operator-precedence issue) purely through reasoning about what each expression evaluates to; verified the fix genuinely blocks unauthenticated requests via a real curl test returning 403; on the Races POST rep, correctly identified a third variant (a missing `await` entirely, leaving `permission` as an always-truthy Promise) when asked what the un-awaited value actually was; on 2026-08-24, after a week gap, correctly recalled unprompted that a hidden Nav link is not real protection since a user could just enter the URL directly — the backend is what actually has to enforce it
+- evidence: caught two real self-authored bugs in the permission check (checking the function reference `if (!requireDM)` instead of its result, then `await !requireDM()` operator-precedence issue) purely through reasoning about what each expression evaluates to; verified the fix genuinely blocks unauthenticated requests via a real curl test returning 403; on the Races POST rep, correctly identified a third variant (a missing `await` entirely, leaving `permission` as an always-truthy Promise) when asked what the un-awaited value actually was; on 2026-08-24, after a week gap, correctly recalled unprompted that a hidden Nav link is not real protection since a user could just enter the URL directly — the backend is what actually has to enforce it; on 2026-09-13, wrote `const permission = requireDM();` in weapons/route.ts's POST with a missing `await` (same category of bug as the original 2026-08-17 incident) — self-corrected once asked to compare against every other route's version of this check
 
 ## react-forms
 - status: practicing
@@ -395,7 +395,7 @@
 - depends-on: nextjs-routing
 - introduced: 2026-08-17
 - last-reviewed: 2026-08-24
-- evidence: independently wrote the PUT handler's params type ({ params }: { params: Promise<{ id: string }> }) correctly on the second attempt after one real self-caught TS7031 error; reused the pattern correctly for DELETE once shown the signature mismatch; on the Races rep, wrote a complete, correct races/[id]/route.ts (both PUT and DELETE, both correct params typing) entirely unaided, zero errors; on 2026-08-24, after diagnosing through real debugging that spells/[id]/route.ts had never been built at all (Spells only got GET/POST back in Section 10, before edit/delete UI existed), wrote the entire file themselves — correct params typing, permission check, sanitization, and Prisma calls — entirely unaided, before even being asked whether they wanted to write it themselves or look at a reference first; on 2026-08-24, gave an imprecise answer about where a dynamic route's id actually comes from (conceptually right — "the item we select" — but missed the URL-segment-to-params mechanism), needed the precise plumbing explained
+- evidence: independently wrote the PUT handler's params type ({ params }: { params: Promise<{ id: string }> }) correctly on the second attempt after one real self-caught TS7031 error; reused the pattern correctly for DELETE once shown the signature mismatch; on the Races rep, wrote a complete, correct races/[id]/route.ts (both PUT and DELETE, both correct params typing) entirely unaided, zero errors; on 2026-08-24, after diagnosing through real debugging that spells/[id]/route.ts had never been built at all (Spells only got GET/POST back in Section 10, before edit/delete UI existed), wrote the entire file themselves — correct params typing, permission check, sanitization, and Prisma calls — entirely unaided, before even being asked whether they wanted to write it themselves or look at a reference first; on 2026-08-24, gave an imprecise answer about where a dynamic route's id actually comes from (conceptually right — "the item we select" — but missed the URL-segment-to-params mechanism), needed the precise plumbing explained; on 2026-09-13, wrote weapons/[id]/route.ts's PUT with the wrong params type (`{ params } : Promise<{id : string}>`, missing the wrapping object) while DELETE right below it had the correct shape — self-corrected once asked to compare the two signatures directly
 
 ## rich-text-editor
 - status: practicing
@@ -485,8 +485,8 @@
 - status: understood
 - depends-on: npm-package-json
 - introduced: 2026-08-17
-- last-reviewed: 2026-08-24
-- evidence: correctly judged a deepmerge-ts "high severity" audit warning as safe to ignore on 2026-08-17 (during TipTap install) and again independently a second time (during Vitest install), tracing both times into Prisma's own CLI config-loading code that never runs in the deployed app, and correctly refusing the "fix" since it would downgrade Prisma from v7 to v6; on 2026-08-24, correctly generalized this same reasoning to a genuinely new, more complex situation — a 4-group audit report mixing two real/reachable/fixable issues (@tiptap/core, fast-uri) with two unreachable Prisma-CLI-only ones (deepmerge-ts, mysql2) — correctly separating which to fix and which to leave alone unprompted, a clean multi-day retrieval of the same underlying judgment skill
+- last-reviewed: 2026-09-12
+- evidence: correctly judged a deepmerge-ts "high severity" audit warning as safe to ignore on 2026-08-17 (during TipTap install) and again independently a second time (during Vitest install), tracing both times into Prisma's own CLI config-loading code that never runs in the deployed app, and correctly refusing the "fix" since it would downgrade Prisma from v7 to v6; on 2026-08-24, correctly generalized this same reasoning to a genuinely new, more complex situation — a 4-group audit report mixing two real/reachable/fixable issues (@tiptap/core, fast-uri) with two unreachable Prisma-CLI-only ones (deepmerge-ts, mysql2) — correctly separating which to fix and which to leave alone unprompted, a clean multi-day retrieval of the same underlying judgment skill; on 2026-09-12, after installing @vercel/blob surfaced a critical Next.js RCE (specifically in the Image Optimization API — directly reachable code, unlike the past two Prisma-CLI-only situations) alongside the same familiar deepmerge-ts/mysql2 pair, correctly recognized deepmerge-ts/mysql2 as the same unreachable pattern, and correctly agreed to fix the real ones once the reachability distinction was named; initially reached straight for `npm audit fix` without inspecting details first (a real process gap this time, corrected by being walked through `npm audit` on its own), but once shown the report, correctly reasoned that `--force` was unsafe here (it would bundle in the Prisma downgrade) and needed a targeted `npm install next@16.3.5` instead
 
 ## edit-vs-create-forms
 - status: practicing
@@ -496,40 +496,46 @@
 - evidence: built ItemEditForm.tsx correctly and entirely unaided given only the two-difference explanation (state initialized from item.name/type/description instead of "", PUT to `/api/items/${item.id}` instead of POST to /api/items) — zero bugs, correct on the first save; on the Races rep, correctly built the full pattern (thread isDM, RaceEditForm, Delete button, wiring) in one pass, with one real self-corrected bug — the fetch URLs were copy-pasted from Items and still pointed at /api/items instead of /api/races
 
 ## file-storage
-- status: introduced
+- status: practicing
 - depends-on: environment-variables
 - introduced: 2026-09-10
-- last-reviewed: 2026-09-10
-- evidence: during v3 planning, correctly reasoned that a database isn't an efficient place for image files and that dedicated file storage is needed; compared Vercel Blob against Cloudinary and correctly articulated the tradeoff (staying on one platform vs. Cloudinary's bundled image transformations) before choosing Vercel Blob
+- last-reviewed: 2026-09-12
+- evidence: during v3 planning, correctly reasoned that a database isn't an efficient place for image files and that dedicated file storage is needed; compared Vercel Blob against Cloudinary and correctly articulated the tradeoff (staying on one platform vs. Cloudinary's bundled image transformations) before choosing Vercel Blob; on 2026-09-12, built the real thing end to end — created a Blob store, wired its token into .env, and got a real image uploaded and served back through it
 
 ## vercel-blob
-- status: introduced
+- status: practicing
 - depends-on: file-storage
 - introduced: 2026-09-10
-- last-reviewed: 2026-09-10
-- evidence: locked in as the v3 file storage choice specifically to avoid a second external account beyond the Vercel/Neon/Discord ones already in play; asked a sharp, specific question (does it do automatic resizing like Cloudinary?) that led to verifying the real docs together rather than assuming
+- last-reviewed: 2026-09-12
+- evidence: locked in as the v3 file storage choice specifically to avoid a second external account beyond the Vercel/Neon/Discord ones already in play; asked a sharp, specific question (does it do automatic resizing like Cloudinary?) that led to verifying the real docs together rather than assuming; on 2026-09-12, correctly wrote the DM-only permission check in the real upload route unaided; hit a real "Cannot use public access on a private store" error, correctly reasoned through why private access wouldn't work for site-wide-visible images (a Player couldn't just load a private blob URL), and correctly identified the store's access setting (not the code) as what needed to change; also correctly diagnosed a real object-vs-string bug (stored the whole put() response instead of its .url field) once asked to think about the shape of the parsed response, and correctly recalled dot-access from prior work (character.race.name, spell.type) to fix it
 
 ## image-optimization
-- status: introduced
+- status: practicing
 - depends-on: file-storage
 - introduced: 2026-09-10
-- last-reviewed: 2026-09-10
-- evidence: shown that next/image (already part of the existing Next.js app) provides automatic resizing/format conversion at display time regardless of storage location, closing the gap between Vercel Blob and Cloudinary's bundled features; not yet built or seen working live
+- last-reviewed: 2026-09-12
+- evidence: shown that next/image (already part of the existing Next.js app) provides automatic resizing/format conversion at display time regardless of storage location, closing the gap between Vercel Blob and Cloudinary's bundled features; on 2026-09-12, built and saw it working live for the first time — wrote the actual <Image> element (src/alt/width/height) unaided; initially misread a real Network tab request as hitting the blob URL directly, but once shown the full request URL, correctly parsed /_next/image?url=...&w=...&q=... as Next's own optimization proxy with the original URL passed as a parameter, not a direct fetch; separately hit a real config bug (a stray trailing slash on the remotePatterns hostname value) — predicted incorrectly that it would "try to go to every path and error out," but correctly diagnosed the real cause (exact hostname string matching) once shown the actual error, and fixed it unaided
 
 ## many-to-many-relations
-- status: introduced
+- status: practicing
 - depends-on: foreign-keys, relational-database-design
 - introduced: 2026-09-10
-- last-reviewed: 2026-09-10
-- evidence: correctly reasoned through the real tradeoff between a shared WeaponTag model (many-to-many, edit a definition once) versus a simpler per-weapon duplicated list, and chose the shared model unprompted once the tradeoff was named — genuine judgment, not yet built
+- last-reviewed: 2026-09-13
+- evidence: correctly reasoned through the real tradeoff between a shared WeaponTag model (many-to-many, edit a definition once) versus a simpler per-weapon duplicated list, and chose the shared model unprompted once the tradeoff was named — genuine judgment, not yet built; on 2026-09-13, built the real thing — wrote both mirror array fields (tags/weapons) correctly unaided; used `connect` correctly in the POST route (given directly, new syntax); correctly reasoned through *why* PUT needed `set` instead of `connect` (removing a tag must actually remove it, not just leave it) once the distinction was named, and applied it correctly in the file; verified live that `set` genuinely replaces the full tag list, not just adds to it
 
 ## join-tables
-- status: seed
+- status: introduced
 - depends-on: many-to-many-relations
-- introduced: —
-- last-reviewed: —
-- evidence: —
-- note: seeded 2026-09-10 for v3 Section 16 — the hidden table Prisma creates to actually implement a many-to-many relation between Weapon and WeaponTag
+- introduced: 2026-09-13
+- last-reviewed: 2026-09-13
+- evidence: shown the real `_WeaponToWeaponTag` table Prisma generated (columns A/B, each a foreign key) after the Weapon/WeaponTag migration; correctly answered a free-recall check (2 rows for one weapon with two tags); later verified unprompted-style (asked to predict, then confirmed) that deleting a Weapon cascades to remove its join-table rows too, via ON DELETE CASCADE
+
+## npm-version-pinning
+- status: introduced
+- depends-on: npm-package-json
+- introduced: 2026-09-12
+- last-reviewed: 2026-09-12
+- evidence: shown the `package@version` syntax (npm install next@16.3.5) to target an exact version rather than whatever "latest" resolves to, after correctly reasoning that a plain `npm install next` would grab the newest published version instead of the specific patched one the audit named; not yet used unprompted
 
 ## master-detail-layout
 - status: seed

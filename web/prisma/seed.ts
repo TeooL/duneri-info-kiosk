@@ -40,6 +40,12 @@ async function main() {
         description: "A bolt of water"
       }
   })
+  await prisma.weaponTag.create({
+    data: { name: "Reach", description: "Your weapon has +1 tile range" },
+  })
+  await prisma.weaponTag.create({
+    data: { name: "Two-Handed", description: "Requires both hands to wield" },
+  })
   console.log("Seed data created!");
 }
 

@@ -185,20 +185,29 @@
 - Spell's optional Summon Stat Block: kept as plain optional text for v3 — a real structured stat-block model is deferred to a future version
 - UI: replacing ExpandableEntry's click-to-expand pattern with a split view (list on the left, detail panel on the right) across every content type; item comparison view stays parked until this and the new models are solid
 
-### 15. Image upload infrastructure  [ ] not started
+### 15. Image upload infrastructure  [x] done
 **Deliverable:** A test image can be uploaded through a form and displayed on a page, automatically optimized by Next.js.
 **Concepts:** file-storage, vercel-blob, image-optimization, environment-variables
+**Real incidents (2026-09-12):** the first Blob store was created Private, which broke uploads (public access is required for next/image to load a blob URL directly) — access mode turned out to be locked at store creation, so a second store had to be created Public instead, a real correction on my (the AI's) part, not the learner's; separately, `npm install @vercel/blob` surfaced a critical Next.js RCE specifically in the Image Optimization API (not just the usual unreachable Prisma-CLI noise), fixed by pinning `next@16.3.5` directly rather than a blind `audit fix --force`
 
-- [ ] Create a Vercel Blob store in the Vercel dashboard and add the token it gives you to .env
-- [ ] Install the @vercel/blob package
-- [ ] Build a minimal server-side upload API route that takes a file and stores it in Blob, returning its URL
-- [ ] Build a simple test upload form (file input + submit) that calls the route
-- [ ] Display the uploaded image with next/image and confirm it's optimized
-- [ ] Commit
+- [x] Create a Vercel Blob store in the Vercel dashboard and add the token it gives you to .env
+- [x] Install the @vercel/blob package
+- [x] Build a minimal server-side upload API route that takes a file and stores it in Blob, returning its URL
+- [x] Build a simple test upload form (file input + submit) that calls the route
+- [x] Display the uploaded image with next/image and confirm it's optimized
+- [x] Commit (815897a)
 
-### 16. Weapon backend  [ ] not started
+### 16. Weapon backend  [x] done
 **Deliverable:** A working Weapon API (GET searchable, DM-only POST/PUT/DELETE) with a real WeaponTag many-to-many relation, verified via direct requests.
 **Concepts:** many-to-many-relations, join-tables, prisma-schema, nextjs-api-routes, filtering-with-prisma
+**Real incident (2026-09-13):** Prisma Studio's UI genuinely failed to seed WeaponTag rows twice (auto-generated cuid() id came back empty), unrelated to anything done wrong — routed around it by seeding through real code instead, same fallback pattern used for the two real Spell entries
+
+- [x] Design and add the Weapon and WeaponTag models (many-to-many relation) to schema.prisma, run the migration
+- [x] Seed a couple of real WeaponTag rows (e.g. "Reach", "Two-Handed")
+- [x] Build the Weapon API GET route (searchable)
+- [x] Build the Weapon API POST route (DM-only, creating a Weapon with tags attached)
+- [x] Build the Weapon [id] API route (DM-only PUT/DELETE)
+- [x] Verify all routes via direct requests, then commit
 
 ### 17. Weapon frontend  [ ] not started
 **Deliverable:** A Weapons page where a DM can create a weapon with an uploaded icon and selected tags, and players can browse/search them.
