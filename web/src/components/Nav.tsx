@@ -12,6 +12,7 @@ export default async function Nav() {
       <Link href="/lore">Lore</Link>
       <Link href="/characters">Characters</Link>
       <Link href="/spells">Spells</Link>
+      <Link href="/weapons">Weapons</Link>
       <div className="ml-auto">{session ? (
         <form action={async () => { "use server"; await signOut(); }}>
           <p>Signed in as {session.user?.name} {(session.user as any).role}</p>

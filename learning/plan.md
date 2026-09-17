@@ -213,6 +213,13 @@
 **Deliverable:** A Weapons page where a DM can create a weapon with an uploaded icon and selected tags, and players can browse/search them.
 **Concepts:** reusable-components, controlled-inputs, edit-vs-create-forms, file-storage
 
+- [ ] Build the Weapons page + WeaponSearch component (browse/search, same pattern as Items/Spells)
+- [ ] Build WeaponCreateForm's basic fields (DM-only, controlled inputs, no icon/tags yet)
+- [ ] Add icon upload to WeaponCreateForm, reusing the Section 15 upload pipeline
+- [ ] Add tag selection (checkboxes for existing WeaponTags) to WeaponCreateForm
+- [ ] Build WeaponEditForm + Delete button, wire into WeaponSearch
+- [ ] Commit
+
 ### 18. Spell model revision  [ ] not started
 **Deliverable:** The Spell model, its migration, and its routes/forms reflect the DM's real fields (school, cast time, components, mana cost, icon, etc.), with the two existing real spells safely preserved.
 **Concepts:** database-migrations, prisma-schema

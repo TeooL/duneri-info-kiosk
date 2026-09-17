@@ -25,11 +25,11 @@
 - evidence: —
 
 ## typescript
-- status: introduced
+- status: practicing
 - depends-on: javascript
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-05
-- evidence: correctly explained TypeScript as "JavaScript with typing enforced to prevent more errors" when asked directly in /plan-journey
+- last-reviewed: 2026-09-14
+- evidence: correctly explained TypeScript as "JavaScript with typing enforced to prevent more errors" when asked directly in /plan-journey; on 2026-09-14, hit a real type error passing Prisma's Weapon results into a hand-written Weapon type, correctly read the error message themselves and asked a sharp diagnostic question ("am I supposed to make some of the types optional, like in the prisma model?") rather than guessing at a fix; once shown the distinction (Prisma's nullable fields are `string | null`, always present — not `string | undefined` via `?`, which means possibly absent), applied the fix correctly across all four affected fields unaided
 
 ## react
 - status: seed
@@ -380,8 +380,8 @@
 - status: practicing
 - depends-on: react-forms
 - introduced: 2026-08-17
-- last-reviewed: 2026-08-24
-- evidence: correctly applied the value/onChange pattern for all three fields, and correctly identified textarea as the more semantically correct element than input for a multi-line description field; genuinely struggled with the <select>/<option> variant (put the races.map() inside the onChange prop instead of as children), needed the corrected snippet shown directly rather than self-correcting — a real gap, not yet solid on this specific form-element variant; on 2026-08-24, a real conceptual mix-up — asked whether "controlled" meant input validation/permission-checking, conflating a React state-management pattern with an unrelated security concept; corrected with a plain refresher (value/onChange = React owns the displayed value, nothing to do with sanitizing or permissions); later the same day, correctly wrote a numeric controlled input for Spell's tier field (onChange={(e) => setTier(Number(e.target.value))}) unaided, correctly applying the string-to-number conversion after just being told why it's needed
+- last-reviewed: 2026-09-14
+- evidence: correctly applied the value/onChange pattern for all three fields, and correctly identified textarea as the more semantically correct element than input for a multi-line description field; genuinely struggled with the <select>/<option> variant (put the races.map() inside the onChange prop instead of as children), needed the corrected snippet shown directly rather than self-correcting — a real gap, not yet solid on this specific form-element variant; on 2026-08-24, a real conceptual mix-up — asked whether "controlled" meant input validation/permission-checking, conflating a React state-management pattern with an unrelated security concept; corrected with a plain refresher (value/onChange = React owns the displayed value, nothing to do with sanitizing or permissions); later the same day, correctly wrote a numeric controlled input for Spell's tier field (onChange={(e) => setTier(Number(e.target.value))}) unaided, correctly applying the string-to-number conversion after just being told why it's needed; on 2026-09-14, after a 3-week gap, gave a clean, accurate unprompted definition — "tracked by react state...instead of tracking what the user types, it is managed by state variables" — no refresher needed
 
 ## http-post-put-delete
 - status: practicing
