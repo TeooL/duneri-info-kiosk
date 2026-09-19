@@ -318,7 +318,7 @@
 - depends-on: javascript
 - introduced: 2026-08-14
 - last-reviewed: 2026-09-09
-- evidence: filled in the fetch/setItems call in ItemSearch.tsx (hooks written by me); independently wrote useState/useRef declarations themselves in RaceSearch.tsx after one hint; did the same fully unprompted for LoreSearch.tsx; on 2026-09-09, added a second piece of state (category) and an extracted shared fetch helper to combine two filters — on ItemSearch, wrapped an already-correct Array.from(new Set(...)) in an extra unnecessary [], self-corrected once asked what that did to the shape; on SpellSearch, wrote the new category-aware fetchSpells helper correctly but left the pre-existing handleChange on its own separate, stale fetch call — a real consistency gap between old and new code, caught via a concrete before/after test rather than by inspection alone
+- evidence: filled in the fetch/setItems call in ItemSearch.tsx (hooks written by me); independently wrote useState/useRef declarations themselves in RaceSearch.tsx after one hint; did the same fully unprompted for LoreSearch.tsx; on 2026-09-09, added a second piece of state (category) and an extracted shared fetch helper to combine two filters — on ItemSearch, wrapped an already-correct Array.from(new Set(...)) in an extra unnecessary [], self-corrected once asked what that did to the shape; on SpellSearch, wrote the new category-aware fetchSpells helper correctly but left the pre-existing handleChange on its own separate, stale fetch call — a real consistency gap between old and new code, caught via a concrete before/after test rather than by inspection alone; on 2026-09-17, built a genuinely new state shape unaided in WeaponEditForm — an array of selected tag ids initialized via `weapon.tags.map((tag) => tag.id)` (extracting ids from a prop, not starting empty like the create form), reusing the includes/filter/spread toggle pattern shown once on WeaponCreateForm correctly on the second, independent application
 
 ## sessions
 - status: practicing
@@ -493,7 +493,7 @@
 - depends-on: react-forms, controlled-inputs
 - introduced: 2026-08-24
 - last-reviewed: 2026-08-24
-- evidence: built ItemEditForm.tsx correctly and entirely unaided given only the two-difference explanation (state initialized from item.name/type/description instead of "", PUT to `/api/items/${item.id}` instead of POST to /api/items) — zero bugs, correct on the first save; on the Races rep, correctly built the full pattern (thread isDM, RaceEditForm, Delete button, wiring) in one pass, with one real self-corrected bug — the fetch URLs were copy-pasted from Items and still pointed at /api/items instead of /api/races
+- evidence: built ItemEditForm.tsx correctly and entirely unaided given only the two-difference explanation (state initialized from item.name/type/description instead of "", PUT to `/api/items/${item.id}` instead of POST to /api/items) — zero bugs, correct on the first save; on the Races rep, correctly built the full pattern (thread isDM, RaceEditForm, Delete button, wiring) in one pass, with one real self-corrected bug — the fetch URLs were copy-pasted from Items and still pointed at /api/items instead of /api/races; on 2026-09-17, applied the pattern to a genuinely harder case (WeaponEditForm, with icon re-upload and tag pre-selection layered on top of the usual state-init-from-prop + PUT shape) with zero bugs in either the state initialization or the PUT call — only leftover cleanup (a stray unused import, a stale TODO comment) needed pointing out, not real logic
 
 ## file-storage
 - status: practicing
@@ -506,8 +506,8 @@
 - status: practicing
 - depends-on: file-storage
 - introduced: 2026-09-10
-- last-reviewed: 2026-09-12
-- evidence: locked in as the v3 file storage choice specifically to avoid a second external account beyond the Vercel/Neon/Discord ones already in play; asked a sharp, specific question (does it do automatic resizing like Cloudinary?) that led to verifying the real docs together rather than assuming; on 2026-09-12, correctly wrote the DM-only permission check in the real upload route unaided; hit a real "Cannot use public access on a private store" error, correctly reasoned through why private access wouldn't work for site-wide-visible images (a Player couldn't just load a private blob URL), and correctly identified the store's access setting (not the code) as what needed to change; also correctly diagnosed a real object-vs-string bug (stored the whole put() response instead of its .url field) once asked to think about the shape of the parsed response, and correctly recalled dot-access from prior work (character.race.name, spell.type) to fix it
+- last-reviewed: 2026-09-19
+- evidence: locked in as the v3 file storage choice specifically to avoid a second external account beyond the Vercel/Neon/Discord ones already in play; asked a sharp, specific question (does it do automatic resizing like Cloudinary?) that led to verifying the real docs together rather than assuming; on 2026-09-12, correctly wrote the DM-only permission check in the real upload route unaided; hit a real "Cannot use public access on a private store" error, correctly reasoned through why private access wouldn't work for site-wide-visible images (a Player couldn't just load a private blob URL), and correctly identified the store's access setting (not the code) as what needed to change; also correctly diagnosed a real object-vs-string bug (stored the whole put() response instead of its .url field) once asked to think about the shape of the parsed response, and correctly recalled dot-access from prior work (character.race.name, spell.type) to fix it; on 2026-09-13 through 09-19, integrated the real upload flow into WeaponCreateForm — hit a genuine sequencing bug (POSTing the weapon before the upload had even finished, so `icon` was always null) and, once walked through it, correctly reordered the calls; then, when the same stale-state bug showed up a second time (using `icon` on the line right after `setIcon(...)`), correctly answered when asked directly that state only updates on the next render, not immediately; independently applied the same upload pattern a second time in WeaponEditForm, adding real new judgment — only re-upload if a new file was actually selected, otherwise keep the existing icon URL
 
 ## image-optimization
 - status: practicing
@@ -529,6 +529,13 @@
 - introduced: 2026-09-13
 - last-reviewed: 2026-09-13
 - evidence: shown the real `_WeaponToWeaponTag` table Prisma generated (columns A/B, each a foreign key) after the Weapon/WeaponTag migration; correctly answered a free-recall check (2 rows for one weapon with two tags); later verified unprompted-style (asked to predict, then confirmed) that deleting a Weapon cascades to remove its join-table rows too, via ON DELETE CASCADE
+
+## multi-select-checkbox-pattern
+- status: practicing
+- depends-on: react-state, jsx
+- introduced: 2026-09-17
+- last-reviewed: 2026-09-17
+- evidence: shown the array-of-selected-ids toggle pattern (includes/filter/spread) for the first time on WeaponCreateForm; genuinely struggled with wiring the checkbox itself — wrote `<input>tag.name</input>` (input is a void element, can't have children) and `onChange={() => handleTagToggle}` (referenced the function without calling it), both needing direct correction since `<label>` wrapping a checkbox was new territory for this project; on the WeaponEditForm rep two days later, applied the whole pattern (including correct `<label>` wrapping) with zero repeat of either bug, this time seeded from `weapon.tags` instead of starting empty
 
 ## npm-version-pinning
 - status: introduced

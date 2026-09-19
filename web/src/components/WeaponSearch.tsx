@@ -2,11 +2,12 @@
 
 import React, { useRef, useState } from "react";
 import ExpandableEntry from "./ExpandableEntry";
+import WeaponEditForm from "./WeaponEditForm";
 
 type WeaponTag = {id: string, name : string, description: string}
 type Weapon = {id: string, name : string, subname : string | null, icon : string | null, damageType : string, tags: WeaponTag[], specialSkill : string | null, proficiencySkill : string | null, rarity: string, weight: number, price: string, description: string}
 
-export default function WeaponSearch({initialWeapons, isDM} : {initialWeapons : Weapon[]; isDM: boolean}) {
+export default function WeaponSearch({initialWeapons, isDM, weaponTags} : {initialWeapons : Weapon[]; isDM: boolean; weaponTags : WeaponTag[]}) {
     const [weapons, setWeapons] = useState(initialWeapons);
     const [q, setQ] = useState("");
     const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -42,8 +43,10 @@ export default function WeaponSearch({initialWeapons, isDM} : {initialWeapons : 
                         <p>Tags: {weapon.tags.map((tag) => tag.name).join(", ")}</p>
                         {isDM &&
                         <>
+                            <WeaponEditForm weapon={weapon} weaponTags={weaponTags} />
                             <button onClick={() => handleDelete(weapon.id)}>Delete</button>
                         </>}
+                        
                     </ExpandableEntry>
                 ))}
             </ul>

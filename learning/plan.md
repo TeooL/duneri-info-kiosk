@@ -209,16 +209,17 @@
 - [x] Build the Weapon [id] API route (DM-only PUT/DELETE)
 - [x] Verify all routes via direct requests, then commit
 
-### 17. Weapon frontend  [ ] not started
+### 17. Weapon frontend  [x] done
 **Deliverable:** A Weapons page where a DM can create a weapon with an uploaded icon and selected tags, and players can browse/search them.
 **Concepts:** reusable-components, controlled-inputs, edit-vs-create-forms, file-storage
+**Real incidents (2026-09-13 to 09-19):** a Prisma nullable-field type mismatch (`string | null` vs `?`) self-diagnosed on sight; a genuine icon-upload sequencing bug (weapon POSTed before the upload finished, so icon was always null) and a repeat of the classic "state doesn't update until next render" bug, both walked through and fixed; one leftover piece of junk test data ("Test" weapon with a literal non-URL icon string from before the upload feature existed) caused a real next/image crash, cleaned up via Prisma Studio delete
 
-- [ ] Build the Weapons page + WeaponSearch component (browse/search, same pattern as Items/Spells)
-- [ ] Build WeaponCreateForm's basic fields (DM-only, controlled inputs, no icon/tags yet)
-- [ ] Add icon upload to WeaponCreateForm, reusing the Section 15 upload pipeline
-- [ ] Add tag selection (checkboxes for existing WeaponTags) to WeaponCreateForm
-- [ ] Build WeaponEditForm + Delete button, wire into WeaponSearch
-- [ ] Commit
+- [x] Build the Weapons page + WeaponSearch component (browse/search, same pattern as Items/Spells)
+- [x] Build WeaponCreateForm's basic fields (DM-only, controlled inputs, no icon/tags yet)
+- [x] Add icon upload to WeaponCreateForm, reusing the Section 15 upload pipeline
+- [x] Add tag selection (checkboxes for existing WeaponTags) to WeaponCreateForm
+- [x] Build WeaponEditForm + Delete button, wire into WeaponSearch
+- [x] Commit
 
 ### 18. Spell model revision  [ ] not started
 **Deliverable:** The Spell model, its migration, and its routes/forms reflect the DM's real fields (school, cast time, components, mana cost, icon, etc.), with the two existing real spells safely preserved.

@@ -1,12 +1,16 @@
 "use client"
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import RichTextEditor from "./RichTextEditor";
+import Image from "next/image";
 
-export default function WeaponCreateForm() {
+type WeaponTag = {id: string; name: string, description: string}
+
+export default function WeaponCreateForm({ weaponTags } : {weaponTags : WeaponTag[]}) {
+    const inputFileRef = useRef<HTMLInputElement>(null);
     const [name, setName] = useState("");
     const [subname, setSubname] = useState("");
-    const [icon, setIcon] = useState("");
+    const [icon, setIcon] = useState<string | null>(null);
     const [damageType, setDamageType] = useState("");
     const [specialSkill, setSpecialSkill] = useState("");
     const [proficiencySkill, setProficiencySkill] = useState("");
@@ -14,18 +18,37 @@ export default function WeaponCreateForm() {
     const [weight, setWeight] = useState(0);
     const [price, setPrice] = useState("");
     const [description, setDescription] = useState("")
+    const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
+
+    function handleTagToggle(tagId: string) {
+        if (selectedTagIds.includes(tagId)) {
+            setSelectedTagIds(selectedTagIds.filter((id) => id !== tagId));
+        } else {
+            setSelectedTagIds([...selectedTagIds, tagId]);
+        }
+    }
 
     async function handleSubmit(e : React.FormEvent) {
         e.preventDefault();
+
+        const file = inputFileRef.current?.files?.[0];
+        if (!file) return;
+        const res = await fetch(`/api/upload?filename=${file.name}`, {
+            method: "POST",
+            body: file,
+        })
+        const uploadResult = await res.json();
+        const iconURL = uploadResult.url
+        setIcon(iconURL)
         await fetch("/api/weapons", {
             method: "POST",
             headers: {"Content-Type": "application/json" },
-            body: JSON.stringify({ name, subname, icon, damageType, tagIds : [], specialSkill, proficiencySkill, rarity, weight, price, description}),
+            body: JSON.stringify({ name, subname, icon : iconURL, damageType, tagIds : selectedTagIds, specialSkill, proficiencySkill, rarity, weight, price, description}),
         })
         setName("");
         setSubname("");
-        setIcon("");
         setDamageType("");
+        setSelectedTagIds([]);
         setSpecialSkill("");
         setProficiencySkill("");
         setRarity("");
@@ -39,8 +62,15 @@ export default function WeaponCreateForm() {
         <form onSubmit={handleSubmit}>
             <input className="border rounded-lg p-2 bg-transparent" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
             <input className="border rounded-lg p-2 bg-transparent" value={subname} onChange={(e) => setSubname(e.target.value)} placeholder="Subname" />
-            <input className="border rounded-lg p-2 bg-transparent" value={icon} onChange={(e) => setIcon(e.target.value)} placeholder="Icon" />
+            <input className="border rounded-lg p-2 bg-transparent" type="file" ref={inputFileRef} accept="image/*" required />
+            {icon && <Image src={icon} alt="Uploaded image from DM" width={500} height={500} />}
             <input className="border rounded-lg p-2 bg-transparent" value={damageType} onChange={(e) => setDamageType(e.target.value)} placeholder="Damage Type" />
+            {weaponTags.map((tag) => (
+                <label key={tag.id}>
+                    <input type="checkbox" checked={selectedTagIds.includes(tag.id)} onChange={() => handleTagToggle(tag.id)}/>
+                    {tag.name}
+                </label>
+            ))}
             <input className="border rounded-lg p-2 bg-transparent" value={specialSkill} onChange={(e) => setSpecialSkill(e.target.value)} placeholder="Special Skill" />
             <input className="border rounded-lg p-2 bg-transparent" value={proficiencySkill} onChange={(e) => setProficiencySkill(e.target.value)} placeholder="Proficiency Skill" />
             <input className="border rounded-lg p-2 bg-transparent" value={rarity} onChange={(e) => setRarity(e.target.value)} placeholder="Rarity" />

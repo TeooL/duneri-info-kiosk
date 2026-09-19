@@ -8,15 +8,16 @@ import { requireDM } from "@/lib/requireDM";
 export default async function WeaponPage() {
     const weapons = await prisma.weapon.findMany({include: {tags : true}});
     const isDM = await requireDM();
+    const tags = await prisma.weaponTag.findMany();
 
     return (
         <main>
             <Nav />
             <PageHeader title="Weapons" />
             <p>This page is for the Weapons Section of Duneri</p>
-            <WeaponSearch initialWeapons={weapons} isDM={isDM} />
+            <WeaponSearch initialWeapons={weapons} isDM={isDM} weaponTags={tags} />
             <div className="h-6" />
-            {(isDM) && <WeaponCreateForm />}
+            {(isDM) && <WeaponCreateForm weaponTags={tags}/>}
         </main>
     )
 }
