@@ -29,8 +29,17 @@ model Item {
 model Spell {
   id          String @id @default(cuid())
   name        String
-  type        String
+  school      String
   tier        Int
+  icon        String?
+  castTime    String
+  castRange   String
+  targeting   String
+  components  String
+  manaCost    Int
+  duration    String
+  relatedEffectDescription  String?
+  summonStatBlock  String?
   description String
 }
 

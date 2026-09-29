@@ -221,9 +221,22 @@
 - [x] Build WeaponEditForm + Delete button, wire into WeaponSearch
 - [x] Commit
 
-### 18. Spell model revision  [ ] not started
+### 18. Spell model revision  [x] done
 **Deliverable:** The Spell model, its migration, and its routes/forms reflect the DM's real fields (school, cast time, components, mana cost, icon, etc.), with the two existing real spells safely preserved.
 **Concepts:** database-migrations, prisma-schema
+
+- [x] Decide the new Spell shape (which fields, required vs optional, `type` → `school`, what happens to `tier`) and update schema.prisma
+- [x] Generate the migration with `--create-only`, read and hand-edit the SQL so existing rows survive (rename instead of drop, safe defaults for new required columns), then apply it and verify Firebolt/Waterbolt are intact
+  - 4 live spells actually existed (Firebolt, Waterbolt, "Magic Bolt (EDIT)", Fireball), all survived; new required text fields are now '' and manaCost is 0 until the DM fills them in via the edit form
+  - **known live-site impact (2026-09-22):** dev and prod share one Neon database, so the deployed Spells page (old code reads `type`) errors until the new code is deployed; learner chose to accept a Spells-only outage rather than do an expand/contract migration. Do not commit/push until tasks 3-5 are done.
+- [x] Update the Spells API routes (GET search fields, POST, PUT) to the new fields
+  - only GET needed changes (renamed `type` → `school` in the OR search and category filter); POST/PUT are generic pass-throughs of `data` and needed nothing, correctly reasoned unprompted; verified live via a direct /api/spells request
+- [x] Update SpellCreateForm with the new fields, including icon upload
+  - verified live; two junk test spells were created while testing (one with an icon, one without) and should be deleted before the section's commit (needs the edit/delete UI from the next task)
+- [x] Update SpellEditForm and SpellSearch (types, summary line, category filter now on school)
+  - real bug found in SpellEditForm: a local `let iconURL = null` shadowed the icon state, silently wiping every existing icon on any edit with no new file chosen — caught by predicting the value before running, then fixed by initializing from state (mirroring WeaponEditForm's naming); JSX for SpellEditForm and the type/school rename in SpellSearch were written by the AI at the learner's request, citing repetition across 5+ prior forms
+  - verified live: icon preserved on edit with no new file, school dropdown filters correctly, both junk test spells deleted via the now-working Delete button
+- [ ] Commit
 
 ### 19. Classes page  [ ] not started
 **Deliverable:** A simple Classes page exists with real class data, following the same content-type pattern as Items/Races/Spells.
