@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import ExpandableEntry from "./ExpandableEntry";
 import ItemEditForm from "./ItemEditForm";
-
 
 type Item = { id: string; name: string; type: string; description: string };
 
@@ -11,6 +9,7 @@ export default function ItemSearch({ initialItems, isDM }: { initialItems: Item[
   const [items, setItems] = useState(initialItems);
   const [q, setQ] = useState("");
   const [category, setCategory] = useState("");
+  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const categories = Array.from(new Set(initialItems.map(item => item.type)));
@@ -43,27 +42,37 @@ export default function ItemSearch({ initialItems, isDM }: { initialItems: Item[
   }
 
   return (
-    <div>
-      <input type="text" placeholder="Search races..." onChange={handleChange} />
-      <select value={category} onChange={handleCategoryChange}>
-        <option value="">All</option>
-        {categories.map((category) => (
-          <option key={category} value={category}>
-            {category}
-          </option>
-        ))}
-      </select>
-      <ul>
-        {items.map((item) => (
-          <ExpandableEntry key={item.id} summary={item.name}>
-            <div dangerouslySetInnerHTML={{__html: item.description}}></div>
-            {isDM && 
-            <><ItemEditForm item={item} />
-              <button onClick={() => handleDelete(item.id)}>Delete</button>
-            </>}
-          </ExpandableEntry>
-        ))}
-      </ul>
+    <div className="flex gap-6">
+      <div className="w-1/2">
+        <input type="text" placeholder="Search items..." onChange={handleChange} />
+        <select value={category} onChange={handleCategoryChange}>
+          <option value="">All</option>
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+        <ul>
+          {items.map((item) => (
+            <li key={item.id} onClick={() => setSelectedItem(item)}>{item.name}</li>
+          ))}
+        </ul>
+      </div>
+      <div className="w-1/2 border rounded-lg p-4">
+      {selectedItem ? ( 
+        <div>
+          <div>{selectedItem.name}</div>
+          <div dangerouslySetInnerHTML={{__html:selectedItem.description}}></div>
+        {isDM && 
+          <div>
+            <ItemEditForm key={selectedItem.id} item={selectedItem}/>
+            <button onClick={() => handleDelete(selectedItem.id)}>Delete</button>
+          </div>
+        }
+        </div>)
+       : <div>Select an item to view details</div> }
+      </div>
     </div>
   );
 }

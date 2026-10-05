@@ -238,13 +238,22 @@
   - verified live: icon preserved on edit with no new file, school dropdown filters correctly, both junk test spells deleted via the now-working Delete button
 - [ ] Commit
 
-### 19. Classes page  [ ] not started
+### 19. Classes page  [ ] blocked — waiting on DM
 **Deliverable:** A simple Classes page exists with real class data, following the same content-type pattern as Items/Races/Spells.
 **Concepts:** prisma-schema, nextjs-api-routes, react-forms
+**Blocked (2026-10-02):** skipped for now — same lesson as Weapons/Spells, don't guess at fields; waiting on the DM's real notes for what a Class needs to show. Resume once those notes exist; move on to Section 20 in the meantime.
 
 ### 20. Split-view UI overhaul  [ ] not started
 **Deliverable:** Every content page shows a list on the left and a detail panel on the right that updates when you click an item, replacing the old inline-expand pattern site-wide.
 **Concepts:** master-detail-layout, react-state, component-composition
+
+- [x] Build the split-view pattern on ItemSearch (list left, detail panel right) — the reference implementation
+  - real bugs along the way (uncalled onClick, a malformed two-brace JSX block, a half-written ternary rendering as literal text, forgotten dangerouslySetInnerHTML) all self-corrected; discovered through live testing (not told) that ItemEditForm held stale data across different selected items, fixed with key={selectedItem.id}, and correctly explained the remount mechanism afterward unprompted
+- [ ] Apply the same pattern to RaceSearch and LoreSearch
+- [ ] Apply the same pattern to SpellSearch
+- [ ] Apply the same pattern to WeaponSearch
+- [ ] Apply the same pattern to Characters (different structure — plain Server Component list, no search wrapper)
+- [ ] Remove the now-unused ExpandableEntry component, then commit
 
 ### 21. Icons  [ ] not started
 **Deliverable:** lucide-react is installed, with a few real icons showing up in the nav and/or content pages.
