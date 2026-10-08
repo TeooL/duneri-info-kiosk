@@ -27,16 +27,28 @@ async function main() {
   await prisma.spell.create({
     data: {
       name: "Firebolt",
-      type: "Fire Arts",
+      school: "Fire Arts",
       tier: 1,
+      castTime: "1 action",
+      castRange: "60 ft",
+      targeting: "Single target",
+      components: "Verbal, Somatic",
+      manaCost: 2,
+      duration: "Instant",
       description: "A bolt of fire"
     }
   })
   await prisma.spell.create({
       data: {
         name: "Waterbolt",
-        type: "Water Arts",
+        school: "Water Arts",
         tier: 1,
+        castTime: "1 action",
+        castRange: "60 ft",
+        targeting: "Single target",
+        components: "Verbal, Somatic",
+        manaCost: 2,
+        duration: "Instant",
         description: "A bolt of water"
       }
   })

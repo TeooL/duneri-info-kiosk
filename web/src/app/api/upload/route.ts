@@ -6,6 +6,9 @@ export async function POST(request: Request) {
     if (!permission) {
         return new Response("Forbidden", {status: 403})
     }
+    if (!request.body) {
+        return new Response("Bad Request", {status: 400})
+    }
 
     const { searchParams } = new URL(request.url);
     const filename = searchParams.get("filename") as string;
