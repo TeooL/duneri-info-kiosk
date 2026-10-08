@@ -163,7 +163,7 @@
 - depends-on: none
 - introduced: 2026-08-09
 - last-reviewed: 2026-08-24
-- evidence: used <h3> as a direct child of <ul> (works visually, but violates the ul/li contract); correctly fixed it to <li> after one explanation of why the structure matters; on 2026-08-24, after a 2-week gap, gave an incorrect reason (guessed it was about "knowing what type of list it was") rather than the real accessibility/screen-reader reason — needed the full explanation restated
+- evidence: used <h3> as a direct child of <ul> (works visually, but violates the ul/li contract); correctly fixed it to <li> after one explanation of why the structure matters; on 2026-08-24, after a 2-week gap, gave an incorrect reason (guessed it was about "knowing what type of list it was") rather than the real accessibility/screen-reader reason — needed the full explanation restated; on 2026-10-05, while rewriting LoreSearch's list for the split view, dropped the `<ul>` wrapper entirely (left bare `<li>` elements with no list parent) — a real regression from the original file, caught when pointed out directly rather than self-noticed
 
 ## css-modules
 - status: practicing
@@ -562,15 +562,15 @@
 - status: practicing
 - depends-on: react-state, component-composition
 - introduced: 2026-10-03
-- last-reviewed: 2026-10-03
-- evidence: built the first real instance on ItemSearch — one `selectedItem` state at the list level instead of per-row toggles, a clickable `<li>` calling `setSelectedItem(item)`, and a detail panel reading that shared state; several real bugs along the way (missing call in onClick, a malformed two-expression JSX block needing one merged into the other, a half-written ternary with "selectedItem ?" and "} :" literally rendering as text, dangerouslySetInnerHTML forgotten again) all self-corrected after guiding questions, none requiring the fix to be handed over; independently discovered (by testing, not told) that ItemEditForm kept showing stale data when switching between items, and correctly explained afterward, unprompted, why `key={selectedItem.id}` fixed it — a genuinely new and nontrivial React concept, first exposure
+- last-reviewed: 2026-10-08
+- evidence: built the first real instance on ItemSearch — one `selectedItem` state at the list level instead of per-row toggles, a clickable `<li>` calling `setSelectedItem(item)`, and a detail panel reading that shared state; several real bugs along the way (missing call in onClick, a malformed two-expression JSX block needing one merged into the other, a half-written ternary with "selectedItem ?" and "} :" literally rendering as text, dangerouslySetInnerHTML forgotten again) all self-corrected after guiding questions, none requiring the fix to be handed over; independently discovered (by testing, not told) that ItemEditForm kept showing stale data when switching between items, and correctly explained afterward, unprompted, why `key={selectedItem.id}` fixed it — a genuinely new and nontrivial React concept, first exposure; on 2026-10-05, applied the pattern independently to RaceSearch (zero logic bugs — correctly reasoned the state should be `Race | null` once asked to compare against ItemSearch's `selectedItem`, then built the full two-column layout, ternary, and key fix unaided) and to LoreSearch (one real new bug — `onClick={() => handleChange}` referenced the wrong function entirely, a leftover from copying a different handler; self-corrected once asked to predict the click behavior, though answered by fixing directly rather than stating the prediction first); on 2026-10-08, applied the pattern to SpellSearch — the most complex content type so far (13 fields, an existing school filter, icon display) — building the state, click handler, ternary, and key fix correctly and entirely unaided; the field-by-field detail display (10+ near-identical lines) was written by the AI at the learner's request, citing the same repetition reasoning as Section 18
 
 ## react-key-remounting
-- status: practicing
+- status: understood
 - depends-on: react-state, component-composition
 - introduced: 2026-10-03
-- last-reviewed: 2026-10-03
-- evidence: discovered through live testing (not told in advance) that ItemEditForm, reused across different selected items at the same JSX position, kept its stale useState values since changing a prop doesn't re-run useState on an already-mounted component; once shown that `key={selectedItem.id}` forces React to treat each item as a distinct instance and remount fresh, correctly explained the mechanism back unprompted: "it treats the item form as a new component when the key changes and remounts it fresh"
+- last-reviewed: 2026-10-08
+- evidence: discovered through live testing (not told in advance) that ItemEditForm, reused across different selected items at the same JSX position, kept its stale useState values since changing a prop doesn't re-run useState on an already-mounted component; once shown that `key={selectedItem.id}` forces React to treat each item as a distinct instance and remount fresh, correctly explained the mechanism back unprompted: "it treats the item form as a new component when the key changes and remounts it fresh"; on 2026-10-05, two days after first discovering the bug on ItemSearch, proactively added `key={selectedRace.id}` to RaceEditForm and `key={selectedLore.id}` to LoreEditForm without being told or reminded — genuine multi-day retention of a nontrivial concept, not same-session performance; on 2026-10-08, a third independent application (SpellSearch, after Items and Race/Lore) with zero prompting, and correctly explained afterward in their own words why it's needed: "the key makes sure the selected spell's data fields are updated on each selection"
 
 ## production-migrations
 - status: practicing

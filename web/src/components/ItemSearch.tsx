@@ -5,14 +5,22 @@ import ItemEditForm from "./ItemEditForm";
 
 type Item = { id: string; name: string; type: string; description: string };
 
-export default function ItemSearch({ initialItems, isDM }: { initialItems: Item[]; isDM: boolean}) {
+export default function ItemSearch({
+  initialItems,
+  isDM,
+}: {
+  initialItems: Item[];
+  isDM: boolean;
+}) {
   const [items, setItems] = useState(initialItems);
   const [q, setQ] = useState("");
   const [category, setCategory] = useState("");
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
 
-  const categories = Array.from(new Set(initialItems.map(item => item.type)));
+  const categories = Array.from(new Set(initialItems.map((item) => item.type)));
 
   async function fetchItems(newQ: string, newCategory: string) {
     const res = await fetch(`/api/items?q=${newQ}&category=${newCategory}`);
@@ -28,23 +36,27 @@ export default function ItemSearch({ initialItems, isDM }: { initialItems: Item[
   }
 
   function handleCategoryChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    const category = e.target.value
-    setCategory(category)
-    fetchItems(q, category)
+    const category = e.target.value;
+    setCategory(category);
+    fetchItems(q, category);
   }
 
   async function handleDelete(id: string) {
     await fetch(`/api/items/${id}`, {
       method: "DELETE",
-      headers: { "Content-Type" : "application/json"},
-    })
-    window.location.reload()
+      headers: { "Content-Type": "application/json" },
+    });
+    window.location.reload();
   }
 
   return (
     <div className="flex gap-6">
       <div className="w-1/2">
-        <input type="text" placeholder="Search items..." onChange={handleChange} />
+        <input
+          type="text"
+          placeholder="Search items..."
+          onChange={handleChange}
+        />
         <select value={category} onChange={handleCategoryChange}>
           <option value="">All</option>
           {categories.map((category) => (
@@ -55,23 +67,31 @@ export default function ItemSearch({ initialItems, isDM }: { initialItems: Item[
         </select>
         <ul>
           {items.map((item) => (
-            <li key={item.id} onClick={() => setSelectedItem(item)}>{item.name}</li>
+            <li key={item.id} onClick={() => setSelectedItem(item)}>
+              {item.name}
+            </li>
           ))}
         </ul>
       </div>
       <div className="w-1/2 border rounded-lg p-4">
-      {selectedItem ? ( 
-        <div>
-          <div>{selectedItem.name}</div>
-          <div dangerouslySetInnerHTML={{__html:selectedItem.description}}></div>
-        {isDM && 
+        {selectedItem ? (
           <div>
-            <ItemEditForm key={selectedItem.id} item={selectedItem}/>
-            <button onClick={() => handleDelete(selectedItem.id)}>Delete</button>
+            <div>{selectedItem.name}</div>
+            <div
+              dangerouslySetInnerHTML={{ __html: selectedItem.description }}
+            ></div>
+            {isDM && (
+              <div>
+                <ItemEditForm key={selectedItem.id} item={selectedItem} />
+                <button onClick={() => handleDelete(selectedItem.id)}>
+                  Delete
+                </button>
+              </div>
+            )}
           </div>
-        }
-        </div>)
-       : <div>Select an item to view details</div> }
+        ) : (
+          <div>Select an item to view details</div>
+        )}
       </div>
     </div>
   );

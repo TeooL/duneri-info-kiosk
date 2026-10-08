@@ -1,16 +1,24 @@
-"use client"
+"use client";
 
 import { useRef, useState } from "react";
-import ExpandableEntry from "./ExpandableEntry";
 import RaceEditForm from "./RaceEditForm";
 
-type Race = {id : string; name: string; description: string}
+type Race = { id: string; name: string; description: string };
 
-export default function RaceSearch({initialRaces, isDM} : {initialRaces: Race[], isDM: boolean}) {
-    const [races, setRaces] = useState(initialRaces);
-    const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+export default function RaceSearch({
+  initialRaces,
+  isDM,
+}: {
+  initialRaces: Race[];
+  isDM: boolean;
+}) {
+  const [races, setRaces] = useState(initialRaces);
+  const [selectedRace, setSelectedRace] = useState<Race | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
 
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const q = e.target.value;
     clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(async () => {
@@ -19,28 +27,50 @@ export default function RaceSearch({initialRaces, isDM} : {initialRaces: Race[],
       setRaces(results);
     }, 300);
   }
-    async function handleDelete(id: string) {
-      await fetch(`/api/races/${id}`, {
-        method: "DELETE",
-        headers: { "Content-Type" : "application/json"},
-      })
-      window.location.reload()
-    }
+  async function handleDelete(id: string) {
+    await fetch(`/api/races/${id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+    window.location.reload();
+  }
 
   return (
-    <div>
-      <input type="text" placeholder="Search items..." onChange={handleChange} />
-      <ul>
-        {races.map((race) => (
-          <ExpandableEntry key={race.id} summary={race.name}>
-            <div dangerouslySetInnerHTML={{__html: race.description}}></div>
-            {isDM && 
-            <><RaceEditForm race={race}/>
-              <button onClick={() => handleDelete(race.id)}>Delete</button>
-            </>}
-          </ExpandableEntry>
-        ))}
-      </ul>
+    <div className="flex gap-6">
+      <div className="w-1/2">
+        <input
+          type="text"
+          placeholder="Search races..."
+          onChange={handleChange}
+        />
+        <ul>
+          {races.map((race) => (
+            <li key={race.id} onClick={() => setSelectedRace(race)}>
+              {race.name}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="w-1/2 border rounded-lg p-4">
+        {selectedRace ? (
+          <div>
+            <div>{selectedRace.name}</div>
+            <div
+              dangerouslySetInnerHTML={{ __html: selectedRace.description }}
+            ></div>
+            {isDM && (
+              <div>
+                <RaceEditForm key={selectedRace.id} race={selectedRace} />
+                <button onClick={() => handleDelete(selectedRace.id)}>
+                  Delete
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div>Select a race to view details</div>
+        )}
+      </div>
     </div>
   );
 }

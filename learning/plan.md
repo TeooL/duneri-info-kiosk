@@ -249,8 +249,10 @@
 
 - [x] Build the split-view pattern on ItemSearch (list left, detail panel right) — the reference implementation
   - real bugs along the way (uncalled onClick, a malformed two-brace JSX block, a half-written ternary rendering as literal text, forgotten dangerouslySetInnerHTML) all self-corrected; discovered through live testing (not told) that ItemEditForm held stale data across different selected items, fixed with key={selectedItem.id}, and correctly explained the remount mechanism afterward unprompted
-- [ ] Apply the same pattern to RaceSearch and LoreSearch
-- [ ] Apply the same pattern to SpellSearch
+- [x] Apply the same pattern to RaceSearch and LoreSearch
+  - RaceSearch: zero logic bugs, correctly typed state as `Race | null` by comparison, proactively applied the key={} fix unaided; LoreSearch: one real bug (onClick referenced the wrong function, a copy-paste leftover) plus a dropped <ul> wrapper, both fixed once pointed out
+- [x] Apply the same pattern to SpellSearch
+  - built the state/click/ternary/key structure entirely unaided; the field-by-field detail display (10+ fields) was written by the AI at the learner's request, citing the same boilerplate-repetition reasoning as Section 18; verified live including icon display and switching between spells with the edit form open
 - [ ] Apply the same pattern to WeaponSearch
 - [ ] Apply the same pattern to Characters (different structure — plain Server Component list, no search wrapper)
 - [ ] Remove the now-unused ExpandableEntry component, then commit
