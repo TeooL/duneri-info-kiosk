@@ -243,8 +243,8 @@
 **Concepts:** prisma-schema, nextjs-api-routes, react-forms
 **Blocked (2026-10-02):** skipped for now — same lesson as Weapons/Spells, don't guess at fields; waiting on the DM's real notes for what a Class needs to show. Resume once those notes exist; move on to Section 20 in the meantime.
 
-### 20. Split-view UI overhaul  [ ] not started
-**Deliverable:** Every content page shows a list on the left and a detail panel on the right that updates when you click an item, replacing the old inline-expand pattern site-wide.
+### 20. Split-view UI overhaul  [x] done
+**Deliverable:** Every content page a player actively browses (Items/Races/Lore/Spells/Weapons) shows a list on the left and a detail panel on the right that updates when you click an item; Characters deliberately keeps the old inline-expand pattern (see task 5 note).
 **Concepts:** master-detail-layout, react-state, component-composition
 **Unplanned incident (2026-10-08):** a real Vercel deploy failed on `next build`'s TypeScript check — two latent bugs from earlier sections, never caught locally since `npm run dev` doesn't do a full project-wide type check the way a production build does. (1) prisma/seed.ts still used Spell's pre-Section-18 `type` field and was missing several newer required fields — fixed by updating the two placeholder Spell entries (values filled in by the AI at the learner's request, documentation-only file). (2) src/app/api/upload/route.ts passed `request.body` (typed nullable) straight to Blob's put() — fixed with an explicit runtime null check rather than a type assertion, the learner's own choice for consistency with the rest of the app's defensive style. Both fixes verified via a real local `npm run build`, matching Vercel's exact failing command, before redeploying.
 
@@ -254,9 +254,12 @@
   - RaceSearch: zero logic bugs, correctly typed state as `Race | null` by comparison, proactively applied the key={} fix unaided; LoreSearch: one real bug (onClick referenced the wrong function, a copy-paste leftover) plus a dropped <ul> wrapper, both fixed once pointed out
 - [x] Apply the same pattern to SpellSearch
   - built the state/click/ternary/key structure entirely unaided; the field-by-field detail display (10+ fields) was written by the AI at the learner's request, citing the same boilerplate-repetition reasoning as Section 18; verified live including icon display and switching between spells with the edit form open
-- [ ] Apply the same pattern to WeaponSearch
-- [ ] Apply the same pattern to Characters (different structure — plain Server Component list, no search wrapper)
-- [ ] Remove the now-unused ExpandableEntry component, then commit
+- [x] Apply the same pattern to WeaponSearch
+  - state/click/list/key structure built unaided (including the many-to-many tags list); the field-by-field detail display written by the AI at the learner's request; verified live including icon display and tag list
+- [x] Apply the same pattern to Characters (different structure — plain Server Component list, no search wrapper)
+  - **descoped (2026-10-14):** deliberately skipped, real scope call — Items/Spells/Weapons benefit from a split view because every player browses a long shared list of them; Characters only ever shows the logged-in player's own (usually one or two) characters, so there's no "browse many" problem to solve. ExpandableEntry stays, legitimately, for Characters only.
+- [x] Confirm ExpandableEntry is still legitimately used by Characters (not dead code), then commit
+  - confirmed via grep: only characters/page.tsx imports it now; full project typecheck and a real `npm run build` both pass clean
 
 ### 21. Icons  [ ] not started
 **Deliverable:** lucide-react is installed, with a few real icons showing up in the nav and/or content pages.
